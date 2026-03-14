@@ -11,157 +11,107 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@300;400;500;600&display=swap');
 
 :root {
-  --bg: #0a0e0f;
-  --card: #111618;
-  --card2: #161d1f;
-  --border: #1e2a2d;
-  --border2: #253035;
-  --fuel: #00c4a0;
-  --fuel-dim: rgba(0,196,160,0.12);
-  --fuel-glow: rgba(0,196,160,0.25);
-  --amber: #f59e0b;
-  --amber-dim: rgba(245,158,11,0.12);
-  --red: #ef4444;
-  --green: #22c55e;
-  --text: #e8f0f2;
-  --muted: #5a7278;
-  --muted2: #3a5258;
-  --r: 14px;
+  --bg:#0a0e0f; --card:#111618; --card2:#161d1f;
+  --border:#1e2a2d; --border2:#253035;
+  --fuel:#00c4a0; --fuel-dim:rgba(0,196,160,.12); --fuel-glow:rgba(0,196,160,.25);
+  --amber:#f59e0b; --amber-dim:rgba(245,158,11,.12);
+  --red:#ef4444; --red-dim:rgba(239,68,68,.12);
+  --green:#22c55e; --green-dim:rgba(34,197,94,.12);
+  --purple:#a78bfa;
+  --text:#e8f0f2; --muted:#5a7278; --muted2:#3a5258; --r:14px;
 }
-
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-body {
-  background: var(--bg); color: var(--text);
-  font-family: 'Syne', sans-serif; min-height: 100dvh;
-  padding-bottom: calc(env(safe-area-inset-bottom,0px) + 80px);
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100dvh;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 80px)}
 
 /* HERO */
-.hero {
-  background: linear-gradient(135deg, #0d1f1c 0%, #0a1a22 100%);
-  border-bottom: 1px solid var(--border);
-  padding: 48px 20px 20px; position: relative; overflow: hidden;
-}
-.hero::before {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(ellipse 60% 80% at 90% -10%, var(--fuel-glow), transparent 60%);
-}
-.hero-label {
-  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 4px; position: relative;
-}
-.hero-balance {
-  font-weight: 800; letter-spacing: -0.04em; line-height: 1;
-  color: var(--fuel); text-shadow: 0 0 40px var(--fuel-glow);
-  font-variant-numeric: tabular-nums; position: relative;
-  font-size: clamp(1.9rem, 9.5vw, 3.2rem);
-}
-.hero-balance .lei { font-size: 0.38em; font-weight: 400; color: var(--muted); margin-left: 5px; }
+.hero{background:linear-gradient(135deg,#0d1f1c,#0a1a22);border-bottom:1px solid var(--border);padding:48px 20px 20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 90% -10%,var(--fuel-glow),transparent 60%)}
+.hero-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;position:relative}
+.hero-balance{font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--fuel);text-shadow:0 0 40px var(--fuel-glow);font-variant-numeric:tabular-nums;position:relative;font-size:clamp(1.9rem,9.5vw,3.2rem)}
+.hero-balance .lei{font-size:.38em;font-weight:400;color:var(--muted);margin-left:5px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px;position:relative}
+.hstat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.hstat-label{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.hstat-val{font-family:'Inconsolata',monospace;font-size:.86rem;font-weight:600;color:var(--text)}
+.c-fuel{color:var(--fuel)} .c-amber{color:var(--amber)} .c-green{color:var(--green)} .c-red{color:var(--red)} .c-purple{color:var(--purple)}
 
-.hero-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 16px; position: relative; }
-.hstat { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
-.hstat-label { font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-.hstat-val { font-family: 'Inconsolata', monospace; font-size: 0.86rem; font-weight: 600; color: var(--text); }
-.hstat-val.c-fuel { color: var(--fuel); }
-.hstat-val.c-amber { color: var(--amber); }
+/* ANRE PRICE BADGE */
+.anre-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber-dim);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:5px 10px;margin-top:12px;position:relative;cursor:pointer}
+.anre-badge-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);opacity:.8}
+.anre-badge-val{font-family:'Inconsolata',monospace;font-size:.9rem;font-weight:700;color:var(--amber)}
+.anre-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.anre-dot.loading{background:var(--amber);animation:pulse 1s infinite}
+.anre-dot.error{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* PROGRESS */
-.prog-wrap { height: 3px; background: var(--border); }
-.prog-fill { height: 100%; background: linear-gradient(90deg, var(--fuel), #00e5c0); transition: width 0.7s cubic-bezier(.16,1,.3,1); box-shadow: 0 0 8px var(--fuel); }
+.prog-wrap{height:3px;background:var(--border)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--fuel),#00e5c0);transition:width .7s cubic-bezier(.16,1,.3,1);box-shadow:0 0 8px var(--fuel)}
 
 /* NAV */
-.nav { display: flex; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.nav-btn {
-  flex: 1; border: none; background: transparent; color: var(--muted);
-  font-family: 'Syne', sans-serif; font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.04em; text-transform: uppercase; padding: 13px 4px;
-  cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
-}
-.nav-btn.active { color: var(--fuel); border-bottom-color: var(--fuel); }
+.nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.nav-btn{flex:1;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:13px 2px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.nav-btn.active{color:var(--fuel);border-bottom-color:var(--fuel)}
 
 /* SECTIONS */
-.section { padding: 18px; display: none; }
-.section.active { display: block; }
-.section-title { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.section{padding:18px;display:none}
+.section.active{display:block}
+.section-title{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 
 /* FORMS */
-.form-group { margin-bottom: 13px; }
-.form-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
-.form-input {
-  width: 100%; background: var(--card); border: 1px solid var(--border2);
-  border-radius: 10px; color: var(--text); font-family: 'Inconsolata', monospace;
-  font-size: 1.05rem; font-weight: 500; padding: 12px 14px; outline: none;
-  -webkit-appearance: none; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.form-input:focus { border-color: var(--fuel); box-shadow: 0 0 0 3px var(--fuel-dim); }
-.form-input::placeholder { color: var(--muted2); }
-.form-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 8px; }
-.form-hint { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 14px; }
+.form-group{margin-bottom:13px}
+.form-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.form-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Inconsolata',monospace;font-size:1.05rem;font-weight:500;padding:12px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
+.form-input:focus{border-color:var(--fuel);box-shadow:0 0 0 3px var(--fuel-dim)}
+.form-input::placeholder{color:var(--muted2)}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px}
+.form-hint{font-size:.62rem;color:var(--muted);letter-spacing:.06em;margin-bottom:14px}
 
-.btn {
-  width: 100%; border: none; border-radius: 12px; font-family: 'Syne', sans-serif;
-  font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em;
-  padding: 14px; cursor: pointer; transition: all 0.15s;
-}
-.btn:active { transform: scale(0.97); }
-.btn-fuel { background: var(--fuel); color: #0a0e0f; }
-.btn-topup { background: var(--green); color: #0a0e0f; }
-.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+/* ANRE auto-fill chip */
+.price-chip{font-size:.62rem;background:var(--amber-dim);border:1px solid rgba(245,158,11,.3);color:var(--amber);border-radius:5px;padding:2px 7px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.price-chip:hover{background:rgba(245,158,11,.25)}
+
+.btn{width:100%;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.04em;padding:14px;cursor:pointer;transition:all .15s}
+.btn:active{transform:scale(.97)}
+.btn-fuel{background:var(--fuel);color:#0a0e0f}
+.btn-topup{background:var(--green);color:#0a0e0f}
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0}
 
 /* HISTORY */
-.hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-.hist-item {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 14px; margin-bottom: 9px;
-  animation: fadeUp 0.28s cubic-bezier(.16,1,.3,1);
-}
-.hist-item.topup { border-color: rgba(34,197,94,0.25); }
-@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.hist-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:9px;animation:fadeUp .28s cubic-bezier(.16,1,.3,1)}
+.hist-item.topup{border-color:rgba(34,197,94,.25)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hist-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.hist-type{font-weight:700;font-size:.88rem;color:var(--text)}
+.hist-date{font-size:.7rem;color:var(--muted);font-family:'Inconsolata',monospace;margin-top:1px}
+.hist-cost{font-family:'Inconsolata',monospace;font-size:1.1rem;font-weight:600;text-align:right}
+.hist-cost.minus{color:var(--red)} .hist-cost.plus{color:var(--green)}
+.hist-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hist-pills{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.pill{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Inconsolata',monospace;font-size:.73rem;color:var(--muted);white-space:nowrap}
+.pill strong{color:var(--fuel);font-weight:600}
+.del-btn{background:none;border:1px solid var(--border2);color:var(--muted);font-family:'Syne',sans-serif;font-size:.7rem;font-weight:600;padding:5px 10px;border-radius:7px;cursor:pointer;transition:all .2s;flex-shrink:0;white-space:nowrap}
+.del-btn:active,.del-btn:hover{border-color:var(--red);color:var(--red)}
+.empty{text-align:center;color:var(--muted);font-size:.85rem;padding:48px 20px;line-height:1.8}
+.empty-icon{font-size:2.5rem;margin-bottom:10px;opacity:.4}
 
-.hist-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-.hist-type { font-weight: 700; font-size: 0.88rem; color: var(--text); }
-.hist-date { font-size: 0.7rem; color: var(--muted); font-family: 'Inconsolata', monospace; margin-top: 1px; }
-.hist-cost { font-family: 'Inconsolata', monospace; font-size: 1.1rem; font-weight: 600; text-align: right; }
-.hist-cost.minus { color: var(--red); }
-.hist-cost.plus { color: var(--green); }
+/* CHARTS */
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.chart-title{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+canvas{width:100%!important}
 
-.hist-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.hist-pills { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
-.pill { background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-family: 'Inconsolata', monospace; font-size: 0.73rem; color: var(--muted); white-space: nowrap; }
-.pill strong { color: var(--fuel); font-weight: 600; }
-
-.del-btn {
-  background: none; border: 1px solid var(--border2); color: var(--muted);
-  font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 600;
-  padding: 5px 10px; border-radius: 7px; cursor: pointer;
-  transition: all 0.2s; flex-shrink: 0; white-space: nowrap;
-}
-.del-btn:hover, .del-btn:active { border-color: var(--red); color: var(--red); }
-.del-btn-sm { background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'Syne', sans-serif; font-size: 0.7rem; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
-.del-btn-sm:hover { border-color: var(--red); color: var(--red); }
-
-.empty { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 48px 20px; line-height: 1.8; }
-.empty-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.4; }
-
-/* CHART */
-.chart-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; margin-bottom: 14px; }
-.chart-title { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-canvas { width: 100% !important; }
+/* CHART PERIOD TOGGLE */
+.period-toggle{display:flex;gap:6px;margin-bottom:14px}
+.period-btn{flex:1;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;padding:7px;border-radius:8px;cursor:pointer;transition:all .2s}
+.period-btn.active{background:var(--fuel-dim);border-color:var(--fuel);color:var(--fuel)}
 
 /* TOAST */
-.toast {
-  position: fixed; bottom: calc(env(safe-area-inset-bottom,0px) + 20px);
-  left: 50%; transform: translateX(-50%) translateY(70px);
-  background: var(--card2); border: 1px solid var(--border2); color: var(--text);
-  padding: 10px 22px; border-radius: 100px; font-size: 0.82rem; font-weight: 600;
-  white-space: nowrap; transition: transform 0.35s cubic-bezier(.16,1,.3,1);
-  z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.5); letter-spacing: 0.02em;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);left:50%;transform:translateX(-50%) translateY(70px);background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:10px 22px;border-radius:100px;font-size:.82rem;font-weight:600;white-space:nowrap;transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
 
-.install-hint { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
-.install-hint strong { color: var(--amber); display:block; margin-bottom:2px; }
+.install-hint{background:var(--amber-dim);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:.78rem;color:var(--muted);line-height:1.6}
+.install-hint strong{color:var(--amber);display:block;margin-bottom:2px}
 </style>
 </head>
 <body>
@@ -172,6 +122,16 @@ canvas { width: 100% !important; }
   <div class="hero-balance" id="hero-bal">
     <span id="hero-num">0,00</span><span class="lei">lei</span>
   </div>
+
+  <!-- ANRE price badge -->
+  <div class="anre-badge" onclick="applyAnrePrice()" title="Apasă pentru a completa automat prețul">
+    <div class="anre-dot loading" id="anre-dot"></div>
+    <div>
+      <div class="anre-badge-label">ANRE azi · benzină</div>
+      <div class="anre-badge-val" id="anre-val">se încarcă…</div>
+    </div>
+  </div>
+
   <div class="hero-stats">
     <div class="hstat">
       <div class="hstat-label">Inițial</div>
@@ -189,12 +149,12 @@ canvas { width: 100% !important; }
 </div>
 <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:100%"></div></div>
 
-<!-- NAV -->
+<!-- NAV: ⛽ Alimentare | Istoric | Grafic | + Sold -->
 <div class="nav">
   <button class="nav-btn active" onclick="switchTab('add',this)">⛽ Alimentare</button>
-  <button class="nav-btn" onclick="switchTab('topup',this)">💳 + Sold</button>
   <button class="nav-btn" onclick="switchTab('history',this)">📋 Istoric</button>
   <button class="nav-btn" onclick="switchTab('chart',this)">📈 Grafic</button>
+  <button class="nav-btn" onclick="switchTab('topup',this)">💳 + Sold</button>
 </div>
 
 <!-- TAB: FUEL -->
@@ -219,13 +179,50 @@ canvas { width: 100% !important; }
       <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" oninput="calcFields('liters')">
     </div>
     <div>
-      <label class="form-label">Lei / L</label>
-      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="23,14" oninput="calcFields('price')">
+      <label class="form-label">
+        Lei / L
+        <span class="price-chip" id="anre-chip" onclick="applyAnrePrice()" style="display:none">ANRE</span>
+      </label>
+      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="—" oninput="calcFields('price')">
     </div>
   </div>
   <div class="form-hint">Completează oricare 2 câmpuri — al 3-lea se calculează automat</div>
 
   <button class="btn btn-fuel" onclick="doAddFuel()">✓ Înregistrează alimentarea</button>
+</div>
+
+<!-- TAB: HISTORY -->
+<div class="section" id="tab-history">
+  <div class="hist-header">
+    <div class="section-title" style="margin-bottom:0">Toate tranzacțiile</div>
+    <button class="del-btn" onclick="clearAll()">Șterge tot</button>
+  </div>
+  <div id="history-list"></div>
+</div>
+
+<!-- TAB: CHARTS -->
+<div class="section" id="tab-chart">
+  <!-- 1. Cheltuieli + încărcări pe perioadă -->
+  <div class="chart-wrap">
+    <div class="chart-title">Cheltuieli vs Încărcări</div>
+    <div class="period-toggle">
+      <button class="period-btn active" onclick="setPeriod('weekly',this)">Săptămânal</button>
+      <button class="period-btn" onclick="setPeriod('monthly',this)">Lunar</button>
+    </div>
+    <canvas id="chart-period" height="220"></canvas>
+  </div>
+
+  <!-- 2. Cheltuieli per alimentare + încărcări -->
+  <div class="chart-wrap">
+    <div class="chart-title">Per alimentare — Cheltuieli & Încărcări</div>
+    <canvas id="chart-per-fill" height="200"></canvas>
+  </div>
+
+  <!-- 3. Preț lei/L evoluție -->
+  <div class="chart-wrap">
+    <div class="chart-title">Evoluție preț benzină (lei/L)</div>
+    <canvas id="chart-price" height="200"></canvas>
+  </div>
 </div>
 
 <!-- TAB: TOPUP -->
@@ -242,243 +239,220 @@ canvas { width: 100% !important; }
   <button class="btn btn-topup" onclick="doTopup()">+ Adaugă sold pe card</button>
 </div>
 
-<!-- TAB: HISTORY -->
-<div class="section" id="tab-history">
-  <div class="hist-header">
-    <div class="section-title" style="margin-bottom:0">Toate tranzacțiile</div>
-    <button class="del-btn" onclick="clearAll()">Șterge tot</button>
-  </div>
-  <div id="history-list"></div>
-</div>
-
-<!-- TAB: CHART -->
-<div class="section" id="tab-chart">
-  <div class="chart-wrap">
-    <div class="chart-title">Evoluție sold (lei)</div>
-    <canvas id="chart-balance" height="200"></canvas>
-  </div>
-  <div class="chart-wrap">
-    <div class="chart-title">Cheltuieli per alimentare (lei)</div>
-    <canvas id="chart-spent" height="200"></canvas>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-// ── DEFAULT SEED DATA ──
+// ── DEFAULT DATA ──
 const DEFAULTS = [
-  { id:1, type:'topup', isoDate:'2025-01-01', total:10000, liters:null, pricePerL:null },
-  { id:2, type:'fuel',  isoDate:'2025-02-08', total:439.66, liters:19,    pricePerL:23.14 },
-  { id:3, type:'fuel',  isoDate:'2025-02-22', total:757.85, liters:32.29, pricePerL:23.47 },
-  { id:4, type:'fuel',  isoDate:'2025-03-05', total:531.53, liters:22.38, pricePerL:23.75 },
-  { id:5, type:'fuel',  isoDate:'2025-03-10', total:338.00, liters:14.2,  pricePerL:23.74 },
-  { id:6, type:'fuel',  isoDate:'2025-03-12', total:209.57, liters:8.54,  pricePerL:24.54 },
+  {id:1,type:'topup', isoDate:'2025-01-01',total:10000, liters:null,pricePerL:null},
+  {id:2,type:'fuel',  isoDate:'2025-02-08',total:439.66,liters:19,   pricePerL:23.14},
+  {id:3,type:'fuel',  isoDate:'2025-02-22',total:757.85,liters:32.29,pricePerL:23.47},
+  {id:4,type:'fuel',  isoDate:'2025-03-05',total:531.53,liters:22.38,pricePerL:23.75},
+  {id:5,type:'fuel',  isoDate:'2025-03-10',total:338.00,liters:14.2, pricePerL:23.74},
+  {id:6,type:'fuel',  isoDate:'2025-03-12',total:209.57,liters:8.54, pricePerL:24.54},
 ];
 
 // ── STATE ──
-let S = { history: [], nextId: 100 };
+let S = {history:[], nextId:100};
+let anrePrice = null;
+let activePeriod = 'weekly';
+let charts = {};
 
 function load() {
   try {
-    const d = localStorage.getItem('fuel_v5');
+    const d = localStorage.getItem('fuel_v6');
     if (d) { S = JSON.parse(d); recompute(); return; }
   } catch(e) {}
-  // First run — seed defaults
-  S.history = DEFAULTS.map(h => ({...h, balance:0}));
+  S.history = DEFAULTS.map(h=>({...h,balance:0}));
   S.nextId = 100;
   recompute(); save();
 }
+function save() { try{localStorage.setItem('fuel_v6',JSON.stringify(S))}catch(e){} }
 
-function save() {
-  try { localStorage.setItem('fuel_v5', JSON.stringify(S)); } catch(e) {}
-}
-
-// Recompute all balances from history sorted by date asc
 function recompute() {
   S.history.sort(byDate);
   let bal = 0;
   S.history.forEach(h => {
-    bal = +(h.type === 'topup' ? bal + h.total : bal - h.total).toFixed(2);
+    bal = +(h.type==='topup' ? bal+h.total : bal-h.total).toFixed(2);
     h.balance = bal;
   });
 }
 
-// ── HELPERS ──
-function byDate(a,b) { return a.isoDate.localeCompare(b.isoDate); }
-
-function parseNum(s) {
-  if (s === null || s === undefined || s === '') return NaN;
-  return parseFloat(String(s).replace(/\s/g,'').replace(',','.'));
-}
-
-function fmt(n, dec=2) {
-  if (n === null || n === undefined || isNaN(n)) return '—';
-  return n.toLocaleString('ro-RO', { minimumFractionDigits:dec, maximumFractionDigits:dec });
-}
-
-function fmtDate(iso) {
-  if (!iso) return '';
-  const [y,m,day] = iso.split('-');
-  const mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
-  return `${+day} ${mo[+m-1]} ${y}`;
-}
-
-function todayStr() { return new Date().toISOString().split('T')[0]; }
-
-// ── SMART CALC ──
-// Whenever 2 of the 3 fields are filled, compute the 3rd
-function calcFields(changed) {
-  const tEl = document.getElementById('f-total');
-  const lEl = document.getElementById('f-liters');
-  const pEl = document.getElementById('f-price');
-  const t = parseNum(tEl.value);
-  const l = parseNum(lEl.value);
-  const p = parseNum(pEl.value);
-
-  const ok = (n) => !isNaN(n) && n > 0;
-
-  if (changed !== 'total' && ok(l) && ok(p))
-    setIfEmpty(tEl, l * p, changed);
-  else if (changed !== 'liters' && ok(t) && ok(p))
-    setIfEmpty(lEl, t / p, changed);
-  else if (changed !== 'price' && ok(t) && ok(l))
-    setIfEmpty(pEl, t / l, changed);
-}
-
-function setIfEmpty(el, val, changedField) {
-  // Only overwrite if user is not editing this field
-  if (document.activeElement !== el) {
-    el.value = fmt(val, 2).replace(/\./g,'').replace(',','.');
+// ── ANRE API ──
+async function fetchAnre() {
+  const dot = document.getElementById('anre-dot');
+  const val = document.getElementById('anre-val');
+  const chip = document.getElementById('anre-chip');
+  dot.className = 'anre-dot loading';
+  val.textContent = 'se încarcă…';
+  try {
+    const resp = await fetch('https://api.ecarburanti.anre.md/public/plafon/');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    anrePrice = data.b_pc; // benzina
+    dot.className = 'anre-dot';
+    val.textContent = fmt(anrePrice) + ' lei/L · ' + data.date;
+    chip.style.display = 'inline-flex';
+    // Auto-fill price field if empty
+    const pEl = document.getElementById('f-price');
+    if (!pEl.value) {
+      pEl.value = String(anrePrice).replace('.',',');
+      calcFields('price');
+    }
+  } catch(e) {
+    dot.className = 'anre-dot error';
+    val.textContent = 'indisponibil';
+    console.warn('ANRE fetch failed:', e);
   }
 }
 
+function applyAnrePrice() {
+  if (!anrePrice) return;
+  const pEl = document.getElementById('f-price');
+  pEl.value = String(anrePrice).replace('.',',');
+  calcFields('price');
+  // Switch to fuel tab
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-add').classList.add('active');
+  document.querySelector('.nav-btn').classList.add('active');
+  toast('Preț ANRE aplicat: ' + fmt(anrePrice) + ' lei/L');
+}
+
+// ── HELPERS ──
+function byDate(a,b){ return a.isoDate.localeCompare(b.isoDate); }
+function parseNum(s){
+  if(s===null||s===undefined||s==='') return NaN;
+  return parseFloat(String(s).replace(/\s/g,'').replace(',','.'));
+}
+function fmt(n,dec=2){
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  return n.toLocaleString('ro-RO',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+function fmtDate(iso){
+  if(!iso) return '';
+  const [y,m,day]=iso.split('-');
+  const mo=['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  return `${+day} ${mo[+m-1]} ${y}`;
+}
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+
+// ── CALC 3 FIELDS ──
+function calcFields(changed){
+  const tEl=document.getElementById('f-total');
+  const lEl=document.getElementById('f-liters');
+  const pEl=document.getElementById('f-price');
+  const t=parseNum(tEl.value), l=parseNum(lEl.value), p=parseNum(pEl.value);
+  const ok=n=>!isNaN(n)&&n>0;
+  if(changed!=='total'&&ok(l)&&ok(p)&&document.activeElement!==tEl)
+    tEl.value=fmtInput(l*p);
+  else if(changed!=='liters'&&ok(t)&&ok(p)&&document.activeElement!==lEl)
+    lEl.value=fmtInput(t/p);
+  else if(changed!=='price'&&ok(t)&&ok(l)&&document.activeElement!==pEl)
+    pEl.value=fmtInput(t/l);
+}
+function fmtInput(n){ return n.toFixed(2).replace('.',','); }
+
 // ── ADD FUEL ──
-function doAddFuel() {
-  const date  = document.getElementById('f-date').value || todayStr();
-  const total = parseNum(document.getElementById('f-total').value);
-  const liters= parseNum(document.getElementById('f-liters').value);
-  const price = parseNum(document.getElementById('f-price').value);
-
-  if (isNaN(total) || total <= 0) { toast('⚠️ Introdu suma totală'); return; }
-  const currentBal = S.history.length ? S.history[S.history.length-1].balance : 0;
-  // recompute gives correct order so last is highest date
-  const sorted = [...S.history].sort(byDate);
-  const curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
-  if (total > curBal) { toast('⚠️ Suma depășește soldul disponibil!'); return; }
-
-  S.history.push({
-    id: S.nextId++, type: 'fuel', isoDate: date,
-    total: +total.toFixed(2),
-    liters: isNaN(liters) ? null : +liters.toFixed(2),
-    pricePerL: isNaN(price) ? null : +price.toFixed(2),
-    balance: 0
-  });
+function doAddFuel(){
+  const date =document.getElementById('f-date').value||todayStr();
+  const total=parseNum(document.getElementById('f-total').value);
+  const liters=parseNum(document.getElementById('f-liters').value);
+  const price=parseNum(document.getElementById('f-price').value);
+  if(isNaN(total)||total<=0){toast('⚠️ Introdu suma totală');return;}
+  const sorted=[...S.history].sort(byDate);
+  const curBal=sorted.length?sorted[sorted.length-1].balance:0;
+  if(total>curBal){toast('⚠️ Suma depășește soldul!');return;}
+  S.history.push({id:S.nextId++,type:'fuel',isoDate:date,total:+total.toFixed(2),liters:isNaN(liters)?null:+liters.toFixed(2),pricePerL:isNaN(price)?null:+price.toFixed(2),balance:0});
   recompute();
-  ['f-total','f-liters','f-price'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-date').value = todayStr();
+  ['f-total','f-liters','f-price'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-date').value=todayStr();
   save(); render();
-  toast('⛽ −' + fmt(total) + ' lei înregistrat');
+  toast('⛽ −'+fmt(total)+' lei înregistrat');
 }
 
 // ── TOPUP ──
-function doTopup() {
-  const val  = parseNum(document.getElementById('t-amount').value);
-  const date = document.getElementById('t-date').value || todayStr();
-  if (isNaN(val) || val <= 0) { toast('Introdu o sumă validă'); return; }
-
-  S.history.push({ id: S.nextId++, type:'topup', isoDate:date, total:+val.toFixed(2), liters:null, pricePerL:null, balance:0 });
+function doTopup(){
+  const val=parseNum(document.getElementById('t-amount').value);
+  const date=document.getElementById('t-date').value||todayStr();
+  if(isNaN(val)||val<=0){toast('Introdu o sumă validă');return;}
+  S.history.push({id:S.nextId++,type:'topup',isoDate:date,total:+val.toFixed(2),liters:null,pricePerL:null,balance:0});
   recompute();
-  document.getElementById('t-amount').value = '';
-  document.getElementById('t-date').value = todayStr();
+  document.getElementById('t-amount').value='';
+  document.getElementById('t-date').value=todayStr();
   save(); render();
-  toast('💳 +' + fmt(val) + ' lei adăugat pe card');
+  toast('💳 +'+fmt(val)+' lei adăugat pe card');
 }
 
 // ── DELETE ──
-function deleteEntry(id) {
-  const h = S.history.find(x => x.id === id);
-  if (!h) return;
-  const label = h.type === 'topup'
-    ? '💳 +' + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate)
-    : '⛽ −' + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate);
-  if (!confirm('Sigur ștergi această înregistrare?\n\n' + label)) return;
-  S.history = S.history.filter(x => x.id !== id);
-  recompute();
-  save(); render();
+function deleteEntry(id){
+  const h=S.history.find(x=>x.id===id);
+  if(!h) return;
+  const label=(h.type==='topup'?'💳 +':'⛽ −')+fmt(h.total)+' lei — '+fmtDate(h.isoDate);
+  if(!confirm('Sigur ștergi?\n\n'+label)) return;
+  S.history=S.history.filter(x=>x.id!==id);
+  recompute(); save(); render();
   toast('Înregistrare ștearsă');
 }
-
-function clearAll() {
-  if (!confirm('Ștergi TOT istoricul complet?\n\nAceastă acțiune nu poate fi anulată.')) return;
-  S.history = [];
-  save(); render();
-  toast('Istoric șters complet');
+function clearAll(){
+  if(!confirm('Ștergi TOT istoricul complet?\n\nAceastă acțiune nu poate fi anulată.')) return;
+  S.history=[]; save(); render(); toast('Istoric șters complet');
 }
 
 // ── RENDER ──
-function render() {
-  const sorted = [...S.history].sort(byDate);
-  const curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
-  const firstTopup = sorted.find(h => h.type === 'topup');
-  const initBal = firstTopup ? firstTopup.total : null;
-  const spent = sorted.filter(h=>h.type==='fuel').reduce((a,h)=>a+h.total, 0);
-  const litri = sorted.filter(h=>h.type==='fuel' && h.liters).reduce((a,h)=>a+h.liters, 0);
+function render(){
+  const sorted=[...S.history].sort(byDate);
+  const curBal=sorted.length?sorted[sorted.length-1].balance:0;
+  const firstTopup=sorted.find(h=>h.type==='topup');
+  const initBal=firstTopup?firstTopup.total:null;
+  const spent=sorted.filter(h=>h.type==='fuel').reduce((a,h)=>a+h.total,0);
+  const litri=sorted.filter(h=>h.type==='fuel'&&h.liters).reduce((a,h)=>a+h.liters,0);
 
-  // Hero
-  document.getElementById('hero-num').textContent = fmt(curBal);
-  const pct = initBal ? curBal / initBal * 100 : 100;
-  const heroEl = document.getElementById('hero-bal');
-  heroEl.style.color = pct > 50 ? 'var(--fuel)' : pct > 25 ? 'var(--amber)' : 'var(--red)';
-  heroEl.style.textShadow = pct > 50 ? '0 0 40px var(--fuel-glow)'
-    : pct > 25 ? '0 0 40px rgba(245,158,11,0.25)'
-    : '0 0 40px rgba(239,68,68,0.25)';
+  document.getElementById('hero-num').textContent=fmt(curBal);
+  const pct=initBal?curBal/initBal*100:100;
+  const heroEl=document.getElementById('hero-bal');
+  heroEl.style.color=pct>50?'var(--fuel)':pct>25?'var(--amber)':'var(--red)';
+  heroEl.style.textShadow=pct>50?'0 0 40px var(--fuel-glow)':pct>25?'0 0 40px rgba(245,158,11,.25)':'0 0 40px rgba(239,68,68,.25)';
 
-  document.getElementById('stat-init').textContent = initBal !== null ? fmt(initBal) + ' lei' : '—';
-  document.getElementById('stat-spent').textContent = fmt(spent) + ' lei';
-  document.getElementById('stat-litri').textContent = fmt(litri,1) + ' L';
+  document.getElementById('stat-init').textContent=initBal!==null?fmt(initBal)+' lei':'—';
+  document.getElementById('stat-spent').textContent=fmt(spent)+' lei';
+  document.getElementById('stat-litri').textContent=fmt(litri,1)+' L';
 
-  const bar = document.getElementById('prog-fill');
-  bar.style.width = Math.max(0,Math.min(100,pct)) + '%';
-  bar.style.background = pct > 50 ? 'linear-gradient(90deg,var(--fuel),#00e5c0)'
-    : pct > 25 ? 'linear-gradient(90deg,var(--amber),#fbbf24)'
-    : 'linear-gradient(90deg,var(--red),#f87171)';
+  const bar=document.getElementById('prog-fill');
+  bar.style.width=Math.max(0,Math.min(100,pct))+'%';
+  bar.style.background=pct>50?'linear-gradient(90deg,var(--fuel),#00e5c0)':pct>25?'linear-gradient(90deg,var(--amber),#fbbf24)':'linear-gradient(90deg,var(--red),#f87171)';
 
   renderHistory(sorted);
+  // Re-render charts if visible
+  if(document.getElementById('tab-chart').classList.contains('active')) renderCharts();
 }
 
-function renderHistory(sorted) {
-  const el = document.getElementById('history-list');
-  if (!sorted.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzacție.<br>Adaugă prima alimentare!</div>';
+function renderHistory(sorted){
+  const el=document.getElementById('history-list');
+  if(!sorted.length){
+    el.innerHTML='<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzacție.<br>Adaugă prima alimentare!</div>';
     return;
   }
-
-  // Oldest first (ascending by date = order as sorted)
-  el.innerHTML = sorted.map(h => {
-    const isTopup = h.type === 'topup';
-    const costStr = isTopup ? '+' + fmt(h.total) + ' lei' : '−' + fmt(h.total) + ' lei';
-    const costClass = isTopup ? 'plus' : 'minus';
-    const icon = isTopup ? '💳' : '⛽';
-    const label = isTopup ? 'Încărcare card' : 'Alimentare';
-
-    let pills = '';
-    if (!isTopup) {
-      if (h.liters) pills += `<div class="pill"><strong>${fmt(h.liters,2)} L</strong></div>`;
-      if (h.pricePerL) pills += `<div class="pill">${fmt(h.pricePerL,2)} lei/L</div>`;
+  // Newest first in history list (reverse of chronological)
+  el.innerHTML=[...sorted].reverse().map(h=>{
+    const isTopup=h.type==='topup';
+    const costStr=isTopup?'+'+fmt(h.total)+' lei':'−'+fmt(h.total)+' lei';
+    const icon=isTopup?'💳':'⛽';
+    const label=isTopup?'Încărcare card':'Alimentare';
+    let pills='';
+    if(!isTopup){
+      if(h.liters) pills+=`<div class="pill"><strong>${fmt(h.liters,2)} L</strong></div>`;
+      if(h.pricePerL) pills+=`<div class="pill">${fmt(h.pricePerL,2)} lei/L</div>`;
     }
-    pills += `<div class="pill">Sold: <strong>${fmt(h.balance)} lei</strong></div>`;
-
+    pills+=`<div class="pill">Sold: <strong>${fmt(h.balance)} lei</strong></div>`;
     return `<div class="hist-item${isTopup?' topup':''}">
       <div class="hist-top">
         <div>
           <div class="hist-type">${icon} ${label}</div>
           <div class="hist-date">${fmtDate(h.isoDate)}</div>
         </div>
-        <div>
-          <div class="hist-cost ${costClass}">${costStr}</div>
-        </div>
+        <div><div class="hist-cost ${isTopup?'plus':'minus'}">${costStr}</div></div>
       </div>
       <div class="hist-bottom">
         <div class="hist-pills">${pills}</div>
@@ -489,73 +463,199 @@ function renderHistory(sorted) {
 }
 
 // ── CHARTS ──
-let cBal = null, cSpent = null;
+function setPeriod(p, btn){
+  activePeriod=p;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCharts();
+}
 
-function renderCharts() {
-  const fuels = [...S.history].sort(byDate).filter(h => h.type === 'fuel');
-  if (!fuels.length) {
-    if (cBal) { cBal.destroy(); cBal = null; }
-    if (cSpent) { cSpent.destroy(); cSpent = null; }
-    return;
-  }
-  const labels   = fuels.map(h => fmtDate(h.isoDate));
-  const balances = fuels.map(h => h.balance);
-  const costs    = fuels.map(h => h.total);
+function destroyChart(key){
+  if(charts[key]){charts[key].destroy();delete charts[key];}
+}
 
-  const base = {
-    responsive: true,
-    plugins: {
-      legend: { display:false },
-      tooltip: {
-        backgroundColor:'#161d1f', borderColor:'#1e2a2d', borderWidth:1,
-        titleColor:'#5a7278', bodyColor:'#e8f0f2',
-        callbacks: { label: ctx => ' ' + fmt(ctx.parsed.y) + ' lei' }
-      }
-    },
-    scales: {
-      x: { grid:{color:'#1e2a2d'}, ticks:{color:'#5a7278', font:{size:9,family:'Inconsolata'}, maxRotation:45} },
-      y: { grid:{color:'#1e2a2d'}, ticks:{color:'#5a7278', font:{size:9,family:'Inconsolata'}, callback: v=>fmt(v,0)} }
-    }
-  };
+function renderCharts(){
+  const sorted=[...S.history].sort(byDate);
+  const fuels=sorted.filter(h=>h.type==='fuel');
 
-  if (cBal) cBal.destroy();
-  cBal = new Chart(document.getElementById('chart-balance'), {
-    type: 'line',
-    data: { labels, datasets: [{ data:balances, borderColor:'#00c4a0', backgroundColor:'rgba(0,196,160,0.08)', borderWidth:2, pointBackgroundColor:'#00c4a0', pointRadius:4, fill:true, tension:0.35 }] },
-    options: base
+  // ── CHART 1: Cheltuieli vs Încărcări per perioadă ──
+  renderPeriodChart(sorted);
+
+  // ── CHART 2: Per alimentare — cheltuieli & incarcari combinate ──
+  renderPerFillChart(sorted);
+
+  // ── CHART 3: Preț benzina evoluție ──
+  renderPriceChart(fuels);
+}
+
+function getWeekKey(iso){
+  const d=new Date(iso);
+  // Get Monday of that week
+  const day=d.getDay()||7;
+  d.setDate(d.getDate()-day+1);
+  return d.toISOString().split('T')[0];
+}
+function getMonthKey(iso){ return iso.slice(0,7); }
+function fmtWeek(iso){
+  const d=new Date(iso);
+  const d2=new Date(d); d2.setDate(d2.getDate()+6);
+  return `${d.getDate()} ${['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'][d.getMonth()]}`;
+}
+function fmtMonth(key){
+  const [y,m]=key.split('-');
+  return ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'][+m-1]+' '+y.slice(2);
+}
+
+function renderPeriodChart(sorted){
+  destroyChart('period');
+  const getKey = activePeriod==='weekly' ? getWeekKey : getMonthKey;
+  const fmtKey = activePeriod==='weekly' ? fmtWeek : fmtMonth;
+
+  // Aggregate
+  const map=new Map();
+  sorted.forEach(h=>{
+    const k=getKey(h.isoDate);
+    if(!map.has(k)) map.set(k,{label:fmtKey(k),spent:0,topup:0});
+    const v=map.get(k);
+    if(h.type==='fuel') v.spent=+(v.spent+h.total).toFixed(2);
+    else v.topup=+(v.topup+h.total).toFixed(2);
   });
 
-  if (cSpent) cSpent.destroy();
-  cSpent = new Chart(document.getElementById('chart-spent'), {
-    type: 'bar',
-    data: { labels, datasets: [{ data:costs, backgroundColor:'rgba(239,68,68,0.55)', borderColor:'#ef4444', borderWidth:1, borderRadius:6 }] },
-    options: { ...base }
+  const keys=[...map.keys()].sort();
+  const labels=keys.map(k=>map.get(k).label);
+  const spent=keys.map(k=>map.get(k).spent);
+  const topups=keys.map(k=>map.get(k).topup);
+
+  charts['period']=new Chart(document.getElementById('chart-period'),{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Cheltuieli (lei)',data:spent,backgroundColor:'rgba(239,68,68,.65)',borderColor:'#ef4444',borderWidth:1,borderRadius:5},
+        {label:'Încărcări (lei)',data:topups,backgroundColor:'rgba(34,197,94,.55)',borderColor:'#22c55e',borderWidth:1,borderRadius:5},
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{labels:{color:'#5a7278',font:{size:10,family:'Inconsolata'},boxWidth:12}},
+        tooltip:{backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,titleColor:'#5a7278',bodyColor:'#e8f0f2',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.parsed.y)+' lei'}}
+      },
+      scales:{
+        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45},stacked:false},
+        y:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},callback:v=>fmt(v,0)}}
+      }
+    }
+  });
+}
+
+function renderPerFillChart(sorted){
+  destroyChart('perfill');
+  // All events in chronological order — fuels as negative (spend), topups as positive
+  const labels=sorted.map(h=>fmtDate(h.isoDate));
+  const spendData=sorted.map(h=>h.type==='fuel'?h.total:0);
+  const topupData=sorted.map(h=>h.type==='topup'?h.total:0);
+
+  charts['perfill']=new Chart(document.getElementById('chart-per-fill'),{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Cheltuieli (lei)',data:spendData,backgroundColor:'rgba(239,68,68,.65)',borderColor:'#ef4444',borderWidth:1,borderRadius:5},
+        {label:'Încărcări (lei)',data:topupData,backgroundColor:'rgba(34,197,94,.55)',borderColor:'#22c55e',borderWidth:1,borderRadius:5},
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{labels:{color:'#5a7278',font:{size:10,family:'Inconsolata'},boxWidth:12}},
+        tooltip:{backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,titleColor:'#5a7278',bodyColor:'#e8f0f2',callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.parsed.y)+' lei'}}
+      },
+      scales:{
+        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45}},
+        y:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},callback:v=>fmt(v,0)}}
+      }
+    }
+  });
+}
+
+function renderPriceChart(fuels){
+  destroyChart('price');
+  const withPrice=fuels.filter(h=>h.pricePerL);
+  if(!withPrice.length){
+    document.getElementById('chart-price').parentElement.style.display='none';
+    return;
+  }
+  document.getElementById('chart-price').parentElement.style.display='block';
+  const labels=withPrice.map(h=>fmtDate(h.isoDate));
+  const prices=withPrice.map(h=>h.pricePerL);
+
+  // Color points: green if lower than prev, red if higher
+  const pointColors=prices.map((p,i)=>i===0?'#5a7278':p>prices[i-1]?'#ef4444':'#22c55e');
+
+  charts['price']=new Chart(document.getElementById('chart-price'),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'Lei/L',data:prices,
+        borderColor:'#a78bfa',
+        backgroundColor:'rgba(167,139,250,.08)',
+        borderWidth:2,
+        pointBackgroundColor:pointColors,
+        pointBorderColor:pointColors,
+        pointRadius:6,
+        pointHoverRadius:8,
+        fill:true,tension:0.3
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,
+          titleColor:'#5a7278',bodyColor:'#e8f0f2',
+          callbacks:{label:ctx=>' '+fmt(ctx.parsed.y)+' lei/L'}
+        }
+      },
+      scales:{
+        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45}},
+        y:{
+          grid:{color:'#1e2a2d'},
+          ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},callback:v=>v+' lei'},
+          suggestedMin: Math.min(...prices)-0.5,
+          suggestedMax: Math.max(...prices)+0.5
+        }
+      }
+    }
   });
 }
 
 // ── TABS ──
-function switchTab(name, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+function switchTab(name,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'chart') renderCharts();
+  if(name==='chart') renderCharts();
 }
 
 // ── TOAST ──
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
 }
 
 // ── INIT ──
 load();
-document.getElementById('f-date').value = todayStr();
-document.getElementById('t-date').value = todayStr();
-if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone)
-  document.getElementById('ios-hint').style.display = 'block';
+document.getElementById('f-date').value=todayStr();
+document.getElementById('t-date').value=todayStr();
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.navigator.standalone)
+  document.getElementById('ios-hint').style.display='block';
 render();
+fetchAnre();
 </script>
 </body>
 </html>
