@@ -395,6 +395,32 @@ canvas { width: 100% !important; }
   transform: translateX(-50%) translateY(0);
 }
 
+.chart-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.cstat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.cstat-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.cstat-val {
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.c-red { color: var(--red); }
 .install-hint {
   background: var(--amber-dim);
   border: 1px solid rgba(245,158,11,0.2);
@@ -499,6 +525,22 @@ canvas { width: 100% !important; }
     <button class="period-btn" onclick="setPeriod('fill', this)">Alimentare</button>
   </div>
 
+  <!-- Stats summary row -->
+  <div class="chart-stats-row" id="chart-stats-row">
+    <div class="cstat">
+      <div class="cstat-label">Total cheltuit</div>
+      <div class="cstat-val c-red" id="cs-total">—</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label" id="cs-avg-label">Medie lunara</div>
+      <div class="cstat-val c-amber" id="cs-avg">—</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">Total litri</div>
+      <div class="cstat-val c-fuel" id="cs-liters">—</div>
+    </div>
+  </div>
+
   <div class="chart-wrap">
     <div class="chart-title" id="title-spent">Cheltuieli lunare (lei)</div>
     <canvas id="canvas-spent" height="200"></canvas>
@@ -532,7 +574,13 @@ canvas { width: 100% !important; }
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
+// Register datalabels plugin
+if (typeof ChartDataLabels !== 'undefined') {
+  Chart.register(ChartDataLabels);
+}
+
 // ── DEFAULT DATA ──
 var DEFAULTS = [
   {id:1, type:'topup', isoDate:'2026-02-01', total:10000,  liters:null,  pricePerL:null},
@@ -893,7 +941,7 @@ var BASE_OPTS = {
   }
 };
 
-function makeOpts(tooltipCb, yTickCb) {
+function makeOpts(tooltipCb, yTickCb, labelFmt) {
   return {
     responsive: true,
     plugins: {
@@ -905,7 +953,16 @@ function makeOpts(tooltipCb, yTickCb) {
         titleColor: '#5a7278',
         bodyColor: '#e8f0f2',
         callbacks: {label: tooltipCb}
-      }
+      },
+      datalabels: labelFmt ? {
+        color: 'rgba(232,240,242,0.85)',
+        font: {size: 9, family: 'Inconsolata', weight: '600'},
+        anchor: 'end',
+        align: 'top',
+        offset: 2,
+        formatter: labelFmt,
+        clip: false
+      } : {display: false}
     },
     scales: {
       x: {
@@ -941,6 +998,25 @@ function renderCharts() {
 
   var pd = buildPeriodData(fuels);
 
+  // ── Stats summary ──
+  var totalSpent = 0, totalLiters = 0;
+  for (var fi = 0; fi < fuels.length; fi++) {
+    totalSpent += fuels[fi].total;
+    if (fuels[fi].liters) totalLiters += fuels[fi].liters;
+  }
+  totalSpent = +totalSpent.toFixed(2);
+  totalLiters = +totalLiters.toFixed(2);
+
+  // Average: total / number of periods
+  var numPeriods = pd.labels.length || 1;
+  var avgSpent = +(totalSpent / numPeriods).toFixed(2);
+  var avgLabel = activePeriod === 'monthly' ? 'Medie lunara' : activePeriod === 'weekly' ? 'Medie sapt.' : 'Medie/alim.';
+
+  document.getElementById('cs-total').textContent = fmt(totalSpent) + ' lei';
+  document.getElementById('cs-avg-label').textContent = avgLabel;
+  document.getElementById('cs-avg').textContent = fmt(avgSpent) + ' lei';
+  document.getElementById('cs-liters').textContent = fmt(totalLiters, 1) + ' L';
+
   // Chart 1 — Cheltuieli
   if (chartSpent) { chartSpent.destroy(); chartSpent = null; }
   chartSpent = new Chart(document.getElementById('canvas-spent'), {
@@ -957,6 +1033,7 @@ function renderCharts() {
     },
     options: makeOpts(
       function(ctx) { return ' ' + fmt(ctx.parsed.y) + ' lei'; },
+      function(v) { return fmt(v, 0) + ' lei'; },
       function(v) { return fmt(v, 0) + ' lei'; }
     )
   });
@@ -977,7 +1054,8 @@ function renderCharts() {
     },
     options: makeOpts(
       function(ctx) { return ' ' + fmt(ctx.parsed.y, 2) + ' L'; },
-      function(v) { return v + ' L'; }
+      function(v) { return v + ' L'; },
+      function(v) { return fmt(v, 2) + ' L'; }
     )
   });
 
