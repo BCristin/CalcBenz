@@ -421,6 +421,26 @@ canvas { width: 100% !important; }
   font-weight: 700;
 }
 .c-red { color: var(--red); }
+
+.predict-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(167,139,250,0.08);
+  border: 1px solid rgba(167,139,250,0.25);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.predict-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.predict-text {
+  font-size: 0.8rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-family: 'Inconsolata', monospace;
+}
+.predict-text strong { color: var(--purple); }
+
 .install-hint {
   background: var(--amber-dim);
   border: 1px solid rgba(245,158,11,0.2);
@@ -525,20 +545,26 @@ canvas { width: 100% !important; }
     <button class="period-btn" onclick="setPeriod('fill', this)">Alimentare</button>
   </div>
 
-  <!-- Stats summary row -->
+  <!-- Stats: medii + predictie -->
   <div class="chart-stats-row" id="chart-stats-row">
     <div class="cstat">
-      <div class="cstat-label">Total cheltuit</div>
-      <div class="cstat-val c-red" id="cs-total">—</div>
+      <div class="cstat-label">Medie lunara</div>
+      <div class="cstat-val c-amber" id="cs-avg-monthly">—</div>
     </div>
     <div class="cstat">
-      <div class="cstat-label" id="cs-avg-label">Medie lunara</div>
-      <div class="cstat-val c-amber" id="cs-avg">—</div>
+      <div class="cstat-label">Medie sapt.</div>
+      <div class="cstat-val c-amber" id="cs-avg-weekly">—</div>
     </div>
     <div class="cstat">
-      <div class="cstat-label">Total litri</div>
-      <div class="cstat-val c-fuel" id="cs-liters">—</div>
+      <div class="cstat-label">Medie/alim.</div>
+      <div class="cstat-val c-amber" id="cs-avg-fill">—</div>
     </div>
+  </div>
+
+  <!-- Predictie -->
+  <div class="predict-box" id="predict-box">
+    <div class="predict-icon">🔮</div>
+    <div class="predict-text" id="predict-text">—</div>
   </div>
 
   <div class="chart-wrap">
@@ -882,6 +908,30 @@ function renderHistory(sorted) {
 }
 
 // ── CHARTS ──
+// Generic period aggregator (used for stats computation regardless of active period)
+function buildPeriodDataFor(fuels, period) {
+  var getKey = period === 'monthly' ? getMonthKey : getWeekKey;
+  var fmtKey = period === 'monthly' ? fmtMonth : fmtWeek;
+  var map = {};
+  var keyOrder = [];
+  for (var j = 0; j < fuels.length; j++) {
+    var h = fuels[j];
+    var k = getKey(h.isoDate);
+    if (!map[k]) { map[k] = {label: fmtKey(k), spent: 0, liters: 0}; keyOrder.push(k); }
+    map[k].spent = +(map[k].spent + h.total).toFixed(2);
+    if (h.liters) map[k].liters = +(map[k].liters + h.liters).toFixed(2);
+  }
+  keyOrder.sort();
+  var out = {labels: [], spent: [], liters: []};
+  for (var ki = 0; ki < keyOrder.length; ki++) {
+    var v = map[keyOrder[ki]];
+    out.labels.push(v.label);
+    out.spent.push(v.spent);
+    out.liters.push(v.liters);
+  }
+  return out;
+}
+
 function buildPeriodData(fuels) {
   if (activePeriod === 'fill') {
     var labels = [], spent = [], liters = [];
@@ -955,14 +1005,18 @@ function makeOpts(tooltipCb, yTickCb, labelFmt) {
         callbacks: {label: tooltipCb}
       },
       datalabels: labelFmt ? {
-        color: 'rgba(232,240,242,0.85)',
+        color: 'rgba(232,240,242,0.9)',
         font: {size: 9, family: 'Inconsolata', weight: '600'},
         anchor: 'end',
-        align: 'top',
-        offset: 2,
+        align: 'end',
+        offset: -16,
+        padding: {top: 0},
         formatter: labelFmt,
         clip: false
       } : {display: false}
+    },
+    layout: {
+      padding: { top: 18 }
     },
     scales: {
       x: {
@@ -998,7 +1052,7 @@ function renderCharts() {
 
   var pd = buildPeriodData(fuels);
 
-  // ── Stats summary ──
+  // ── Stats: all 3 averages + prediction ──
   var totalSpent = 0, totalLiters = 0;
   for (var fi = 0; fi < fuels.length; fi++) {
     totalSpent += fuels[fi].total;
@@ -1007,15 +1061,40 @@ function renderCharts() {
   totalSpent = +totalSpent.toFixed(2);
   totalLiters = +totalLiters.toFixed(2);
 
-  // Average: total / number of periods
-  var numPeriods = pd.labels.length || 1;
-  var avgSpent = +(totalSpent / numPeriods).toFixed(2);
-  var avgLabel = activePeriod === 'monthly' ? 'Medie lunara' : activePeriod === 'weekly' ? 'Medie sapt.' : 'Medie/alim.';
+  // Monthly average
+  var pdMonthly = buildPeriodDataFor(fuels, 'monthly');
+  var avgMonthly = pdMonthly.labels.length ? +(totalSpent / pdMonthly.labels.length).toFixed(2) : 0;
 
-  document.getElementById('cs-total').textContent = fmt(totalSpent) + ' lei';
-  document.getElementById('cs-avg-label').textContent = avgLabel;
-  document.getElementById('cs-avg').textContent = fmt(avgSpent) + ' lei';
-  document.getElementById('cs-liters').textContent = fmt(totalLiters, 1) + ' L';
+  // Weekly average
+  var pdWeekly = buildPeriodDataFor(fuels, 'weekly');
+  var avgWeekly = pdWeekly.labels.length ? +(totalSpent / pdWeekly.labels.length).toFixed(2) : 0;
+
+  // Per fill average
+  var avgFill = fuels.length ? +(totalSpent / fuels.length).toFixed(2) : 0;
+
+  document.getElementById('cs-avg-monthly').textContent = fmt(avgMonthly) + ' lei';
+  document.getElementById('cs-avg-weekly').textContent = fmt(avgWeekly) + ' lei';
+  document.getElementById('cs-avg-fill').textContent = fmt(avgFill) + ' lei';
+
+  // ── Prediction ──
+  var lastSorted = S.history.slice().sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);});
+  var curBal = lastSorted.length ? lastSorted[lastSorted.length-1].balance : 0;
+  var predictEl = document.getElementById('predict-text');
+  if (avgWeekly > 0 && curBal > 0) {
+    var weeksLeft = curBal / avgWeekly;
+    var daysLeft = Math.round(weeksLeft * 7);
+    var endDate = new Date();
+    endDate.setDate(endDate.getDate() + daysLeft);
+    var endStr = fmtDate(endDate.toISOString().split('T')[0]);
+    var fillsLeft = avgFill > 0 ? Math.floor(curBal / avgFill) : '?';
+    predictEl.innerHTML =
+      'La ritmul actual (<strong>' + fmt(avgWeekly) + ' lei/sapt</strong>), soldul de <strong>' + fmt(curBal) + ' lei</strong> va dura aproximativ <strong>' + daysLeft + ' zile</strong> — pana pe <strong>' + endStr + '</strong>.<br>' +
+      'Mai pot face aproximativ <strong>' + fillsLeft + ' alimentari</strong> a cate <strong>' + fmt(avgFill) + ' lei</strong>.';
+  } else if (curBal <= 0) {
+    predictEl.innerHTML = '<strong>Soldul este epuizat.</strong> Adauga fonduri pentru a continua.';
+  } else {
+    predictEl.innerHTML = 'Adauga mai multe date pentru a vedea predictia.';
+  }
 
   // Chart 1 — Cheltuieli
   if (chartSpent) { chartSpent.destroy(); chartSpent = null; }
