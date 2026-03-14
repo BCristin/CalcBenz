@@ -5,113 +5,411 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Card Benzină">
-<title>Card Benzină</title>
+<meta name="apple-mobile-web-app-title" content="Card Benzina">
+<title>Card Benzina</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@300;400;500;600&display=swap');
 
 :root {
-  --bg:#0a0e0f; --card:#111618; --card2:#161d1f;
-  --border:#1e2a2d; --border2:#253035;
-  --fuel:#00c4a0; --fuel-dim:rgba(0,196,160,.12); --fuel-glow:rgba(0,196,160,.25);
-  --amber:#f59e0b; --amber-dim:rgba(245,158,11,.12);
-  --red:#ef4444; --red-dim:rgba(239,68,68,.12);
-  --green:#22c55e; --green-dim:rgba(34,197,94,.12);
-  --purple:#a78bfa;
-  --text:#e8f0f2; --muted:#5a7278; --muted2:#3a5258; --r:14px;
+  --bg: #0a0e0f;
+  --card: #111618;
+  --card2: #161d1f;
+  --border: #1e2a2d;
+  --border2: #253035;
+  --fuel: #00c4a0;
+  --fuel-dim: rgba(0,196,160,0.12);
+  --fuel-glow: rgba(0,196,160,0.25);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.12);
+  --red: #ef4444;
+  --green: #22c55e;
+  --purple: #a78bfa;
+  --text: #e8f0f2;
+  --muted: #5a7278;
+  --muted2: #3a5258;
+  --r: 14px;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100dvh;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 80px)}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  min-height: 100dvh;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
+}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#0d1f1c,#0a1a22);border-bottom:1px solid var(--border);padding:48px 20px 20px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 90% -10%,var(--fuel-glow),transparent 60%)}
-.hero-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;position:relative}
-.hero-balance{font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--fuel);text-shadow:0 0 40px var(--fuel-glow);font-variant-numeric:tabular-nums;position:relative;font-size:clamp(1.9rem,9.5vw,3.2rem)}
-.hero-balance .lei{font-size:.38em;font-weight:400;color:var(--muted);margin-left:5px}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px;position:relative}
-.hstat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
-.hstat-label{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
-.hstat-val{font-family:'Inconsolata',monospace;font-size:.86rem;font-weight:600;color:var(--text)}
-.c-fuel{color:var(--fuel)} .c-amber{color:var(--amber)} .c-green{color:var(--green)} .c-red{color:var(--red)} .c-purple{color:var(--purple)}
-
-/* ANRE PRICE BADGE */
-.anre-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber-dim);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:5px 10px;margin-top:12px;position:relative;cursor:pointer}
-.anre-badge-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);opacity:.8}
-.anre-badge-val{font-family:'Inconsolata',monospace;font-size:.9rem;font-weight:700;color:var(--amber)}
-.anre-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
-.anre-dot.loading{background:var(--amber);animation:pulse 1s infinite}
-.anre-dot.error{background:var(--red)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero {
+  background: linear-gradient(135deg, #0d1f1c, #0a1a22);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 90% -10%, var(--fuel-glow), transparent 60%);
+}
+.hero-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+  position: relative;
+}
+.hero-balance {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fuel);
+  text-shadow: 0 0 40px var(--fuel-glow);
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  font-size: clamp(1.9rem, 9.5vw, 3.2rem);
+}
+.hero-balance .lei {
+  font-size: 0.38em;
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 5px;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+  position: relative;
+}
+.hstat {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.hstat-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.hstat-val {
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.c-fuel { color: var(--fuel); }
+.c-amber { color: var(--amber); }
 
 /* PROGRESS */
-.prog-wrap{height:3px;background:var(--border)}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--fuel),#00e5c0);transition:width .7s cubic-bezier(.16,1,.3,1);box-shadow:0 0 8px var(--fuel)}
+.prog-wrap { height: 3px; background: var(--border); }
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--fuel), #00e5c0);
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px var(--fuel);
+}
 
 /* NAV */
-.nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-.nav-btn{flex:1;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:13px 2px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
-.nav-btn.active{color:var(--fuel);border-bottom-color:var(--fuel)}
+.nav {
+  display: flex;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.nav-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 13px 2px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.nav-btn.active {
+  color: var(--fuel);
+  border-bottom-color: var(--fuel);
+}
 
 /* SECTIONS */
-.section{padding:18px;display:none}
-.section.active{display:block}
-.section-title{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.section {
+  padding: 18px;
+  display: none;
+}
+.section.active {
+  display: block;
+}
+.section-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
 
 /* FORMS */
-.form-group{margin-bottom:13px}
-.form-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:8px}
-.form-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Inconsolata',monospace;font-size:1.05rem;font-weight:500;padding:12px 14px;outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
-.form-input:focus{border-color:var(--fuel);box-shadow:0 0 0 3px var(--fuel-dim)}
-.form-input::placeholder{color:var(--muted2)}
-.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px}
-.form-hint{font-size:.62rem;color:var(--muted);letter-spacing:.06em;margin-bottom:14px}
+.form-group {
+  margin-bottom: 13px;
+}
+.form-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 12px 14px;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus {
+  border-color: var(--fuel);
+  box-shadow: 0 0 0 3px var(--fuel-dim);
+}
+.form-input::placeholder {
+  color: var(--muted2);
+}
+.form-row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.form-hint {
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
 
-/* ANRE auto-fill chip */
-.price-chip{font-size:.62rem;background:var(--amber-dim);border:1px solid rgba(245,158,11,.3);color:var(--amber);border-radius:5px;padding:2px 7px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.price-chip:hover{background:rgba(245,158,11,.25)}
+/* BUTTONS */
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-fuel { background: var(--fuel); color: #0a0e0f; }
+.btn-topup { background: var(--green); color: #0a0e0f; }
 
-.btn{width:100%;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.04em;padding:14px;cursor:pointer;transition:all .15s}
-.btn:active{transform:scale(.97)}
-.btn-fuel{background:var(--fuel);color:#0a0e0f}
-.btn-topup{background:var(--green);color:#0a0e0f}
-.divider{border:none;border-top:1px solid var(--border);margin:20px 0}
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}
 
 /* HISTORY */
-.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.hist-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:9px;animation:fadeUp .28s cubic-bezier(.16,1,.3,1)}
-.hist-item.topup{border-color:rgba(34,197,94,.25)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.hist-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.hist-type{font-weight:700;font-size:.88rem;color:var(--text)}
-.hist-date{font-size:.7rem;color:var(--muted);font-family:'Inconsolata',monospace;margin-top:1px}
-.hist-cost{font-family:'Inconsolata',monospace;font-size:1.1rem;font-weight:600;text-align:right}
-.hist-cost.minus{color:var(--red)} .hist-cost.plus{color:var(--green)}
-.hist-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.hist-pills{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-.pill{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Inconsolata',monospace;font-size:.73rem;color:var(--muted);white-space:nowrap}
-.pill strong{color:var(--fuel);font-weight:600}
-.del-btn{background:none;border:1px solid var(--border2);color:var(--muted);font-family:'Syne',sans-serif;font-size:.7rem;font-weight:600;padding:5px 10px;border-radius:7px;cursor:pointer;transition:all .2s;flex-shrink:0;white-space:nowrap}
-.del-btn:active,.del-btn:hover{border-color:var(--red);color:var(--red)}
-.empty{text-align:center;color:var(--muted);font-size:.85rem;padding:48px 20px;line-height:1.8}
-.empty-icon{font-size:2.5rem;margin-bottom:10px;opacity:.4}
+.hist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.hist-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+  margin-bottom: 9px;
+  animation: fadeUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hist-item.topup {
+  border-color: rgba(34, 197, 94, 0.25);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hist-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.hist-type {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.hist-date {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: 'Inconsolata', monospace;
+  margin-top: 1px;
+}
+.hist-cost {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: right;
+}
+.hist-cost.minus { color: var(--red); }
+.hist-cost.plus { color: var(--green); }
+.hist-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.hist-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.pill {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.73rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.pill strong { color: var(--fuel); font-weight: 600; }
+.del-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.del-btn:active, .del-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 48px 20px;
+  line-height: 1.8;
+}
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  opacity: 0.4;
+}
 
 /* CHARTS */
-.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
-.chart-title{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-canvas{width:100%!important}
+.chart-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.chart-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+canvas { width: 100% !important; }
 
-/* CHART PERIOD TOGGLE */
-.period-toggle{display:flex;gap:6px;margin-bottom:14px}
-.period-btn{flex:1;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;padding:7px;border-radius:8px;cursor:pointer;transition:all .2s}
-.period-btn.active{background:var(--fuel-dim);border-color:var(--fuel);color:var(--fuel)}
+/* PERIOD TOGGLE */
+.period-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.period-btn {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 9px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.period-btn.active {
+  background: var(--fuel-dim);
+  border-color: var(--fuel);
+  color: var(--fuel);
+}
 
 /* TOAST */
-.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);left:50%;transform:translateX(-50%) translateY(70px);background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:10px 22px;border-radius:100px;font-size:.82rem;font-weight:600;white-space:nowrap;transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(70px);
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
 
-.install-hint{background:var(--amber-dim);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:.78rem;color:var(--muted);line-height:1.6}
-.install-hint strong{color:var(--amber);display:block;margin-bottom:2px}
+.install-hint {
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.install-hint strong {
+  color: var(--amber);
+  display: block;
+  margin-bottom: 2px;
+}
 </style>
 </head>
 <body>
@@ -122,19 +420,9 @@ canvas{width:100%!important}
   <div class="hero-balance" id="hero-bal">
     <span id="hero-num">0,00</span><span class="lei">lei</span>
   </div>
-
-  <!-- ANRE price badge -->
-  <div class="anre-badge" onclick="applyAnrePrice()" title="Apasă pentru a completa automat prețul">
-    <div class="anre-dot loading" id="anre-dot"></div>
-    <div>
-      <div class="anre-badge-label">ANRE azi · benzină</div>
-      <div class="anre-badge-val" id="anre-val">se încarcă…</div>
-    </div>
-  </div>
-
   <div class="hero-stats">
     <div class="hstat">
-      <div class="hstat-label">Inițial</div>
+      <div class="hstat-label">Initial</div>
       <div class="hstat-val c-fuel" id="stat-init">—</div>
     </div>
     <div class="hstat">
@@ -149,20 +437,23 @@ canvas{width:100%!important}
 </div>
 <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:100%"></div></div>
 
-<!-- NAV: ⛽ Alimentare | Istoric | Grafic | + Sold -->
+<!-- NAV -->
 <div class="nav">
-  <button class="nav-btn active" onclick="switchTab('add',this)">⛽ Alimentare</button>
-  <button class="nav-btn" onclick="switchTab('history',this)">📋 Istoric</button>
-  <button class="nav-btn" onclick="switchTab('chart',this)">📈 Grafic</button>
-  <button class="nav-btn" onclick="switchTab('topup',this)">💳 + Sold</button>
+  <button class="nav-btn active" onclick="switchTab('add', this)">Alimentare</button>
+  <button class="nav-btn" onclick="switchTab('history', this)">Istoric</button>
+  <button class="nav-btn" onclick="switchTab('chart', this)">Grafic</button>
+  <button class="nav-btn" onclick="switchTab('topup', this)">+ Sold</button>
 </div>
 
 <!-- TAB: FUEL -->
 <div class="section active" id="tab-add">
   <div id="ios-hint" style="display:none">
-    <div class="install-hint"><strong>📲 Salvează pe iPhone</strong>Safari → Distribuie → „Adaugă la ecranul principal"</div>
+    <div class="install-hint">
+      <strong>Salveaza pe iPhone</strong>
+      Safari - Distribuie - Adauga la ecranul principal
+    </div>
   </div>
-  <div class="section-title">Înregistrează alimentare</div>
+  <div class="section-title">Inregistreaza alimentare</div>
 
   <div class="form-group">
     <label class="form-label">Data</label>
@@ -170,73 +461,69 @@ canvas{width:100%!important}
   </div>
 
   <div class="form-row3">
-    <div>
+    <div class="form-group" style="margin-bottom:0">
       <label class="form-label">Total (lei)</label>
       <input class="form-input" id="f-total" type="text" inputmode="decimal" placeholder="439,66" oninput="calcFields('total')">
     </div>
-    <div>
+    <div class="form-group" style="margin-bottom:0">
       <label class="form-label">Litri</label>
       <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" oninput="calcFields('liters')">
     </div>
-    <div>
-      <label class="form-label">
-        Lei / L
-        <span class="price-chip" id="anre-chip" onclick="applyAnrePrice()" style="display:none">ANRE</span>
-      </label>
-      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="—" oninput="calcFields('price')">
+    <div class="form-group" style="margin-bottom:0">
+      <label class="form-label">Lei / L</label>
+      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="23,14" oninput="calcFields('price')">
     </div>
   </div>
-  <div class="form-hint">Completează oricare 2 câmpuri — al 3-lea se calculează automat</div>
+  <div class="form-hint">Completeaza oricare 2 campuri — al 3-lea se calculeaza automat</div>
 
-  <button class="btn btn-fuel" onclick="doAddFuel()">✓ Înregistrează alimentarea</button>
+  <button class="btn btn-fuel" onclick="doAddFuel()">Inregistreaza alimentarea</button>
 </div>
 
 <!-- TAB: HISTORY -->
 <div class="section" id="tab-history">
   <div class="hist-header">
-    <div class="section-title" style="margin-bottom:0">Toate tranzacțiile</div>
-    <button class="del-btn" onclick="clearAll()">Șterge tot</button>
+    <div class="section-title" style="margin-bottom:0">Toate tranzactiile</div>
+    <button class="del-btn" onclick="clearAll()">Sterge tot</button>
   </div>
   <div id="history-list"></div>
 </div>
 
 <!-- TAB: CHARTS -->
 <div class="section" id="tab-chart">
-  <!-- 1. Cheltuieli + încărcări pe perioadă -->
-  <div class="chart-wrap">
-    <div class="chart-title">Cheltuieli vs Încărcări</div>
-    <div class="period-toggle">
-      <button class="period-btn active" onclick="setPeriod('weekly',this)">Săptămânal</button>
-      <button class="period-btn" onclick="setPeriod('monthly',this)">Lunar</button>
-    </div>
-    <canvas id="chart-period" height="220"></canvas>
+  <div class="period-toggle">
+    <button class="period-btn active" onclick="setPeriod('monthly', this)">Lunar</button>
+    <button class="period-btn" onclick="setPeriod('weekly', this)">Saptamanal</button>
+    <button class="period-btn" onclick="setPeriod('fill', this)">Alimentare</button>
   </div>
 
-  <!-- 2. Cheltuieli per alimentare + încărcări -->
   <div class="chart-wrap">
-    <div class="chart-title">Per alimentare — Cheltuieli & Încărcări</div>
-    <canvas id="chart-per-fill" height="200"></canvas>
+    <div class="chart-title" id="title-spent">Cheltuieli lunare (lei)</div>
+    <canvas id="canvas-spent" height="200"></canvas>
   </div>
 
-  <!-- 3. Preț lei/L evoluție -->
   <div class="chart-wrap">
-    <div class="chart-title">Evoluție preț benzină (lei/L)</div>
-    <canvas id="chart-price" height="200"></canvas>
+    <div class="chart-title" id="title-liters">Litri lunari</div>
+    <canvas id="canvas-liters" height="200"></canvas>
+  </div>
+
+  <div class="chart-wrap" id="wrap-price">
+    <div class="chart-title">Evolutie pret benzina (lei/L)</div>
+    <canvas id="canvas-price" height="200"></canvas>
   </div>
 </div>
 
 <!-- TAB: TOPUP -->
 <div class="section" id="tab-topup">
-  <div class="section-title">Adaugă sold pe card</div>
+  <div class="section-title">Adauga sold pe card</div>
   <div class="form-group">
-    <label class="form-label">Sumă (lei)</label>
+    <label class="form-label">Suma (lei)</label>
     <input class="form-input" id="t-amount" type="text" inputmode="decimal" placeholder="ex: 5000,00">
   </div>
   <div class="form-group">
     <label class="form-label">Data</label>
     <input class="form-input" id="t-date" type="date">
   </div>
-  <button class="btn btn-topup" onclick="doTopup()">+ Adaugă sold pe card</button>
+  <button class="btn btn-topup" onclick="doTopup()">+ Adauga sold pe card</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -244,489 +531,522 @@ canvas{width:100%!important}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 // ── DEFAULT DATA ──
-const DEFAULTS = [
-  {id:1,type:'topup', isoDate:'2025-01-01',total:10000, liters:null,pricePerL:null},
-  {id:2,type:'fuel',  isoDate:'2025-02-08',total:439.66,liters:19,   pricePerL:23.14},
-  {id:3,type:'fuel',  isoDate:'2025-02-22',total:757.85,liters:32.29,pricePerL:23.47},
-  {id:4,type:'fuel',  isoDate:'2025-03-05',total:531.53,liters:22.38,pricePerL:23.75},
-  {id:5,type:'fuel',  isoDate:'2025-03-10',total:338.00,liters:14.2, pricePerL:23.74},
-  {id:6,type:'fuel',  isoDate:'2025-03-12',total:209.57,liters:8.54, pricePerL:24.54},
+var DEFAULTS = [
+  {id:1, type:'topup', isoDate:'2025-01-01', total:10000,  liters:null,  pricePerL:null},
+  {id:2, type:'fuel',  isoDate:'2025-02-08', total:439.66, liters:19,    pricePerL:23.14},
+  {id:3, type:'fuel',  isoDate:'2025-02-22', total:757.85, liters:32.29, pricePerL:23.47},
+  {id:4, type:'fuel',  isoDate:'2025-03-05', total:531.53, liters:22.38, pricePerL:23.75},
+  {id:5, type:'fuel',  isoDate:'2025-03-10', total:338.00, liters:14.2,  pricePerL:23.74},
+  {id:6, type:'fuel',  isoDate:'2025-03-12', total:209.57, liters:8.54,  pricePerL:24.54}
 ];
 
 // ── STATE ──
-let S = {history:[], nextId:100};
-let anrePrice = null;
-let activePeriod = 'weekly';
-let charts = {};
+var S = {history: [], nextId: 100};
+var activePeriod = 'monthly';
+var chartSpent = null;
+var chartLiters = null;
+var chartPrice = null;
 
-function load() {
+// ── STORAGE ──
+function loadState() {
   try {
-    const d = localStorage.getItem('fuel_v6');
-    if (d) { S = JSON.parse(d); recompute(); return; }
-  } catch(e) {}
-  S.history = DEFAULTS.map(h=>({...h,balance:0}));
-  S.nextId = 100;
-  recompute(); save();
-}
-function save() { try{localStorage.setItem('fuel_v6',JSON.stringify(S))}catch(e){} }
-
-function recompute() {
-  S.history.sort(byDate);
-  let bal = 0;
-  S.history.forEach(h => {
-    bal = +(h.type==='topup' ? bal+h.total : bal-h.total).toFixed(2);
-    h.balance = bal;
-  });
-}
-
-// ── ANRE API ──
-const ANRE_IDNO = '1002600015382';
-
-// Robustly parse whatever the API or proxy returns
-function extractGasolinePrice(raw) {
-  // raw can be: string, array, object, or {contents: "..."} from allorigins
-  let data = raw;
-  if (typeof raw === 'string') {
-    try { data = JSON.parse(raw); } catch(e) { return null; }
-  }
-  // allorigins wraps in {contents: "..."}
-  if (data && typeof data.contents === 'string') {
-    try { data = JSON.parse(data.contents); } catch(e) { return null; }
-  }
-  // /public endpoint — array of stations
-  if (Array.isArray(data)) {
-    const entry = data.find(d => String(d.idno) === ANRE_IDNO);
-    if (entry && entry.gasoline) return { price: entry.gasoline, date: entry.date || null };
-    // fallback: first entry with gasoline
-    const any = data.find(d => d.gasoline);
-    if (any) return { price: any.gasoline, date: any.date || null };
-  }
-  // /public/plafon/ endpoint — {date, b_pc, m_pc}
-  if (data && data.b_pc) return { price: data.b_pc, date: data.date || null };
-  // object keyed by idno
-  if (data && data[ANRE_IDNO] && data[ANRE_IDNO].gasoline)
-    return { price: data[ANRE_IDNO].gasoline, date: null };
-  return null;
-}
-
-async function fetchWithTimeout(url, ms=8000) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
-  try {
-    const r = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(timer);
-    return r;
-  } catch(e) { clearTimeout(timer); throw e; }
-}
-
-async function fetchAnre() {
-  const dot  = document.getElementById('anre-dot');
-  const val  = document.getElementById('anre-val');
-  const chip = document.getElementById('anre-chip');
-  dot.className = 'anre-dot loading';
-  val.textContent = 'se încarcă…';
-
-  function applyPrice(price, dateStr) {
-    anrePrice = price;
-    dot.className = 'anre-dot';
-    const today = new Date().toISOString().split('T')[0];
-    val.textContent = fmt(anrePrice) + ' lei/L · ' + (dateStr || today);
-    chip.style.display = 'inline-flex';
-    const pEl = document.getElementById('f-price');
-    if (!pEl.value) { pEl.value = String(anrePrice).replace('.',','); calcFields('price'); }
-  }
-
-  const targets = [
-    'https://api.ecarburanti.anre.md/public',
-    'https://api.ecarburanti.anre.md/public/plafon/',
-  ];
-  const proxies = [
-    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
-    u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
-    u => `https://thingproxy.freeboard.io/fetch/${u}`,
-  ];
-
-  // Try each target directly first, then through each proxy
-  for (const target of targets) {
-    // Direct
-    try {
-      const r = await fetchWithTimeout(target, 5000);
-      if (r.ok) {
-        const result = extractGasolinePrice(await r.json());
-        if (result) { applyPrice(result.price, result.date); return; }
-      }
-    } catch(e) {}
-    // Through proxies
-    for (const mkProxy of proxies) {
-      try {
-        const r = await fetchWithTimeout(mkProxy(target), 6000);
-        if (r.ok) {
-          const text = await r.text();
-          const result = extractGasolinePrice(text);
-          if (result) { applyPrice(result.price, result.date); return; }
-        }
-      } catch(e) {}
+    var d = localStorage.getItem('fuel_v8');
+    if (d) {
+      S = JSON.parse(d);
+      recompute();
+      return;
     }
-  }
-
-  dot.className = 'anre-dot error';
-  val.textContent = 'indisponibil';
-  console.warn('ANRE: all fetch attempts failed');
+  } catch(e) {}
+  S.history = DEFAULTS.map(function(h) {
+    return {id:h.id, type:h.type, isoDate:h.isoDate, total:h.total, liters:h.liters, pricePerL:h.pricePerL, balance:0};
+  });
+  S.nextId = 100;
+  recompute();
+  saveState();
 }
 
-function applyAnrePrice() {
-  if (!anrePrice) return;
-  const pEl = document.getElementById('f-price');
-  pEl.value = String(anrePrice).replace('.',',');
-  calcFields('price');
-  // Switch to fuel tab
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-add').classList.add('active');
-  document.querySelector('.nav-btn').classList.add('active');
-  toast('Preț ANRE aplicat: ' + fmt(anrePrice) + ' lei/L');
+function saveState() {
+  try { localStorage.setItem('fuel_v8', JSON.stringify(S)); } catch(e) {}
+}
+
+// ── RECOMPUTE balances ──
+function recompute() {
+  S.history.sort(function(a, b) { return a.isoDate.localeCompare(b.isoDate); });
+  var bal = 0;
+  for (var i = 0; i < S.history.length; i++) {
+    var h = S.history[i];
+    if (h.type === 'topup') bal = +(bal + h.total).toFixed(2);
+    else bal = +(bal - h.total).toFixed(2);
+    h.balance = bal;
+  }
 }
 
 // ── HELPERS ──
-function byDate(a,b){ return a.isoDate.localeCompare(b.isoDate); }
-function parseNum(s){
-  if(s===null||s===undefined||s==='') return NaN;
-  return parseFloat(String(s).replace(/\s/g,'').replace(',','.'));
+function parseNum(s) {
+  if (s === null || s === undefined || s === '') return NaN;
+  return parseFloat(String(s).replace(/\s/g, '').replace(',', '.'));
 }
-function fmt(n,dec=2){
-  if(n===null||n===undefined||isNaN(n)) return '—';
-  return n.toLocaleString('ro-RO',{minimumFractionDigits:dec,maximumFractionDigits:dec});
-}
-function fmtDate(iso){
-  if(!iso) return '';
-  const [y,m,day]=iso.split('-');
-  const mo=['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
-  return `${+day} ${mo[+m-1]} ${y}`;
-}
-function todayStr(){ return new Date().toISOString().split('T')[0]; }
 
-// ── CALC 3 FIELDS ──
-function calcFields(changed){
-  const tEl=document.getElementById('f-total');
-  const lEl=document.getElementById('f-liters');
-  const pEl=document.getElementById('f-price');
-  const t=parseNum(tEl.value), l=parseNum(lEl.value), p=parseNum(pEl.value);
-  const ok=n=>!isNaN(n)&&n>0;
-  if(changed!=='total'&&ok(l)&&ok(p)&&document.activeElement!==tEl)
-    tEl.value=fmtInput(l*p);
-  else if(changed!=='liters'&&ok(t)&&ok(p)&&document.activeElement!==lEl)
-    lEl.value=fmtInput(t/p);
-  else if(changed!=='price'&&ok(t)&&ok(l)&&document.activeElement!==pEl)
-    pEl.value=fmtInput(t/l);
+function fmt(n, dec) {
+  if (dec === undefined) dec = 2;
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return n.toLocaleString('ro-RO', {minimumFractionDigits: dec, maximumFractionDigits: dec});
 }
-function fmtInput(n){ return n.toFixed(2).replace('.',','); }
+
+function fmtDate(iso) {
+  if (!iso) return '';
+  var parts = iso.split('-');
+  var y = parts[0], m = parseInt(parts[1]), day = parseInt(parts[2]);
+  var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  return day + ' ' + mo[m-1] + ' ' + y;
+}
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function fmtInput(n) {
+  return n.toFixed(2).replace('.', ',');
+}
+
+// ── PERIOD HELPERS ──
+function getMonthKey(iso) { return iso.slice(0, 7); }
+
+function getWeekKey(iso) {
+  var d = new Date(iso + 'T12:00:00');
+  var day = d.getDay() || 7;
+  d.setDate(d.getDate() - day + 1);
+  return d.toISOString().split('T')[0];
+}
+
+function fmtMonth(key) {
+  var parts = key.split('-');
+  var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  return mo[parseInt(parts[1])-1] + ' ' + parts[0].slice(2);
+}
+
+function fmtWeek(iso) {
+  var d = new Date(iso + 'T12:00:00');
+  var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  return d.getDate() + ' ' + mo[d.getMonth()];
+}
+
+// ── SMART CALC (any 2 of 3) ──
+function calcFields(changed) {
+  var tEl = document.getElementById('f-total');
+  var lEl = document.getElementById('f-liters');
+  var pEl = document.getElementById('f-price');
+  var t = parseNum(tEl.value);
+  var l = parseNum(lEl.value);
+  var p = parseNum(pEl.value);
+
+  function ok(n) { return !isNaN(n) && n > 0; }
+
+  if (changed !== 'total' && ok(l) && ok(p) && document.activeElement !== tEl)
+    tEl.value = fmtInput(l * p);
+  else if (changed !== 'liters' && ok(t) && ok(p) && document.activeElement !== lEl)
+    lEl.value = fmtInput(t / p);
+  else if (changed !== 'price' && ok(t) && ok(l) && document.activeElement !== pEl)
+    pEl.value = fmtInput(t / l);
+}
 
 // ── ADD FUEL ──
-function doAddFuel(){
-  const date =document.getElementById('f-date').value||todayStr();
-  const total=parseNum(document.getElementById('f-total').value);
-  const liters=parseNum(document.getElementById('f-liters').value);
-  const price=parseNum(document.getElementById('f-price').value);
-  if(isNaN(total)||total<=0){toast('⚠️ Introdu suma totală');return;}
-  const sorted=[...S.history].sort(byDate);
-  const curBal=sorted.length?sorted[sorted.length-1].balance:0;
-  if(total>curBal){toast('⚠️ Suma depășește soldul!');return;}
-  S.history.push({id:S.nextId++,type:'fuel',isoDate:date,total:+total.toFixed(2),liters:isNaN(liters)?null:+liters.toFixed(2),pricePerL:isNaN(price)?null:+price.toFixed(2),balance:0});
+function doAddFuel() {
+  var date = document.getElementById('f-date').value || todayStr();
+  var total = parseNum(document.getElementById('f-total').value);
+  var liters = parseNum(document.getElementById('f-liters').value);
+  var price = parseNum(document.getElementById('f-price').value);
+
+  if (isNaN(total) || total <= 0) { showToast('Introdu suma totala'); return; }
+
+  var sorted = S.history.slice().sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
+  var curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
+  if (total > curBal) { showToast('Suma depaseste soldul!'); return; }
+
+  S.history.push({
+    id: S.nextId++,
+    type: 'fuel',
+    isoDate: date,
+    total: +total.toFixed(2),
+    liters: isNaN(liters) ? null : +liters.toFixed(2),
+    pricePerL: isNaN(price) ? null : +price.toFixed(2),
+    balance: 0
+  });
+
   recompute();
-  ['f-total','f-liters','f-price'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-date').value=todayStr();
-  save(); render();
-  toast('⛽ −'+fmt(total)+' lei înregistrat');
+  document.getElementById('f-total').value = '';
+  document.getElementById('f-liters').value = '';
+  document.getElementById('f-price').value = '';
+  document.getElementById('f-date').value = todayStr();
+  saveState();
+  render();
+  showToast('−' + fmt(total) + ' lei inregistrat');
 }
 
 // ── TOPUP ──
-function doTopup(){
-  const val=parseNum(document.getElementById('t-amount').value);
-  const date=document.getElementById('t-date').value||todayStr();
-  if(isNaN(val)||val<=0){toast('Introdu o sumă validă');return;}
-  S.history.push({id:S.nextId++,type:'topup',isoDate:date,total:+val.toFixed(2),liters:null,pricePerL:null,balance:0});
+function doTopup() {
+  var val = parseNum(document.getElementById('t-amount').value);
+  var date = document.getElementById('t-date').value || todayStr();
+  if (isNaN(val) || val <= 0) { showToast('Introdu o suma valida'); return; }
+
+  S.history.push({
+    id: S.nextId++,
+    type: 'topup',
+    isoDate: date,
+    total: +val.toFixed(2),
+    liters: null,
+    pricePerL: null,
+    balance: 0
+  });
+
   recompute();
-  document.getElementById('t-amount').value='';
-  document.getElementById('t-date').value=todayStr();
-  save(); render();
-  toast('💳 +'+fmt(val)+' lei adăugat pe card');
+  document.getElementById('t-amount').value = '';
+  document.getElementById('t-date').value = todayStr();
+  saveState();
+  render();
+  showToast('+' + fmt(val) + ' lei adaugat');
 }
 
 // ── DELETE ──
-function deleteEntry(id){
-  const h=S.history.find(x=>x.id===id);
-  if(!h) return;
-  const label=(h.type==='topup'?'💳 +':'⛽ −')+fmt(h.total)+' lei — '+fmtDate(h.isoDate);
-  if(!confirm('Sigur ștergi?\n\n'+label)) return;
-  S.history=S.history.filter(x=>x.id!==id);
-  recompute(); save(); render();
-  toast('Înregistrare ștearsă');
+function deleteEntry(id) {
+  var h = null;
+  for (var i = 0; i < S.history.length; i++) {
+    if (S.history[i].id === id) { h = S.history[i]; break; }
+  }
+  if (!h) return;
+  var label = (h.type === 'topup' ? '+' : '-') + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate);
+  if (!confirm('Sigur stergi?\n\n' + label)) return;
+  S.history = S.history.filter(function(x) { return x.id !== id; });
+  recompute();
+  saveState();
+  render();
+  showToast('Inregistrare stearsa');
 }
-function clearAll(){
-  if(!confirm('Ștergi TOT istoricul complet?\n\nAceastă acțiune nu poate fi anulată.')) return;
-  S.history=[]; save(); render(); toast('Istoric șters complet');
+
+function clearAll() {
+  if (!confirm('Stergi TOT istoricul?\n\nAcesta actiune nu poate fi anulata.')) return;
+  S.history = [];
+  saveState();
+  render();
+  showToast('Istoric sters');
 }
 
-// ── RENDER ──
-function render(){
-  const sorted=[...S.history].sort(byDate);
-  const curBal=sorted.length?sorted[sorted.length-1].balance:0;
-  const firstTopup=sorted.find(h=>h.type==='topup');
-  const initBal=firstTopup?firstTopup.total:null;
-  const spent=sorted.filter(h=>h.type==='fuel').reduce((a,h)=>a+h.total,0);
-  const litri=sorted.filter(h=>h.type==='fuel'&&h.liters).reduce((a,h)=>a+h.liters,0);
+// ── RENDER HERO ──
+function render() {
+  var sorted = S.history.slice().sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
+  var curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
 
-  document.getElementById('hero-num').textContent=fmt(curBal);
-  const pct=initBal?curBal/initBal*100:100;
-  const heroEl=document.getElementById('hero-bal');
-  heroEl.style.color=pct>50?'var(--fuel)':pct>25?'var(--amber)':'var(--red)';
-  heroEl.style.textShadow=pct>50?'0 0 40px var(--fuel-glow)':pct>25?'0 0 40px rgba(245,158,11,.25)':'0 0 40px rgba(239,68,68,.25)';
+  var firstTopup = null;
+  for (var i = 0; i < sorted.length; i++) {
+    if (sorted[i].type === 'topup') { firstTopup = sorted[i]; break; }
+  }
+  var initBal = firstTopup ? firstTopup.total : null;
 
-  document.getElementById('stat-init').textContent=initBal!==null?fmt(initBal)+' lei':'—';
-  document.getElementById('stat-spent').textContent=fmt(spent)+' lei';
-  document.getElementById('stat-litri').textContent=fmt(litri,1)+' L';
+  var spent = 0, litri = 0;
+  for (var j = 0; j < sorted.length; j++) {
+    if (sorted[j].type === 'fuel') {
+      spent += sorted[j].total;
+      if (sorted[j].liters) litri += sorted[j].liters;
+    }
+  }
+  spent = +spent.toFixed(2);
+  litri = +litri.toFixed(2);
 
-  const bar=document.getElementById('prog-fill');
-  bar.style.width=Math.max(0,Math.min(100,pct))+'%';
-  bar.style.background=pct>50?'linear-gradient(90deg,var(--fuel),#00e5c0)':pct>25?'linear-gradient(90deg,var(--amber),#fbbf24)':'linear-gradient(90deg,var(--red),#f87171)';
+  document.getElementById('hero-num').textContent = fmt(curBal);
+
+  var pct = initBal ? curBal / initBal * 100 : 100;
+  var heroEl = document.getElementById('hero-bal');
+  heroEl.style.color = pct > 50 ? 'var(--fuel)' : pct > 25 ? 'var(--amber)' : 'var(--red)';
+
+  document.getElementById('stat-init').textContent = initBal !== null ? fmt(initBal) + ' lei' : '—';
+  document.getElementById('stat-spent').textContent = fmt(spent) + ' lei';
+  document.getElementById('stat-litri').textContent = fmt(litri, 1) + ' L';
+
+  var bar = document.getElementById('prog-fill');
+  var p2 = Math.max(0, Math.min(100, pct));
+  bar.style.width = p2 + '%';
+  bar.style.background = pct > 50
+    ? 'linear-gradient(90deg, var(--fuel), #00e5c0)'
+    : pct > 25
+    ? 'linear-gradient(90deg, var(--amber), #fbbf24)'
+    : 'linear-gradient(90deg, var(--red), #f87171)';
 
   renderHistory(sorted);
-  // Re-render charts if visible
-  if(document.getElementById('tab-chart').classList.contains('active')) renderCharts();
+
+  if (document.getElementById('tab-chart').classList.contains('active')) {
+    renderCharts();
+  }
 }
 
-function renderHistory(sorted){
-  const el=document.getElementById('history-list');
-  if(!sorted.length){
-    el.innerHTML='<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzacție.<br>Adaugă prima alimentare!</div>';
+// ── RENDER HISTORY ──
+function renderHistory(sorted) {
+  var el = document.getElementById('history-list');
+  if (!sorted.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzactie.<br>Adauga prima alimentare!</div>';
     return;
   }
-  // Newest first in history list (reverse of chronological)
-  el.innerHTML=[...sorted].reverse().map(h=>{
-    const isTopup=h.type==='topup';
-    const costStr=isTopup?'+'+fmt(h.total)+' lei':'−'+fmt(h.total)+' lei';
-    const icon=isTopup?'💳':'⛽';
-    const label=isTopup?'Încărcare card':'Alimentare';
-    let pills='';
-    if(!isTopup){
-      if(h.liters) pills+=`<div class="pill"><strong>${fmt(h.liters,2)} L</strong></div>`;
-      if(h.pricePerL) pills+=`<div class="pill">${fmt(h.pricePerL,2)} lei/L</div>`;
+
+  var reversed = sorted.slice().reverse();
+  var html = '';
+  for (var i = 0; i < reversed.length; i++) {
+    var h = reversed[i];
+    var isTopup = h.type === 'topup';
+    var costStr = isTopup ? '+' + fmt(h.total) + ' lei' : '−' + fmt(h.total) + ' lei';
+    var icon = isTopup ? '💳' : '⛽';
+    var label = isTopup ? 'Incarcare card' : 'Alimentare';
+    var costClass = isTopup ? 'plus' : 'minus';
+
+    var pills = '';
+    if (!isTopup) {
+      if (h.liters) pills += '<div class="pill"><strong>' + fmt(h.liters, 2) + ' L</strong></div>';
+      if (h.pricePerL) pills += '<div class="pill">' + fmt(h.pricePerL, 2) + ' lei/L</div>';
     }
-    pills+=`<div class="pill">Sold: <strong>${fmt(h.balance)} lei</strong></div>`;
-    return `<div class="hist-item${isTopup?' topup':''}">
-      <div class="hist-top">
-        <div>
-          <div class="hist-type">${icon} ${label}</div>
-          <div class="hist-date">${fmtDate(h.isoDate)}</div>
-        </div>
-        <div><div class="hist-cost ${isTopup?'plus':'minus'}">${costStr}</div></div>
-      </div>
-      <div class="hist-bottom">
-        <div class="hist-pills">${pills}</div>
-        <button class="del-btn" onclick="deleteEntry(${h.id})">✕ Șterge</button>
-      </div>
-    </div>`;
-  }).join('');
+    pills += '<div class="pill">Sold: <strong>' + fmt(h.balance) + ' lei</strong></div>';
+
+    html += '<div class="hist-item' + (isTopup ? ' topup' : '') + '">';
+    html += '<div class="hist-top">';
+    html += '<div><div class="hist-type">' + icon + ' ' + label + '</div>';
+    html += '<div class="hist-date">' + fmtDate(h.isoDate) + '</div></div>';
+    html += '<div><div class="hist-cost ' + costClass + '">' + costStr + '</div></div>';
+    html += '</div>';
+    html += '<div class="hist-bottom">';
+    html += '<div class="hist-pills">' + pills + '</div>';
+    html += '<button class="del-btn" onclick="deleteEntry(' + h.id + ')">✕ Sterge</button>';
+    html += '</div></div>';
+  }
+  el.innerHTML = html;
 }
 
 // ── CHARTS ──
-function setPeriod(p, btn){
-  activePeriod=p;
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+function buildPeriodData(fuels) {
+  if (activePeriod === 'fill') {
+    var labels = [], spent = [], liters = [];
+    for (var i = 0; i < fuels.length; i++) {
+      labels.push(fmtDate(fuels[i].isoDate));
+      spent.push(fuels[i].total);
+      liters.push(fuels[i].liters || 0);
+    }
+    return {labels: labels, spent: spent, liters: liters};
+  }
+
+  var getKey = activePeriod === 'monthly' ? getMonthKey : getWeekKey;
+  var fmtKey = activePeriod === 'monthly' ? fmtMonth : fmtWeek;
+  var map = {};
+  var keyOrder = [];
+
+  for (var j = 0; j < fuels.length; j++) {
+    var h = fuels[j];
+    var k = getKey(h.isoDate);
+    if (!map[k]) { map[k] = {label: fmtKey(k), spent: 0, liters: 0}; keyOrder.push(k); }
+    map[k].spent = +(map[k].spent + h.total).toFixed(2);
+    if (h.liters) map[k].liters = +(map[k].liters + h.liters).toFixed(2);
+  }
+
+  keyOrder.sort();
+  var out = {labels: [], spent: [], liters: []};
+  for (var ki = 0; ki < keyOrder.length; ki++) {
+    var v = map[keyOrder[ki]];
+    out.labels.push(v.label);
+    out.spent.push(v.spent);
+    out.liters.push(v.liters);
+  }
+  return out;
+}
+
+var BASE_OPTS = {
+  responsive: true,
+  plugins: {
+    legend: {display: false},
+    tooltip: {
+      backgroundColor: '#161d1f',
+      borderColor: '#1e2a2d',
+      borderWidth: 1,
+      titleColor: '#5a7278',
+      bodyColor: '#e8f0f2'
+    }
+  },
+  scales: {
+    x: {
+      grid: {color: '#1e2a2d'},
+      ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, maxRotation: 40}
+    },
+    y: {
+      grid: {color: '#1e2a2d'},
+      ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}}
+    }
+  }
+};
+
+function makeOpts(tooltipCb, yTickCb) {
+  return {
+    responsive: true,
+    plugins: {
+      legend: {display: false},
+      tooltip: {
+        backgroundColor: '#161d1f',
+        borderColor: '#1e2a2d',
+        borderWidth: 1,
+        titleColor: '#5a7278',
+        bodyColor: '#e8f0f2',
+        callbacks: {label: tooltipCb}
+      }
+    },
+    scales: {
+      x: {
+        grid: {color: '#1e2a2d'},
+        ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, maxRotation: 40}
+      },
+      y: {
+        grid: {color: '#1e2a2d'},
+        ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, callback: yTickCb}
+      }
+    }
+  };
+}
+
+function renderCharts() {
+  var fuels = [];
+  for (var i = 0; i < S.history.length; i++) {
+    if (S.history[i].type === 'fuel') fuels.push(S.history[i]);
+  }
+  fuels.sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
+
+  // Update titles
+  var periodLabel = activePeriod === 'monthly' ? 'lunare' : activePeriod === 'weekly' ? 'saptamanale' : 'per alimentare';
+  document.getElementById('title-spent').textContent = 'Cheltuieli ' + periodLabel + ' (lei)';
+  document.getElementById('title-liters').textContent = 'Litri ' + periodLabel;
+
+  if (!fuels.length) {
+    if (chartSpent)  { chartSpent.destroy();  chartSpent  = null; }
+    if (chartLiters) { chartLiters.destroy(); chartLiters = null; }
+    if (chartPrice)  { chartPrice.destroy();  chartPrice  = null; }
+    return;
+  }
+
+  var pd = buildPeriodData(fuels);
+
+  // Chart 1 — Cheltuieli
+  if (chartSpent) { chartSpent.destroy(); chartSpent = null; }
+  chartSpent = new Chart(document.getElementById('canvas-spent'), {
+    type: 'bar',
+    data: {
+      labels: pd.labels,
+      datasets: [{
+        data: pd.spent,
+        backgroundColor: 'rgba(239,68,68,0.6)',
+        borderColor: '#ef4444',
+        borderWidth: 1,
+        borderRadius: 6
+      }]
+    },
+    options: makeOpts(
+      function(ctx) { return ' ' + fmt(ctx.parsed.y) + ' lei'; },
+      function(v) { return fmt(v, 0) + ' lei'; }
+    )
+  });
+
+  // Chart 2 — Litri
+  if (chartLiters) { chartLiters.destroy(); chartLiters = null; }
+  chartLiters = new Chart(document.getElementById('canvas-liters'), {
+    type: 'bar',
+    data: {
+      labels: pd.labels,
+      datasets: [{
+        data: pd.liters,
+        backgroundColor: 'rgba(0,196,160,0.55)',
+        borderColor: '#00c4a0',
+        borderWidth: 1,
+        borderRadius: 6
+      }]
+    },
+    options: makeOpts(
+      function(ctx) { return ' ' + fmt(ctx.parsed.y, 2) + ' L'; },
+      function(v) { return v + ' L'; }
+    )
+  });
+
+  // Chart 3 — Pret/L (always per alimentare)
+  if (chartPrice) { chartPrice.destroy(); chartPrice = null; }
+  var withPrice = fuels.filter(function(h) { return h.pricePerL; });
+  if (!withPrice.length) {
+    document.getElementById('wrap-price').style.display = 'none';
+    return;
+  }
+  document.getElementById('wrap-price').style.display = 'block';
+
+  var prices = withPrice.map(function(h) { return h.pricePerL; });
+  var ptColors = prices.map(function(p, i) {
+    if (i === 0) return '#a78bfa';
+    return p > prices[i-1] ? '#ef4444' : '#22c55e';
+  });
+
+  var minP = Math.min.apply(null, prices);
+  var maxP = Math.max.apply(null, prices);
+
+  var priceOpts = makeOpts(
+    function(ctx) { return ' ' + fmt(ctx.parsed.y) + ' lei/L'; },
+    function(v) { return v + ' lei'; }
+  );
+  priceOpts.scales.y.suggestedMin = minP - 0.3;
+  priceOpts.scales.y.suggestedMax = maxP + 0.3;
+
+  chartPrice = new Chart(document.getElementById('canvas-price'), {
+    type: 'line',
+    data: {
+      labels: withPrice.map(function(h) { return fmtDate(h.isoDate); }),
+      datasets: [{
+        data: prices,
+        borderColor: '#a78bfa',
+        backgroundColor: 'rgba(167,139,250,0.08)',
+        borderWidth: 2,
+        pointBackgroundColor: ptColors,
+        pointBorderColor: ptColors,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: priceOpts
+  });
+}
+
+// ── PERIOD TOGGLE ──
+function setPeriod(p, btn) {
+  activePeriod = p;
+  var btns = document.querySelectorAll('.period-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
   btn.classList.add('active');
   renderCharts();
 }
 
-function destroyChart(key){
-  if(charts[key]){charts[key].destroy();delete charts[key];}
-}
-
-function renderCharts(){
-  const sorted=[...S.history].sort(byDate);
-  const fuels=sorted.filter(h=>h.type==='fuel');
-
-  // ── CHART 1: Cheltuieli vs Încărcări per perioadă ──
-  renderPeriodChart(sorted);
-
-  // ── CHART 2: Per alimentare — cheltuieli & incarcari combinate ──
-  renderPerFillChart(sorted);
-
-  // ── CHART 3: Preț benzina evoluție ──
-  renderPriceChart(fuels);
-}
-
-function getWeekKey(iso){
-  const d=new Date(iso);
-  // Get Monday of that week
-  const day=d.getDay()||7;
-  d.setDate(d.getDate()-day+1);
-  return d.toISOString().split('T')[0];
-}
-function getMonthKey(iso){ return iso.slice(0,7); }
-function fmtWeek(iso){
-  const d=new Date(iso);
-  const d2=new Date(d); d2.setDate(d2.getDate()+6);
-  return `${d.getDate()} ${['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'][d.getMonth()]}`;
-}
-function fmtMonth(key){
-  const [y,m]=key.split('-');
-  return ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'][+m-1]+' '+y.slice(2);
-}
-
-function renderPeriodChart(sorted){
-  destroyChart('period');
-  const getKey = activePeriod==='weekly' ? getWeekKey : getMonthKey;
-  const fmtKey = activePeriod==='weekly' ? fmtWeek : fmtMonth;
-
-  const map=new Map();
-  sorted.filter(h=>h.type==='fuel').forEach(h=>{
-    const k=getKey(h.isoDate);
-    if(!map.has(k)) map.set(k,{label:fmtKey(k),spent:0,liters:0});
-    const v=map.get(k);
-    v.spent=+(v.spent+h.total).toFixed(2);
-    if(h.liters) v.liters=+(v.liters+h.liters).toFixed(2);
-  });
-
-  const keys=[...map.keys()].sort();
-  const labels=keys.map(k=>map.get(k).label);
-  const spent=keys.map(k=>map.get(k).spent);
-  const liters=keys.map(k=>map.get(k).liters);
-
-  charts['period']=new Chart(document.getElementById('chart-period'),{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        {label:'Cheltuieli (lei)',data:spent,backgroundColor:'rgba(239,68,68,.65)',borderColor:'#ef4444',borderWidth:1,borderRadius:5,yAxisID:'y'},
-        {label:'Litri',data:liters,backgroundColor:'rgba(0,196,160,.45)',borderColor:'#00c4a0',borderWidth:1,borderRadius:5,yAxisID:'y2'},
-      ]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{labels:{color:'#5a7278',font:{size:10,family:'Inconsolata'},boxWidth:12}},
-        tooltip:{backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,titleColor:'#5a7278',bodyColor:'#e8f0f2',
-          callbacks:{label:ctx=>ctx.datasetIndex===0?' '+fmt(ctx.parsed.y)+' lei':' '+fmt(ctx.parsed.y,2)+' L'}}
-      },
-      scales:{
-        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45}},
-        y:{grid:{color:'#1e2a2d'},position:'left',ticks:{color:'#ef4444',font:{size:9,family:'Inconsolata'},callback:v=>fmt(v,0)}},
-        y2:{grid:{display:false},position:'right',ticks:{color:'#00c4a0',font:{size:9,family:'Inconsolata'},callback:v=>v+'L'}}
-      }
-    }
-  });
-}
-
-function renderPerFillChart(sorted){
-  destroyChart('perfill');
-  const fuels=sorted.filter(h=>h.type==='fuel');
-  if(!fuels.length){destroyChart('perfill');return;}
-  const labels=fuels.map(h=>fmtDate(h.isoDate));
-  const spendData=fuels.map(h=>h.total);
-  const literData=fuels.map(h=>h.liters||0);
-
-  charts['perfill']=new Chart(document.getElementById('chart-per-fill'),{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[
-        {label:'Cheltuieli (lei)',data:spendData,backgroundColor:'rgba(239,68,68,.65)',borderColor:'#ef4444',borderWidth:1,borderRadius:5,yAxisID:'y'},
-        {label:'Litri',data:literData,backgroundColor:'rgba(0,196,160,.45)',borderColor:'#00c4a0',borderWidth:1,borderRadius:5,yAxisID:'y2'},
-      ]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{labels:{color:'#5a7278',font:{size:10,family:'Inconsolata'},boxWidth:12}},
-        tooltip:{backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,titleColor:'#5a7278',bodyColor:'#e8f0f2',
-          callbacks:{label:ctx=>ctx.datasetIndex===0?' '+fmt(ctx.parsed.y)+' lei':' '+fmt(ctx.parsed.y,2)+' L'}}
-      },
-      scales:{
-        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45}},
-        y:{grid:{color:'#1e2a2d'},position:'left',ticks:{color:'#ef4444',font:{size:9,family:'Inconsolata'},callback:v=>fmt(v,0)}},
-        y2:{grid:{display:false},position:'right',ticks:{color:'#00c4a0',font:{size:9,family:'Inconsolata'},callback:v=>v+'L'}}
-      }
-    }
-  });
-}
-
-function renderPriceChart(fuels){
-  destroyChart('price');
-  const withPrice=fuels.filter(h=>h.pricePerL);
-  if(!withPrice.length){
-    document.getElementById('chart-price').parentElement.style.display='none';
-    return;
-  }
-  document.getElementById('chart-price').parentElement.style.display='block';
-  const labels=withPrice.map(h=>fmtDate(h.isoDate));
-  const prices=withPrice.map(h=>h.pricePerL);
-
-  // Color points: green if lower than prev, red if higher
-  const pointColors=prices.map((p,i)=>i===0?'#5a7278':p>prices[i-1]?'#ef4444':'#22c55e');
-
-  charts['price']=new Chart(document.getElementById('chart-price'),{
-    type:'line',
-    data:{
-      labels,
-      datasets:[{
-        label:'Lei/L',data:prices,
-        borderColor:'#a78bfa',
-        backgroundColor:'rgba(167,139,250,.08)',
-        borderWidth:2,
-        pointBackgroundColor:pointColors,
-        pointBorderColor:pointColors,
-        pointRadius:6,
-        pointHoverRadius:8,
-        fill:true,tension:0.3
-      }]
-    },
-    options:{
-      responsive:true,
-      plugins:{
-        legend:{display:false},
-        tooltip:{
-          backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,
-          titleColor:'#5a7278',bodyColor:'#e8f0f2',
-          callbacks:{label:ctx=>' '+fmt(ctx.parsed.y)+' lei/L'}
-        }
-      },
-      scales:{
-        x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:45}},
-        y:{
-          grid:{color:'#1e2a2d'},
-          ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},callback:v=>v+' lei'},
-          suggestedMin: Math.min(...prices)-0.5,
-          suggestedMax: Math.max(...prices)+0.5
-        }
-      }
-    }
-  });
-}
-
 // ── TABS ──
-function switchTab(name,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
+function switchTab(name, btn) {
+  var sections = document.querySelectorAll('.section');
+  for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
+  var navBtns = document.querySelectorAll('.nav-btn');
+  for (var j = 0; j < navBtns.length; j++) navBtns[j].classList.remove('active');
+  document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  if(name==='chart') renderCharts();
+  if (name === 'chart') renderCharts();
 }
 
 // ── TOAST ──
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2600);
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2600);
 }
 
 // ── INIT ──
-load();
-document.getElementById('f-date').value=todayStr();
-document.getElementById('t-date').value=todayStr();
-if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.navigator.standalone)
-  document.getElementById('ios-hint').style.display='block';
+loadState();
+document.getElementById('f-date').value = todayStr();
+document.getElementById('t-date').value = todayStr();
+if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone) {
+  document.getElementById('ios-hint').style.display = 'block';
+}
 render();
-fetchAnre();
 </script>
 </body>
 </html>
