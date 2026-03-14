@@ -22,7 +22,7 @@
   --amber: #f59e0b;
   --amber-dim: rgba(245,158,11,0.12);
   --red: #ef4444;
-  --red-dim: rgba(239,68,68,0.12);
+  --green: #22c55e;
   --text: #e8f0f2;
   --muted: #5a7278;
   --muted2: #3a5258;
@@ -32,317 +32,136 @@
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-  min-height: 100dvh;
+  background: var(--bg); color: var(--text);
+  font-family: 'Syne', sans-serif; min-height: 100dvh;
   padding-bottom: calc(env(safe-area-inset-bottom,0px) + 80px);
 }
 
-/* ── TOP CARD ── */
+/* HERO */
 .hero {
   background: linear-gradient(135deg, #0d1f1c 0%, #0a1a22 100%);
   border-bottom: 1px solid var(--border);
-  padding: 52px 24px 28px;
-  position: relative;
-  overflow: hidden;
+  padding: 48px 20px 20px; position: relative; overflow: hidden;
 }
 .hero::before {
-  content:'';
-  position:absolute; inset:0;
-  background: radial-gradient(ellipse 60% 80% at 90% -10%, var(--fuel-glow) 0%, transparent 60%);
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 60% 80% at 90% -10%, var(--fuel-glow), transparent 60%);
 }
 .hero-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px; position: relative;
 }
 .hero-balance {
-  font-size: 3.4rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--fuel);
-  text-shadow: 0 0 40px var(--fuel-glow);
-  font-variant-numeric: tabular-nums;
+  font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+  color: var(--fuel); text-shadow: 0 0 40px var(--fuel-glow);
+  font-variant-numeric: tabular-nums; position: relative;
+  font-size: clamp(1.9rem, 9.5vw, 3.2rem);
 }
-.hero-balance span { font-size: 1.4rem; font-weight: 400; color: var(--muted); margin-left: 4px; }
+.hero-balance .lei { font-size: 0.38em; font-weight: 400; color: var(--muted); margin-left: 5px; }
 
-.hero-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  margin-top: 20px;
-}
-.hstat {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-}
-.hstat-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-.hstat-val { font-family: 'Inconsolata', monospace; font-size: 1rem; font-weight: 600; color: var(--text); }
-.hstat-val.green { color: var(--fuel); }
-.hstat-val.amber { color: var(--amber); }
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 16px; position: relative; }
+.hstat { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
+.hstat-label { font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.hstat-val { font-family: 'Inconsolata', monospace; font-size: 0.86rem; font-weight: 600; color: var(--text); }
+.hstat-val.c-fuel { color: var(--fuel); }
+.hstat-val.c-amber { color: var(--amber); }
 
-/* ── PROGRESS BAR ── */
-.prog-wrap {
-  height: 3px;
-  background: var(--border);
-  position: relative;
-}
-.prog-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--fuel), #00e5c0);
-  transition: width 0.7s cubic-bezier(.16,1,.3,1);
-  box-shadow: 0 0 8px var(--fuel);
-}
+/* PROGRESS */
+.prog-wrap { height: 3px; background: var(--border); }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--fuel), #00e5c0); transition: width 0.7s cubic-bezier(.16,1,.3,1); box-shadow: 0 0 8px var(--fuel); }
 
-/* ── NAV TABS ── */
-.nav {
-  display: flex;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+/* NAV */
+.nav { display: flex; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
 .nav-btn {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 14px 8px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
+  flex: 1; border: none; background: transparent; color: var(--muted);
+  font-family: 'Syne', sans-serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; padding: 13px 4px;
+  cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
 }
-.nav-btn.active {
-  color: var(--fuel);
-  border-bottom-color: var(--fuel);
-}
+.nav-btn.active { color: var(--fuel); border-bottom-color: var(--fuel); }
 
-/* ── SECTIONS ── */
-.section { padding: 20px; display: none; }
+/* SECTIONS */
+.section { padding: 18px; display: none; }
 .section.active { display: block; }
+.section-title { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 
-/* ── FORM ── */
-.form-group { margin-bottom: 14px; }
-.form-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-  display: block;
-}
+/* FORMS */
+.form-group { margin-bottom: 13px; }
+.form-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
 .form-input {
-  width: 100%;
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: 'Inconsolata', monospace;
-  font-size: 1.05rem;
-  font-weight: 500;
-  padding: 13px 14px;
-  outline: none;
-  -webkit-appearance: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%; background: var(--card); border: 1px solid var(--border2);
+  border-radius: 10px; color: var(--text); font-family: 'Inconsolata', monospace;
+  font-size: 1.05rem; font-weight: 500; padding: 12px 14px; outline: none;
+  -webkit-appearance: none; transition: border-color 0.2s, box-shadow 0.2s;
 }
-.form-input:focus {
-  border-color: var(--fuel);
-  box-shadow: 0 0 0 3px var(--fuel-dim);
-}
+.form-input:focus { border-color: var(--fuel); box-shadow: 0 0 0 3px var(--fuel-dim); }
 .form-input::placeholder { color: var(--muted2); }
-
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-/* Calculated display */
-.calc-box {
-  background: var(--fuel-dim);
-  border: 1px solid rgba(0,196,160,0.2);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.calc-box-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fuel); opacity: 0.7; }
-.calc-box-val { font-family: 'Inconsolata', monospace; font-size: 1.3rem; font-weight: 600; color: var(--fuel); }
+.form-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.form-hint { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 14px; }
 
 .btn {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 15px;
-  cursor: pointer;
-  transition: all 0.15s;
+  width: 100%; border: none; border-radius: 12px; font-family: 'Syne', sans-serif;
+  font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 14px; cursor: pointer; transition: all 0.15s;
 }
 .btn:active { transform: scale(0.97); }
 .btn-fuel { background: var(--fuel); color: #0a0e0f; }
-.btn-set { background: var(--amber); color: #0a0e0f; margin-top: 10px; }
+.btn-topup { background: var(--green); color: #0a0e0f; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 24px 0;
-}
-
-/* ── HISTORY ── */
+/* HISTORY */
+.hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .hist-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 16px;
-  margin-bottom: 10px;
-  animation: fadeUp 0.3s cubic-bezier(.16,1,.3,1);
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px; margin-bottom: 9px;
+  animation: fadeUp 0.28s cubic-bezier(.16,1,.3,1);
 }
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(8px); }
-  to { opacity:1; transform:translateY(0); }
-}
-.hist-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-}
-.hist-station {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text);
-}
-.hist-date {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-family: 'Inconsolata', monospace;
-  margin-top: 2px;
-}
-.hist-cost {
-  font-family: 'Inconsolata', monospace;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--red);
-  text-align: right;
-}
-.hist-balance-after {
-  font-size: 0.68rem;
-  color: var(--muted);
-  text-align: right;
-  margin-top: 1px;
-}
-.hist-pills {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.pill {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.78rem;
-  color: var(--muted);
-}
+.hist-item.topup { border-color: rgba(34,197,94,0.25); }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.hist-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.hist-type { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+.hist-date { font-size: 0.7rem; color: var(--muted); font-family: 'Inconsolata', monospace; margin-top: 1px; }
+.hist-cost { font-family: 'Inconsolata', monospace; font-size: 1.1rem; font-weight: 600; text-align: right; }
+.hist-cost.minus { color: var(--red); }
+.hist-cost.plus { color: var(--green); }
+
+.hist-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.hist-pills { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.pill { background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-family: 'Inconsolata', monospace; font-size: 0.73rem; color: var(--muted); white-space: nowrap; }
 .pill strong { color: var(--fuel); font-weight: 600; }
 
-.empty {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.85rem;
-  padding: 48px 20px;
-  line-height: 1.8;
+.del-btn {
+  background: none; border: 1px solid var(--border2); color: var(--muted);
+  font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 600;
+  padding: 5px 10px; border-radius: 7px; cursor: pointer;
+  transition: all 0.2s; flex-shrink: 0; white-space: nowrap;
 }
+.del-btn:hover, .del-btn:active { border-color: var(--red); color: var(--red); }
+.del-btn-sm { background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'Syne', sans-serif; font-size: 0.7rem; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
+.del-btn-sm:hover { border-color: var(--red); color: var(--red); }
+
+.empty { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 48px 20px; line-height: 1.8; }
 .empty-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.4; }
 
-.hist-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-.hist-header-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.clear-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  padding: 5px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.clear-btn:hover { border-color: var(--red); color: var(--red); }
-
-/* ── CHART ── */
-.chart-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.chart-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
+/* CHART */
+.chart-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; margin-bottom: 14px; }
+.chart-title { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 canvas { width: 100% !important; }
 
-/* ── TOAST ── */
+/* TOAST */
 .toast {
-  position: fixed;
-  bottom: calc(env(safe-area-inset-bottom,0px) + 24px);
-  left: 50%; transform: translateX(-50%) translateY(60px);
-  background: var(--card2);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  padding: 11px 22px;
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: transform 0.35s cubic-bezier(.16,1,.3,1);
-  z-index: 999;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  letter-spacing: 0.02em;
+  position: fixed; bottom: calc(env(safe-area-inset-bottom,0px) + 20px);
+  left: 50%; transform: translateX(-50%) translateY(70px);
+  background: var(--card2); border: 1px solid var(--border2); color: var(--text);
+  padding: 10px 22px; border-radius: 100px; font-size: 0.82rem; font-weight: 600;
+  white-space: nowrap; transition: transform 0.35s cubic-bezier(.16,1,.3,1);
+  z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.5); letter-spacing: 0.02em;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ── iOS install hint ── */
-.install-hint {
-  background: var(--amber-dim);
-  border: 1px solid rgba(245,158,11,0.2);
-  border-radius: 10px;
-  padding: 13px 16px;
-  margin-bottom: 16px;
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.install-hint strong { color: var(--amber); display:block; margin-bottom:3px; font-size:0.8rem; }
+.install-hint { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+.install-hint strong { color: var(--amber); display:block; margin-bottom:2px; }
 </style>
 </head>
 <body>
@@ -350,15 +169,17 @@ canvas { width: 100% !important; }
 <!-- HERO -->
 <div class="hero">
   <div class="hero-label">Sold disponibil</div>
-  <div class="hero-balance" id="hero-bal">0<span>lei</span></div>
+  <div class="hero-balance" id="hero-bal">
+    <span id="hero-num">0,00</span><span class="lei">lei</span>
+  </div>
   <div class="hero-stats">
     <div class="hstat">
       <div class="hstat-label">Inițial</div>
-      <div class="hstat-val green" id="stat-init">—</div>
+      <div class="hstat-val c-fuel" id="stat-init">—</div>
     </div>
     <div class="hstat">
       <div class="hstat-label">Cheltuit</div>
-      <div class="hstat-val amber" id="stat-spent">0 lei</div>
+      <div class="hstat-val c-amber" id="stat-spent">0 lei</div>
     </div>
     <div class="hstat">
       <div class="hstat-label">Litri total</div>
@@ -370,61 +191,62 @@ canvas { width: 100% !important; }
 
 <!-- NAV -->
 <div class="nav">
-  <button class="nav-btn active" onclick="switchTab('add')">⛽ Alimentare</button>
-  <button class="nav-btn" onclick="switchTab('history')">📋 Istoric</button>
-  <button class="nav-btn" onclick="switchTab('chart')">📈 Grafic</button>
-  <button class="nav-btn" onclick="switchTab('settings')">⚙️ Card</button>
+  <button class="nav-btn active" onclick="switchTab('add',this)">⛽ Alimentare</button>
+  <button class="nav-btn" onclick="switchTab('topup',this)">💳 + Sold</button>
+  <button class="nav-btn" onclick="switchTab('history',this)">📋 Istoric</button>
+  <button class="nav-btn" onclick="switchTab('chart',this)">📈 Grafic</button>
 </div>
 
-<!-- TAB: ADD -->
+<!-- TAB: FUEL -->
 <div class="section active" id="tab-add">
-
-  <div id="install-hint-wrap" style="display:none">
-    <div class="install-hint">
-      <strong>📲 Salvează pe iPhone</strong>
-      Safari → buton Distribuie → „Adaugă la ecranul principal"
-    </div>
+  <div id="ios-hint" style="display:none">
+    <div class="install-hint"><strong>📲 Salvează pe iPhone</strong>Safari → Distribuie → „Adaugă la ecranul principal"</div>
   </div>
-
-  <div class="form-row">
-    <div class="form-group">
-      <label class="form-label">Data</label>
-      <input class="form-input" id="f-date" type="date">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Preț/litru (lei)</label>
-      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="ex: 6,89" oninput="calcTotal()">
-    </div>
-  </div>
+  <div class="section-title">Înregistrează alimentare</div>
 
   <div class="form-group">
-    <label class="form-label">Litri alimentați</label>
-    <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="ex: 45,50" oninput="calcTotal()">
+    <label class="form-label">Data</label>
+    <input class="form-input" id="f-date" type="date">
   </div>
 
-  <div class="calc-box" id="calc-box" style="display:none">
+  <div class="form-row3">
     <div>
-      <div class="calc-box-label">Total de plată</div>
+      <label class="form-label">Total (lei)</label>
+      <input class="form-input" id="f-total" type="text" inputmode="decimal" placeholder="439,66" oninput="calcFields('total')">
     </div>
-    <div class="calc-box-val" id="calc-total">0,00 lei</div>
+    <div>
+      <label class="form-label">Litri</label>
+      <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" oninput="calcFields('liters')">
+    </div>
+    <div>
+      <label class="form-label">Lei / L</label>
+      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="23,14" oninput="calcFields('price')">
+    </div>
   </div>
+  <div class="form-hint">Completează oricare 2 câmpuri — al 3-lea se calculează automat</div>
 
-  <button class="btn btn-fuel" onclick="doAdd()">✓ Înregistrează alimentarea</button>
+  <button class="btn btn-fuel" onclick="doAddFuel()">✓ Înregistrează alimentarea</button>
+</div>
 
-  <hr class="divider">
-
+<!-- TAB: TOPUP -->
+<div class="section" id="tab-topup">
+  <div class="section-title">Adaugă sold pe card</div>
   <div class="form-group">
-    <label class="form-label">Sau adaugă o sumă manual (lei)</label>
-    <input class="form-input" id="f-manual" type="text" inputmode="decimal" placeholder="ex: 439,66">
+    <label class="form-label">Sumă (lei)</label>
+    <input class="form-input" id="t-amount" type="text" inputmode="decimal" placeholder="ex: 5000,00">
   </div>
-  <button class="btn btn-fuel" onclick="doManual()">✓ Adaugă alimentare (sumă directă)</button>
+  <div class="form-group">
+    <label class="form-label">Data</label>
+    <input class="form-input" id="t-date" type="date">
+  </div>
+  <button class="btn btn-topup" onclick="doTopup()">+ Adaugă sold pe card</button>
 </div>
 
 <!-- TAB: HISTORY -->
 <div class="section" id="tab-history">
   <div class="hist-header">
-    <div class="hist-header-title">Toate alimentările</div>
-    <button class="clear-btn" onclick="clearHistory()">Șterge tot</button>
+    <div class="section-title" style="margin-bottom:0">Toate tranzacțiile</div>
+    <button class="del-btn" onclick="clearAll()">Șterge tot</button>
   </div>
   <div id="history-list"></div>
 </div>
@@ -441,301 +263,298 @@ canvas { width: 100% !important; }
   </div>
 </div>
 
-<!-- TAB: SETTINGS -->
-<div class="section" id="tab-settings">
-  <div class="form-group">
-    <label class="form-label">Sold inițial card (lei)</label>
-    <input class="form-input" id="s-balance" type="text" inputmode="decimal" placeholder="ex: 10000">
-  </div>
-  <button class="btn btn-set" onclick="doSetBalance()">Setează soldul cardului</button>
-
-  <hr class="divider">
-
-  <div class="form-group">
-    <label class="form-label">Adaugă fonduri pe card (lei)</label>
-    <input class="form-input" id="s-topup" type="text" inputmode="decimal" placeholder="ex: 5000">
-  </div>
-  <button class="btn btn-fuel" onclick="doTopup()">+ Reîncarcă cardul</button>
-</div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
+// ── DEFAULT SEED DATA ──
+const DEFAULTS = [
+  { id:1, type:'topup', isoDate:'2025-01-01', total:10000, liters:null, pricePerL:null },
+  { id:2, type:'fuel',  isoDate:'2025-02-08', total:439.66, liters:19,    pricePerL:23.14 },
+  { id:3, type:'fuel',  isoDate:'2025-02-22', total:757.85, liters:32.29, pricePerL:23.47 },
+  { id:4, type:'fuel',  isoDate:'2025-03-05', total:531.53, liters:22.38, pricePerL:23.75 },
+  { id:5, type:'fuel',  isoDate:'2025-03-10', total:338.00, liters:14.2,  pricePerL:23.74 },
+  { id:6, type:'fuel',  isoDate:'2025-03-12', total:209.57, liters:8.54,  pricePerL:24.54 },
+];
+
 // ── STATE ──
-let S = { balance: 0, initialBalance: null, totalSpent: 0, totalLiters: 0, history: [] };
+let S = { history: [], nextId: 100 };
 
 function load() {
-  try { const d = localStorage.getItem('benzinaCard_v3'); if(d) S = JSON.parse(d); } catch(e){}
+  try {
+    const d = localStorage.getItem('fuel_v5');
+    if (d) { S = JSON.parse(d); recompute(); return; }
+  } catch(e) {}
+  // First run — seed defaults
+  S.history = DEFAULTS.map(h => ({...h, balance:0}));
+  S.nextId = 100;
+  recompute(); save();
 }
+
 function save() {
-  try { localStorage.setItem('benzinaCard_v3', JSON.stringify(S)); } catch(e){}
+  try { localStorage.setItem('fuel_v5', JSON.stringify(S)); } catch(e) {}
 }
 
-// ── PARSE number (supports , and .) ──
-function parseNum(str) {
-  if (!str) return NaN;
-  // replace comma with dot, remove spaces
-  return parseFloat(String(str).replace(/\s/g,'').replace(',','.'));
+// Recompute all balances from history sorted by date asc
+function recompute() {
+  S.history.sort(byDate);
+  let bal = 0;
+  S.history.forEach(h => {
+    bal = +(h.type === 'topup' ? bal + h.total : bal - h.total).toFixed(2);
+    h.balance = bal;
+  });
 }
+
+// ── HELPERS ──
+function byDate(a,b) { return a.isoDate.localeCompare(b.isoDate); }
+
+function parseNum(s) {
+  if (s === null || s === undefined || s === '') return NaN;
+  return parseFloat(String(s).replace(/\s/g,'').replace(',','.'));
+}
+
 function fmt(n, dec=2) {
-  return n.toLocaleString('ro-RO', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return n.toLocaleString('ro-RO', { minimumFractionDigits:dec, maximumFractionDigits:dec });
 }
 
-// ── CALC TOTAL ──
-function calcTotal() {
-  const price = parseNum(document.getElementById('f-price').value);
-  const liters = parseNum(document.getElementById('f-liters').value);
-  const box = document.getElementById('calc-box');
-  if (price > 0 && liters > 0) {
-    const total = price * liters;
-    document.getElementById('calc-total').textContent = fmt(total) + ' lei';
-    box.style.display = 'flex';
-  } else {
-    box.style.display = 'none';
+function fmtDate(iso) {
+  if (!iso) return '';
+  const [y,m,day] = iso.split('-');
+  const mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  return `${+day} ${mo[+m-1]} ${y}`;
+}
+
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+
+// ── SMART CALC ──
+// Whenever 2 of the 3 fields are filled, compute the 3rd
+function calcFields(changed) {
+  const tEl = document.getElementById('f-total');
+  const lEl = document.getElementById('f-liters');
+  const pEl = document.getElementById('f-price');
+  const t = parseNum(tEl.value);
+  const l = parseNum(lEl.value);
+  const p = parseNum(pEl.value);
+
+  const ok = (n) => !isNaN(n) && n > 0;
+
+  if (changed !== 'total' && ok(l) && ok(p))
+    setIfEmpty(tEl, l * p, changed);
+  else if (changed !== 'liters' && ok(t) && ok(p))
+    setIfEmpty(lEl, t / p, changed);
+  else if (changed !== 'price' && ok(t) && ok(l))
+    setIfEmpty(pEl, t / l, changed);
+}
+
+function setIfEmpty(el, val, changedField) {
+  // Only overwrite if user is not editing this field
+  if (document.activeElement !== el) {
+    el.value = fmt(val, 2).replace(/\./g,'').replace(',','.');
   }
 }
 
-// ── ADD (calculated from liters + price) ──
-function doAdd() {
-  const station = 'Alimentare';
-  const dateVal = document.getElementById('f-date').value;
+// ── ADD FUEL ──
+function doAddFuel() {
+  const date  = document.getElementById('f-date').value || todayStr();
+  const total = parseNum(document.getElementById('f-total').value);
+  const liters= parseNum(document.getElementById('f-liters').value);
   const price = parseNum(document.getElementById('f-price').value);
-  const liters = parseNum(document.getElementById('f-liters').value);
 
-  if (!liters || liters <= 0) { toast('Introdu numărul de litri'); return; }
-  if (!price || price <= 0) { toast('Introdu prețul per litru'); return; }
+  if (isNaN(total) || total <= 0) { toast('⚠️ Introdu suma totală'); return; }
+  const currentBal = S.history.length ? S.history[S.history.length-1].balance : 0;
+  // recompute gives correct order so last is highest date
+  const sorted = [...S.history].sort(byDate);
+  const curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
+  if (total > curBal) { toast('⚠️ Suma depășește soldul disponibil!'); return; }
 
-  const total = +(price * liters).toFixed(2);
-  if (total > S.balance) { toast('⚠️ Suma depășește soldul!'); return; }
-
-  const dateDisplay = dateVal ? formatDate(dateVal) : formatDate(todayStr());
-
-  S.balance = +(S.balance - total).toFixed(2);
-  S.totalSpent = +(S.totalSpent + total).toFixed(2);
-  S.totalLiters = +(S.totalLiters + liters).toFixed(2);
-  S.history.push({ station, date: dateDisplay, liters, pricePerL: price, total, balance: S.balance, type: 'fuel' });
-
-  clearFuelForm();
+  S.history.push({
+    id: S.nextId++, type: 'fuel', isoDate: date,
+    total: +total.toFixed(2),
+    liters: isNaN(liters) ? null : +liters.toFixed(2),
+    pricePerL: isNaN(price) ? null : +price.toFixed(2),
+    balance: 0
+  });
+  recompute();
+  ['f-total','f-liters','f-price'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-date').value = todayStr();
   save(); render();
   toast('⛽ −' + fmt(total) + ' lei înregistrat');
 }
 
-// ── MANUAL SUM ──
-function doManual() {
-  const total = parseNum(document.getElementById('f-manual').value);
-  const note = 'Alimentare';
-  if (!total || total <= 0) { toast('Introdu suma'); return; }
-  if (total > S.balance) { toast('⚠️ Suma depășește soldul!'); return; }
-
-  S.balance = +(S.balance - total).toFixed(2);
-  S.totalSpent = +(S.totalSpent + total).toFixed(2);
-  S.history.push({ station: note, date: formatDate(todayStr()), liters: null, pricePerL: null, total, balance: S.balance, type: 'manual' });
-
-  document.getElementById('f-manual').value = '';
-  document.getElementById('f-manual-note').value = '';
-  save(); render();
-  toast('−' + fmt(total) + ' lei înregistrat');
-}
-
-function doSetBalance() {
-  const val = parseNum(document.getElementById('s-balance').value);
-  if (!val || val <= 0) { toast('Introdu o sumă validă'); return; }
-  S.balance = val;
-  S.initialBalance = val;
-  S.totalSpent = 0;
-  S.totalLiters = 0;
-  S.history = [];
-  document.getElementById('s-balance').value = '';
-  save(); render();
-  toast('Card setat la ' + fmt(val) + ' lei');
-}
-
+// ── TOPUP ──
 function doTopup() {
-  const val = parseNum(document.getElementById('s-topup').value);
-  if (!val || val <= 0) { toast('Introdu o sumă validă'); return; }
-  S.balance = +(S.balance + val).toFixed(2);
-  if (S.initialBalance !== null) S.initialBalance = +(S.initialBalance + val).toFixed(2);
-  S.history.push({ station: 'Reîncărcare card', date: formatDate(todayStr()), liters: null, pricePerL: null, total: -val, balance: S.balance, type: 'topup' });
-  document.getElementById('s-topup').value = '';
+  const val  = parseNum(document.getElementById('t-amount').value);
+  const date = document.getElementById('t-date').value || todayStr();
+  if (isNaN(val) || val <= 0) { toast('Introdu o sumă validă'); return; }
+
+  S.history.push({ id: S.nextId++, type:'topup', isoDate:date, total:+val.toFixed(2), liters:null, pricePerL:null, balance:0 });
+  recompute();
+  document.getElementById('t-amount').value = '';
+  document.getElementById('t-date').value = todayStr();
   save(); render();
-  toast('+' + fmt(val) + ' lei adăugat pe card');
+  toast('💳 +' + fmt(val) + ' lei adăugat pe card');
 }
 
-function clearHistory() {
-  if (!confirm('Ștergi tot istoricul? Soldul rămâne.')) return;
+// ── DELETE ──
+function deleteEntry(id) {
+  const h = S.history.find(x => x.id === id);
+  if (!h) return;
+  const label = h.type === 'topup'
+    ? '💳 +' + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate)
+    : '⛽ −' + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate);
+  if (!confirm('Sigur ștergi această înregistrare?\n\n' + label)) return;
+  S.history = S.history.filter(x => x.id !== id);
+  recompute();
+  save(); render();
+  toast('Înregistrare ștearsă');
+}
+
+function clearAll() {
+  if (!confirm('Ștergi TOT istoricul complet?\n\nAceastă acțiune nu poate fi anulată.')) return;
   S.history = [];
-  S.totalSpent = 0;
-  S.totalLiters = 0;
   save(); render();
-  toast('Istoric șters');
-}
-
-function clearFuelForm() {
-  ['f-price','f-liters'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('calc-box').style.display = 'none';
-  // reset date to today
-  document.getElementById('f-date').value = todayStr();
+  toast('Istoric șters complet');
 }
 
 // ── RENDER ──
 function render() {
-  // Hero
-  document.getElementById('hero-bal').innerHTML = fmt(S.balance) + '<span>lei</span>';
-  document.getElementById('stat-init').textContent = S.initialBalance !== null ? fmt(S.initialBalance) + ' lei' : '—';
-  document.getElementById('stat-spent').textContent = fmt(S.totalSpent) + ' lei';
-  document.getElementById('stat-litri').textContent = fmt(S.totalLiters, 1) + ' L';
+  const sorted = [...S.history].sort(byDate);
+  const curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
+  const firstTopup = sorted.find(h => h.type === 'topup');
+  const initBal = firstTopup ? firstTopup.total : null;
+  const spent = sorted.filter(h=>h.type==='fuel').reduce((a,h)=>a+h.total, 0);
+  const litri = sorted.filter(h=>h.type==='fuel' && h.liters).reduce((a,h)=>a+h.liters, 0);
 
-  // Progress
-  const pct = S.initialBalance ? Math.max(0, Math.min(100, S.balance / S.initialBalance * 100)) : 100;
+  // Hero
+  document.getElementById('hero-num').textContent = fmt(curBal);
+  const pct = initBal ? curBal / initBal * 100 : 100;
+  const heroEl = document.getElementById('hero-bal');
+  heroEl.style.color = pct > 50 ? 'var(--fuel)' : pct > 25 ? 'var(--amber)' : 'var(--red)';
+  heroEl.style.textShadow = pct > 50 ? '0 0 40px var(--fuel-glow)'
+    : pct > 25 ? '0 0 40px rgba(245,158,11,0.25)'
+    : '0 0 40px rgba(239,68,68,0.25)';
+
+  document.getElementById('stat-init').textContent = initBal !== null ? fmt(initBal) + ' lei' : '—';
+  document.getElementById('stat-spent').textContent = fmt(spent) + ' lei';
+  document.getElementById('stat-litri').textContent = fmt(litri,1) + ' L';
+
   const bar = document.getElementById('prog-fill');
-  bar.style.width = pct + '%';
+  bar.style.width = Math.max(0,Math.min(100,pct)) + '%';
   bar.style.background = pct > 50 ? 'linear-gradient(90deg,var(--fuel),#00e5c0)'
     : pct > 25 ? 'linear-gradient(90deg,var(--amber),#fbbf24)'
     : 'linear-gradient(90deg,var(--red),#f87171)';
 
-  renderHistory();
-  renderCharts();
+  renderHistory(sorted);
 }
 
-function renderHistory() {
+function renderHistory(sorted) {
   const el = document.getElementById('history-list');
-  const items = [...S.history].reverse().filter(h => h.type !== 'topup');
-  if (!items.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio alimentare înregistrată.<br>Adaugă prima ta reumplere!</div>';
+  if (!sorted.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzacție.<br>Adaugă prima alimentare!</div>';
     return;
   }
-  el.innerHTML = items.map(h => {
+
+  // Oldest first (ascending by date = order as sorted)
+  el.innerHTML = sorted.map(h => {
     const isTopup = h.type === 'topup';
-    const costStr = isTopup ? '+' + fmt(-h.total) + ' lei' : '−' + fmt(h.total) + ' lei';
-    const costClass = isTopup ? 'green' : '';
+    const costStr = isTopup ? '+' + fmt(h.total) + ' lei' : '−' + fmt(h.total) + ' lei';
+    const costClass = isTopup ? 'plus' : 'minus';
+    const icon = isTopup ? '💳' : '⛽';
+    const label = isTopup ? 'Încărcare card' : 'Alimentare';
+
     let pills = '';
-    if (h.liters) pills += `<div class="pill"><strong>${fmt(h.liters,2)} L</strong></div>`;
-    if (h.pricePerL) pills += `<div class="pill">${fmt(h.pricePerL,2)} lei/L</div>`;
+    if (!isTopup) {
+      if (h.liters) pills += `<div class="pill"><strong>${fmt(h.liters,2)} L</strong></div>`;
+      if (h.pricePerL) pills += `<div class="pill">${fmt(h.pricePerL,2)} lei/L</div>`;
+    }
     pills += `<div class="pill">Sold: <strong>${fmt(h.balance)} lei</strong></div>`;
-    return `
-    <div class="hist-item">
+
+    return `<div class="hist-item${isTopup?' topup':''}">
       <div class="hist-top">
         <div>
-          <div class="hist-station">${h.station}</div>
-          <div class="hist-date">${h.date}</div>
+          <div class="hist-type">${icon} ${label}</div>
+          <div class="hist-date">${fmtDate(h.isoDate)}</div>
         </div>
         <div>
-          <div class="hist-cost" style="color:${isTopup?'var(--fuel)':'var(--red)'}">${costStr}</div>
+          <div class="hist-cost ${costClass}">${costStr}</div>
         </div>
       </div>
-      <div class="hist-pills">${pills}</div>
+      <div class="hist-bottom">
+        <div class="hist-pills">${pills}</div>
+        <button class="del-btn" onclick="deleteEntry(${h.id})">✕ Șterge</button>
+      </div>
     </div>`;
   }).join('');
 }
 
 // ── CHARTS ──
-let chartBalance = null, chartSpent = null;
+let cBal = null, cSpent = null;
 
 function renderCharts() {
-  const fuels = S.history.filter(h => h.type !== 'topup');
+  const fuels = [...S.history].sort(byDate).filter(h => h.type === 'fuel');
   if (!fuels.length) {
-    if (chartBalance) { chartBalance.destroy(); chartBalance = null; }
-    if (chartSpent) { chartSpent.destroy(); chartSpent = null; }
+    if (cBal) { cBal.destroy(); cBal = null; }
+    if (cSpent) { cSpent.destroy(); cSpent = null; }
     return;
   }
-
-  const labels = fuels.map(h => h.date.split(' ')[0]);
+  const labels   = fuels.map(h => fmtDate(h.isoDate));
   const balances = fuels.map(h => h.balance);
-  const costs = fuels.map(h => h.total);
+  const costs    = fuels.map(h => h.total);
 
-  const cfg = {
+  const base = {
     responsive: true,
-    plugins: { legend: { display: false }, tooltip: {
-      backgroundColor: '#161d1f',
-      borderColor: '#1e2a2d',
-      borderWidth: 1,
-      titleColor: '#5a7278',
-      bodyColor: '#e8f0f2',
-      callbacks: {
-        label: ctx => ' ' + fmt(ctx.parsed.y) + ' lei'
+    plugins: {
+      legend: { display:false },
+      tooltip: {
+        backgroundColor:'#161d1f', borderColor:'#1e2a2d', borderWidth:1,
+        titleColor:'#5a7278', bodyColor:'#e8f0f2',
+        callbacks: { label: ctx => ' ' + fmt(ctx.parsed.y) + ' lei' }
       }
-    }},
+    },
     scales: {
-      x: { grid: { color: '#1e2a2d' }, ticks: { color: '#5a7278', font: { size: 10, family: 'Inconsolata' } } },
-      y: { grid: { color: '#1e2a2d' }, ticks: { color: '#5a7278', font: { size: 10, family: 'Inconsolata' }, callback: v => fmt(v,0) } }
+      x: { grid:{color:'#1e2a2d'}, ticks:{color:'#5a7278', font:{size:9,family:'Inconsolata'}, maxRotation:45} },
+      y: { grid:{color:'#1e2a2d'}, ticks:{color:'#5a7278', font:{size:9,family:'Inconsolata'}, callback: v=>fmt(v,0)} }
     }
   };
 
-  // Balance chart
-  if (chartBalance) chartBalance.destroy();
-  chartBalance = new Chart(document.getElementById('chart-balance'), {
+  if (cBal) cBal.destroy();
+  cBal = new Chart(document.getElementById('chart-balance'), {
     type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        data: balances,
-        borderColor: '#00c4a0',
-        backgroundColor: 'rgba(0,196,160,0.08)',
-        borderWidth: 2,
-        pointBackgroundColor: '#00c4a0',
-        pointRadius: 4,
-        fill: true,
-        tension: 0.35
-      }]
-    },
-    options: cfg
+    data: { labels, datasets: [{ data:balances, borderColor:'#00c4a0', backgroundColor:'rgba(0,196,160,0.08)', borderWidth:2, pointBackgroundColor:'#00c4a0', pointRadius:4, fill:true, tension:0.35 }] },
+    options: base
   });
 
-  // Spent per fill chart
-  if (chartSpent) chartSpent.destroy();
-  chartSpent = new Chart(document.getElementById('chart-spent'), {
+  if (cSpent) cSpent.destroy();
+  cSpent = new Chart(document.getElementById('chart-spent'), {
     type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        data: costs,
-        backgroundColor: 'rgba(239,68,68,0.55)',
-        borderColor: '#ef4444',
-        borderWidth: 1,
-        borderRadius: 6
-      }]
-    },
-    options: { ...cfg }
+    data: { labels, datasets: [{ data:costs, backgroundColor:'rgba(239,68,68,0.55)', borderColor:'#ef4444', borderWidth:1, borderRadius:6 }] },
+    options: { ...base }
   });
-}
-
-// ── UTILS ──
-function todayStr() {
-  const d = new Date();
-  return d.toISOString().split('T')[0];
-}
-function formatDate(iso) {
-  const [y,m,day] = iso.split('-');
-  const months = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
-  return `${day} ${months[+m-1]} ${y}`;
-}
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 // ── TABS ──
-function switchTab(name) {
+function switchTab(name, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
   if (name === 'chart') renderCharts();
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
 }
 
 // ── INIT ──
 load();
 document.getElementById('f-date').value = todayStr();
-
-// iOS install hint
-if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone) {
-  document.getElementById('install-hint-wrap').style.display = 'block';
-}
-
+document.getElementById('t-date').value = todayStr();
+if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone)
+  document.getElementById('ios-hint').style.display = 'block';
 render();
 </script>
 </body>
