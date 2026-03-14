@@ -632,22 +632,33 @@ function fmtWeek(iso) {
 }
 
 // ── SMART CALC (any 2 of 3) ──
+// Regula: calculam DOAR campul tert — nu cel pe care userul scrie, nu cel care s-a schimbat
 function calcFields(changed) {
   var tEl = document.getElementById('f-total');
   var lEl = document.getElementById('f-liters');
   var pEl = document.getElementById('f-price');
+  var active = document.activeElement;
+
   var t = parseNum(tEl.value);
   var l = parseNum(lEl.value);
   var p = parseNum(pEl.value);
 
   function ok(n) { return !isNaN(n) && n > 0; }
 
-  if (changed !== 'total' && ok(l) && ok(p) && document.activeElement !== tEl)
-    tEl.value = fmtInput(l * p);
-  else if (changed !== 'liters' && ok(t) && ok(p) && document.activeElement !== lEl)
-    lEl.value = fmtInput(t / p);
-  else if (changed !== 'price' && ok(t) && ok(l) && document.activeElement !== pEl)
+  // Determina campul tert (nu cel schimbat, nu cel activ)
+  if (changed === 'total' && active === lEl && ok(t) && ok(l)) {
     pEl.value = fmtInput(t / l);
+  } else if (changed === 'total' && active === pEl && ok(t) && ok(p)) {
+    lEl.value = fmtInput(t / p);
+  } else if (changed === 'liters' && active === tEl && ok(t) && ok(l)) {
+    pEl.value = fmtInput(t / l);
+  } else if (changed === 'liters' && active === pEl && ok(l) && ok(p)) {
+    tEl.value = fmtInput(l * p);
+  } else if (changed === 'price' && active === tEl && ok(t) && ok(p)) {
+    lEl.value = fmtInput(t / p);
+  } else if (changed === 'price' && active === lEl && ok(l) && ok(p)) {
+    tEl.value = fmtInput(l * p);
+  }
 }
 
 // ── ADD FUEL ──
