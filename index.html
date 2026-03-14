@@ -420,6 +420,9 @@ canvas { width: 100% !important; }
   <div class="hero-balance" id="hero-bal">
     <span id="hero-num">0,00</span><span class="lei">lei</span>
   </div>
+  <div id="hero-warning" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:7px 12px;margin-top:10px;font-size:0.72rem;color:#ef4444;letter-spacing:0.04em;position:relative;">
+    ⚠️ Sold negativ — ai cheltuit mai mult decat limita cardului
+  </div>
   <div class="hero-stats">
     <div class="hstat">
       <div class="hstat-label">Initial</div>
@@ -463,15 +466,15 @@ canvas { width: 100% !important; }
   <div class="form-row3">
     <div class="form-group" style="margin-bottom:0">
       <label class="form-label">Total (lei)</label>
-      <input class="form-input" id="f-total" type="text" inputmode="decimal" placeholder="439,66" oninput="calcFields('total')">
-    </div>
-    <div class="form-group" style="margin-bottom:0">
-      <label class="form-label">Litri</label>
-      <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" oninput="calcFields('liters')">
+      <input class="form-input" id="f-total" type="text" inputmode="decimal" placeholder="439,66" onblur="calcFields('total')">
     </div>
     <div class="form-group" style="margin-bottom:0">
       <label class="form-label">Lei / L</label>
-      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="23,14" oninput="calcFields('price')">
+      <input class="form-input" id="f-price" type="text" inputmode="decimal" placeholder="23,14" onblur="calcFields('price')">
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label class="form-label">Litri</label>
+      <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" onblur="calcFields('liters')">
     </div>
   </div>
   <div class="form-hint">Completeaza oricare 2 campuri — al 3-lea se calculeaza automat</div>
@@ -536,7 +539,7 @@ var DEFAULTS = [
   {id:2, type:'fuel',  isoDate:'2026-02-08', total:439.66, liters:19,    pricePerL:23.14},
   {id:3, type:'fuel',  isoDate:'2026-02-22', total:757.85, liters:32.29, pricePerL:23.47},
   {id:4, type:'fuel',  isoDate:'2026-03-05', total:531.53, liters:22.38, pricePerL:23.75},
-  {id:5, type:'fuel',  isoDate:'2026-03-10', total:344.70, liters:14.52,  pricePerL:23.74},
+  {id:5, type:'fuel',  isoDate:'2026-03-10', total:344.70, liters:14.52, pricePerL:23.74},
   {id:6, type:'fuel',  isoDate:'2026-03-12', total:209.57, liters:8.54,  pricePerL:24.54}
 ];
 
@@ -550,7 +553,7 @@ var chartPrice = null;
 // ── STORAGE ──
 function loadState() {
   try {
-    var d = localStorage.getItem('fuel_v8');
+    var d = localStorage.getItem('fuel_v9');
     if (d) {
       S = JSON.parse(d);
       recompute();
@@ -566,7 +569,7 @@ function loadState() {
 }
 
 function saveState() {
-  try { localStorage.setItem('fuel_v8', JSON.stringify(S)); } catch(e) {}
+  try { localStorage.setItem('fuel_v9', JSON.stringify(S)); } catch(e) {}
 }
 
 // ── RECOMPUTE balances ──
@@ -632,32 +635,28 @@ function fmtWeek(iso) {
 }
 
 // ── SMART CALC (any 2 of 3) ──
-// Regula: calculam DOAR campul tert — nu cel pe care userul scrie, nu cel care s-a schimbat
+// Regula: campul pe care userul scrie (changed) NU se atinge.
+// Dintre celelalte 2, calculam cel care NU e focusat activ.
+// Daca ambele sunt nefocusate, calculam al 3-lea in functie de prioritate.
 function calcFields(changed) {
   var tEl = document.getElementById('f-total');
-  var lEl = document.getElementById('f-liters');
   var pEl = document.getElementById('f-price');
-  var active = document.activeElement;
-
+  var lEl = document.getElementById('f-liters');
   var t = parseNum(tEl.value);
-  var l = parseNum(lEl.value);
   var p = parseNum(pEl.value);
-
+  var l = parseNum(lEl.value);
   function ok(n) { return !isNaN(n) && n > 0; }
 
-  // Determina campul tert (nu cel schimbat, nu cel activ)
-  if (changed === 'total' && active === lEl && ok(t) && ok(l)) {
-    pEl.value = fmtInput(t / l);
-  } else if (changed === 'total' && active === pEl && ok(t) && ok(p)) {
-    lEl.value = fmtInput(t / p);
-  } else if (changed === 'liters' && active === tEl && ok(t) && ok(l)) {
-    pEl.value = fmtInput(t / l);
-  } else if (changed === 'liters' && active === pEl && ok(l) && ok(p)) {
-    tEl.value = fmtInput(l * p);
-  } else if (changed === 'price' && active === tEl && ok(t) && ok(p)) {
-    lEl.value = fmtInput(t / p);
-  } else if (changed === 'price' && active === lEl && ok(l) && ok(p)) {
-    tEl.value = fmtInput(l * p);
+  // Calculeaza campul gol/necunoscut pe baza celor 2 completate
+  if (changed === 'total') {
+    if (ok(t) && ok(p)) { lEl.value = fmtInput(t / p); }
+    else if (ok(t) && ok(l)) { pEl.value = fmtInput(t / l); }
+  } else if (changed === 'price') {
+    if (ok(p) && ok(l)) { tEl.value = fmtInput(p * l); }
+    else if (ok(t) && ok(p)) { lEl.value = fmtInput(t / p); }
+  } else if (changed === 'liters') {
+    if (ok(p) && ok(l)) { tEl.value = fmtInput(p * l); }
+    else if (ok(t) && ok(l)) { pEl.value = fmtInput(t / l); }
   }
 }
 
@@ -672,7 +671,7 @@ function doAddFuel() {
 
   var sorted = S.history.slice().sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
   var curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
-  if (total > curBal) { showToast('Suma depaseste soldul!'); return; }
+  var overLimit = total > curBal;
 
   S.history.push({
     id: S.nextId++,
@@ -691,7 +690,11 @@ function doAddFuel() {
   document.getElementById('f-date').value = todayStr();
   saveState();
   render();
-  showToast('−' + fmt(total) + ' lei inregistrat');
+  if (overLimit) {
+    showToast('Atentie! Sold negativ: ' + fmt(S.history.slice().sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);})[S.history.length-1].balance) + ' lei');
+  } else {
+    showToast('−' + fmt(total) + ' lei inregistrat');
+  }
 }
 
 // ── TOPUP ──
@@ -769,6 +772,8 @@ function render() {
   var heroEl = document.getElementById('hero-bal');
   heroEl.style.color = pct > 50 ? 'var(--fuel)' : pct > 25 ? 'var(--amber)' : 'var(--red)';
 
+  var warnEl = document.getElementById('hero-warning');
+  if (warnEl) warnEl.style.display = curBal < 0 ? 'block' : 'none';
   document.getElementById('stat-init').textContent = initBal !== null ? fmt(initBal) + ' lei' : '—';
   document.getElementById('stat-spent').textContent = fmt(spent) + ' lei';
   document.getElementById('stat-litri').textContent = fmt(litri, 1) + ' L';
