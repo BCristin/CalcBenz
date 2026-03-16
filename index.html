@@ -37,7 +37,7 @@ body {
   color: var(--text);
   font-family: 'Syne', sans-serif;
   min-height: 100dvh;
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
 }
 
 /* HERO */
@@ -45,443 +45,114 @@ body {
   background: linear-gradient(135deg, #0d1f1c, #0a1a22);
   border-bottom: 1px solid var(--border);
   padding: 48px 20px 20px;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse 60% 80% at 90% -10%, var(--fuel-glow), transparent 60%);
 }
-.hero-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
-  position: relative;
-}
-.hero-balance {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--fuel);
-  text-shadow: 0 0 40px var(--fuel-glow);
-  font-variant-numeric: tabular-nums;
-  position: relative;
-  font-size: clamp(1.9rem, 9.5vw, 3.2rem);
-}
-.hero-balance .lei {
-  font-size: 0.38em;
-  font-weight: 400;
-  color: var(--muted);
-  margin-left: 5px;
-}
-.hero-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-top: 16px;
-  position: relative;
-}
-.hstat {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 10px;
-}
-.hstat-label {
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 2px;
-}
-.hstat-val {
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--text);
-}
-.c-fuel { color: var(--fuel); }
-.c-amber { color: var(--amber); }
+.hero-label { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; position: relative; }
+.hero-balance { font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--fuel); text-shadow: 0 0 40px var(--fuel-glow); font-variant-numeric: tabular-nums; position: relative; font-size: clamp(1.9rem, 9.5vw, 3.2rem); }
+.hero-balance .lei { font-size: .38em; font-weight: 400; color: var(--muted); margin-left: 5px; }
+.hero-warning { display: none; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.4); border-radius: 8px; padding: 7px 12px; margin-top: 10px; font-size: .72rem; color: #ef4444; letter-spacing: .04em; position: relative; }
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 16px; position: relative; }
+.hstat { background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
+.hstat-label { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.hstat-val { font-family: 'Inconsolata', monospace; font-size: .86rem; font-weight: 600; color: var(--text); }
+.c-fuel { color: var(--fuel); } .c-amber { color: var(--amber); } .c-red { color: var(--red); }
 
 /* PROGRESS */
 .prog-wrap { height: 3px; background: var(--border); }
-.prog-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--fuel), #00e5c0);
-  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 8px var(--fuel);
-}
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--fuel), #00e5c0); transition: width .7s cubic-bezier(.16,1,.3,1); box-shadow: 0 0 8px var(--fuel); }
+
+
 
 /* NAV */
-.nav {
-  display: flex;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.nav-btn {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 13px 2px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-}
-.nav-btn.active {
-  color: var(--fuel);
-  border-bottom-color: var(--fuel);
-}
+.nav { display: flex; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.nav-btn { flex: 1; border: none; background: transparent; color: var(--muted); font-family: 'Syne', sans-serif; font-size: .65rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 13px 2px; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
+.nav-btn.active { color: var(--fuel); border-bottom-color: var(--fuel); }
 
 /* SECTIONS */
-.section {
-  padding: 18px;
-  display: none;
-}
-.section.active {
-  display: block;
-}
-.section-title {
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
+.section { padding: 18px; display: none; }
+.section.active { display: block; }
+.section-title { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 
 /* FORMS */
-.form-group {
-  margin-bottom: 13px;
-}
-.form-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 5px;
-  display: block;
-}
-.form-input {
-  width: 100%;
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: 'Inconsolata', monospace;
-  font-size: 1.05rem;
-  font-weight: 500;
-  padding: 12px 14px;
-  outline: none;
-  -webkit-appearance: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.form-input:focus {
-  border-color: var(--fuel);
-  box-shadow: 0 0 0 3px var(--fuel-dim);
-}
-.form-input::placeholder {
-  color: var(--muted2);
-}
-.form-row3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.form-hint {
-  font-size: 0.62rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  margin-bottom: 14px;
-}
+.form-group { margin-bottom: 13px; }
+.form-label { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
+.form-input { width: 100%; background: var(--card); border: 1px solid var(--border2); border-radius: 10px; color: var(--text); font-family: 'Inconsolata', monospace; font-size: 1.05rem; font-weight: 500; padding: 12px 14px; outline: none; -webkit-appearance: none; transition: border-color .2s, box-shadow .2s; }
+.form-input:focus { border-color: var(--fuel); box-shadow: 0 0 0 3px var(--fuel-dim); }
+.form-input::placeholder { color: var(--muted2); }
+.form-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.form-hint { font-size: .62rem; color: var(--muted); letter-spacing: .06em; margin-bottom: 14px; }
 
 /* BUTTONS */
-.btn {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 14px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn:active { transform: scale(0.97); }
+.btn { width: 100%; border: none; border-radius: 12px; font-family: 'Syne', sans-serif; font-size: .92rem; font-weight: 700; letter-spacing: .04em; padding: 14px; cursor: pointer; transition: all .15s; }
+.btn:active { transform: scale(.97); }
 .btn-fuel { background: var(--fuel); color: #0a0e0f; }
 .btn-topup { background: var(--green); color: #0a0e0f; }
-
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 20px 0;
-}
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 /* HISTORY */
-.hist-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-.hist-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px;
-  margin-bottom: 9px;
-  animation: fadeUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hist-item.topup {
-  border-color: rgba(34, 197, 94, 0.25);
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hist-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-.hist-type {
-  font-weight: 700;
-  font-size: 0.88rem;
-  color: var(--text);
-}
-.hist-date {
-  font-size: 0.7rem;
-  color: var(--muted);
-  font-family: 'Inconsolata', monospace;
-  margin-top: 1px;
-}
-.hist-cost {
-  font-family: 'Inconsolata', monospace;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-align: right;
-}
-.hist-cost.minus { color: var(--red); }
-.hist-cost.plus { color: var(--green); }
-.hist-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-.hist-pills {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  flex: 1;
-}
-.pill {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px 8px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.73rem;
-  color: var(--muted);
-  white-space: nowrap;
-}
+.hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.hist-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 14px; margin-bottom: 9px; animation: fadeUp .28s cubic-bezier(.16,1,.3,1); }
+.hist-item.topup { border-color: rgba(34,197,94,.25); }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.hist-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.hist-type { font-weight: 700; font-size: .88rem; color: var(--text); }
+.hist-date { font-size: .7rem; color: var(--muted); font-family: 'Inconsolata', monospace; margin-top: 1px; }
+.hist-cost { font-family: 'Inconsolata', monospace; font-size: 1.1rem; font-weight: 600; text-align: right; }
+.hist-cost.minus { color: var(--red); } .hist-cost.plus { color: var(--green); }
+.hist-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.hist-pills { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.pill { background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-family: 'Inconsolata', monospace; font-size: .73rem; color: var(--muted); white-space: nowrap; }
 .pill strong { color: var(--fuel); font-weight: 600; }
-.del-btn {
-  background: none;
-  border: 1px solid var(--border2);
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 7px;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-.del-btn:active, .del-btn:hover {
-  border-color: var(--red);
-  color: var(--red);
-}
-.empty {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.85rem;
-  padding: 48px 20px;
-  line-height: 1.8;
-}
-.empty-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  opacity: 0.4;
-}
+.del-btn { background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'Syne', sans-serif; font-size: .7rem; font-weight: 600; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all .2s; flex-shrink: 0; white-space: nowrap; }
+.del-btn:active, .del-btn:hover { border-color: var(--red); color: var(--red); }
+.empty { text-align: center; color: var(--muted); font-size: .85rem; padding: 48px 20px; line-height: 1.8; }
+.empty-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: .4; }
 
 /* CHARTS */
-.chart-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 18px;
-  margin-bottom: 14px;
-}
-.chart-title {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
+.chart-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; margin-bottom: 14px; }
+.chart-title { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 canvas { width: 100% !important; }
+.period-toggle { display: flex; gap: 6px; margin-bottom: 16px; }
+.period-btn { flex: 1; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: 'Syne', sans-serif; font-size: .68rem; font-weight: 600; padding: 9px 4px; border-radius: 8px; cursor: pointer; transition: all .2s; }
+.period-btn.active { background: var(--fuel-dim); border-color: var(--fuel); color: var(--fuel); }
 
-/* PERIOD TOGGLE */
-.period-toggle {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-.period-btn {
-  flex: 1;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  padding: 9px 4px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.period-btn.active {
-  background: var(--fuel-dim);
-  border-color: var(--fuel);
-  color: var(--fuel);
-}
+/* CHART STATS */
+.chart-stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.cstat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; text-align: center; }
+.cstat-label { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.cstat-val { font-family: 'Inconsolata', monospace; font-size: .92rem; font-weight: 700; }
 
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-  left: 50%;
-  transform: translateX(-50%) translateY(70px);
-  background: var(--card2);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  padding: 10px 22px;
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 999;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-}
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
-
-.chart-stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.cstat {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  text-align: center;
-}
-.cstat-label {
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.cstat-val {
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-.c-red { color: var(--red); }
-
-.predict-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  background: rgba(167,139,250,0.08);
-  border: 1px solid rgba(167,139,250,0.25);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-}
+/* PREDICTION */
+.predict-box { display: flex; align-items: flex-start; gap: 10px; background: rgba(167,139,250,.08); border: 1px solid rgba(167,139,250,.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
 .predict-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-.predict-text {
-  font-size: 0.8rem;
-  color: var(--text);
-  line-height: 1.6;
-  font-family: 'Inconsolata', monospace;
-}
+.predict-text { font-size: .8rem; color: var(--text); line-height: 1.6; font-family: 'Inconsolata', monospace; }
 .predict-text strong { color: var(--purple); }
 
-.install-hint {
-  background: var(--amber-dim);
-  border: 1px solid rgba(245,158,11,0.2);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.install-hint strong {
-  color: var(--amber);
-  display: block;
-  margin-bottom: 2px;
-}
+/* TOAST */
+.toast { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); left: 50%; transform: translateX(-50%) translateY(70px); background: var(--card2); border: 1px solid var(--border2); color: var(--text); padding: 10px 22px; border-radius: 100px; font-size: .82rem; font-weight: 600; white-space: nowrap; transition: transform .35s cubic-bezier(.16,1,.3,1); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.install-hint { background: var(--amber-dim); border: 1px solid rgba(245,158,11,.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: .78rem; color: var(--muted); line-height: 1.6; }
+.install-hint strong { color: var(--amber); display: block; margin-bottom: 2px; }
 </style>
 </head>
 <body>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-label">Sold disponibil</div>
+  <div class="hero-label"><span id="hero-label-text">Sold disponibil</span></div>
   <div class="hero-balance" id="hero-bal">
     <span id="hero-num">0,00</span><span class="lei">lei</span>
   </div>
-  <div id="hero-warning" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:7px 12px;margin-top:10px;font-size:0.72rem;color:#ef4444;letter-spacing:0.04em;position:relative;">
-    ⚠️ Sold negativ — ai cheltuit mai mult decat limita cardului
-  </div>
+  <div class="hero-warning" id="hero-warning">Sold negativ — ai cheltuit mai mult decat limita cardului</div>
   <div class="hero-stats">
-    <div class="hstat">
-      <div class="hstat-label">Initial</div>
-      <div class="hstat-val c-fuel" id="stat-init">—</div>
-    </div>
-    <div class="hstat">
-      <div class="hstat-label">Cheltuit</div>
-      <div class="hstat-val c-amber" id="stat-spent">0 lei</div>
-    </div>
-    <div class="hstat">
-      <div class="hstat-label">Litri total</div>
-      <div class="hstat-val" id="stat-litri">0 L</div>
-    </div>
+    <div class="hstat"><div class="hstat-label">Initial</div><div class="hstat-val c-fuel" id="stat-init">—</div></div>
+    <div class="hstat"><div class="hstat-label">Cheltuit</div><div class="hstat-val c-amber" id="stat-spent">0 lei</div></div>
+    <div class="hstat"><div class="hstat-label">Litri total</div><div class="hstat-val" id="stat-litri">0 L</div></div>
   </div>
 </div>
 <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:100%"></div></div>
@@ -497,18 +168,13 @@ canvas { width: 100% !important; }
 <!-- TAB: FUEL -->
 <div class="section active" id="tab-add">
   <div id="ios-hint" style="display:none">
-    <div class="install-hint">
-      <strong>Salveaza pe iPhone</strong>
-      Safari - Distribuie - Adauga la ecranul principal
-    </div>
+    <div class="install-hint"><strong>Salveaza pe iPhone</strong>Safari - Distribuie - Adauga la ecranul principal</div>
   </div>
   <div class="section-title">Inregistreaza alimentare</div>
-
   <div class="form-group">
     <label class="form-label">Data</label>
     <input class="form-input" id="f-date" type="date">
   </div>
-
   <div class="form-row3">
     <div class="form-group" style="margin-bottom:0">
       <label class="form-label">Total (lei)</label>
@@ -523,8 +189,7 @@ canvas { width: 100% !important; }
       <input class="form-input" id="f-liters" type="text" inputmode="decimal" placeholder="19,00" onblur="calcFields('liters')">
     </div>
   </div>
-  <div class="form-hint">Completeaza oricare 2 campuri — al 3-lea se calculeaza automat</div>
-
+  <div class="form-hint">Completeaza oricare 2 campuri — al 3-lea se calculeaza la iesire din camp</div>
   <button class="btn btn-fuel" onclick="doAddFuel()">Inregistreaza alimentarea</button>
 </div>
 
@@ -544,39 +209,23 @@ canvas { width: 100% !important; }
     <button class="period-btn" onclick="setPeriod('weekly', this)">Saptamanal</button>
     <button class="period-btn" onclick="setPeriod('fill', this)">Alimentare</button>
   </div>
-
-  <!-- Stats: medii + predictie -->
-  <div class="chart-stats-row" id="chart-stats-row">
-    <div class="cstat">
-      <div class="cstat-label">Medie lunara</div>
-      <div class="cstat-val c-amber" id="cs-avg-monthly">—</div>
-    </div>
-    <div class="cstat">
-      <div class="cstat-label">Medie sapt.</div>
-      <div class="cstat-val c-amber" id="cs-avg-weekly">—</div>
-    </div>
-    <div class="cstat">
-      <div class="cstat-label">Medie/alim.</div>
-      <div class="cstat-val c-amber" id="cs-avg-fill">—</div>
-    </div>
+  <div class="chart-stats-row">
+    <div class="cstat"><div class="cstat-label">Medie lunara</div><div class="cstat-val c-amber" id="cs-avg-monthly">—</div></div>
+    <div class="cstat"><div class="cstat-label">Medie sapt.</div><div class="cstat-val c-amber" id="cs-avg-weekly">—</div></div>
+    <div class="cstat"><div class="cstat-label">Medie/alim.</div><div class="cstat-val c-amber" id="cs-avg-fill">—</div></div>
   </div>
-
-  <!-- Predictie -->
   <div class="predict-box" id="predict-box">
     <div class="predict-icon">🔮</div>
-    <div class="predict-text" id="predict-text">—</div>
+    <div class="predict-text" id="predict-text">Adauga mai multe date pentru a vedea predictia.</div>
   </div>
-
   <div class="chart-wrap">
     <div class="chart-title" id="title-spent">Cheltuieli lunare (lei)</div>
     <canvas id="canvas-spent" height="200"></canvas>
   </div>
-
   <div class="chart-wrap">
     <div class="chart-title" id="title-liters">Litri lunari</div>
     <canvas id="canvas-liters" height="200"></canvas>
   </div>
-
   <div class="chart-wrap" id="wrap-price">
     <div class="chart-title">Evolutie pret benzina (lei/L)</div>
     <canvas id="canvas-price" height="200"></canvas>
@@ -597,17 +246,21 @@ canvas { width: 100% !important; }
   <button class="btn btn-topup" onclick="doTopup()">+ Adauga sold pe card</button>
 </div>
 
+
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
-// Register datalabels plugin
-if (typeof ChartDataLabels !== 'undefined') {
-  Chart.register(ChartDataLabels);
-}
+if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
 
-// ── DEFAULT DATA ──
+// ── CONFIG ──
+var BIN_ID  = '69b82c6dc3097a1dd52e286d';
+var BIN_KEY = '$2a$10$/77tKoccydpCapsJZB7cZuFGJTtCOOvCJ1eH4BbmUOiX.7.41HWni';
+var BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+
+// ── DEFAULTS ──
 var DEFAULTS = [
   {id:1, type:'topup', isoDate:'2026-02-01', total:10000,  liters:null,  pricePerL:null},
   {id:2, type:'fuel',  isoDate:'2026-02-08', total:439.66, liters:19,    pricePerL:23.14},
@@ -620,40 +273,85 @@ var DEFAULTS = [
 // ── STATE ──
 var S = {history: [], nextId: 100};
 var activePeriod = 'monthly';
-var chartSpent = null;
-var chartLiters = null;
-var chartPrice = null;
+var chartSpent = null, chartLiters = null, chartPrice = null;
 
-// ── STORAGE ──
-function loadState() {
-  try {
-    var d = localStorage.getItem('fuel_v9');
-    if (d) {
-      S = JSON.parse(d);
-      recompute();
-      return;
-    }
-  } catch(e) {}
-  S.history = DEFAULTS.map(function(h) {
-    return {id:h.id, type:h.type, isoDate:h.isoDate, total:h.total, liters:h.liters, pricePerL:h.pricePerL, balance:0};
+// ── CLOUD API (JSONBin — sursa unica de date) ──
+var _saving = false;
+
+function showSaving(on) {
+  // Subtle indicator in hero label
+  var el = document.getElementById('hero-label-text');
+  if (!el) return;
+  el.textContent = on ? 'se salveaza...' : 'Sold disponibil';
+  el.style.color = on ? 'var(--amber)' : '';
+}
+
+function apiSave(callback) {
+  if (_saving) { if (callback) setTimeout(callback, 300); return; }
+  _saving = true;
+  showSaving(true);
+  fetch(BIN_URL, {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json', 'X-Master-Key':BIN_KEY, 'X-Bin-Versioning':'false'},
+    body: JSON.stringify({history: S.history, nextId: S.nextId})
+  })
+  .then(function(r) {
+    _saving = false; showSaving(false);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    if (callback) callback();
+  })
+  .catch(function(e) {
+    _saving = false; showSaving(false);
+    showToast('Eroare salvare: ' + e.message);
   });
-  S.nextId = 100;
-  recompute();
-  saveState();
 }
 
-function saveState() {
-  try { localStorage.setItem('fuel_v9', JSON.stringify(S)); } catch(e) {}
+function apiLoad(callback) {
+  document.getElementById('hero-label-text').textContent = 'se incarca...';
+  fetch(BIN_URL + '/latest', {
+    headers: {'X-Master-Key': BIN_KEY}
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    document.getElementById('hero-label-text').textContent = 'Sold disponibil';
+    var rec = data.record || data;
+    if (rec && rec.history && rec.history.length > 0) {
+      S.history = rec.history;
+      S.nextId = rec.nextId || 100;
+    } else {
+      // Bin gol — initializeaza cu defaults
+      S.history = DEFAULTS.map(function(h) {
+        return {id:h.id, type:h.type, isoDate:h.isoDate, total:h.total, liters:h.liters, pricePerL:h.pricePerL, balance:0};
+      });
+      S.nextId = 100;
+      apiSave();
+    }
+    recompute();
+    if (callback) callback();
+  })
+  .catch(function(e) {
+    document.getElementById('hero-label-text').textContent = 'Sold disponibil';
+    showToast('Eroare incarcare: ' + e.message);
+    // Fallback la defaults
+    S.history = DEFAULTS.map(function(h) {
+      return {id:h.id, type:h.type, isoDate:h.isoDate, total:h.total, liters:h.liters, pricePerL:h.pricePerL, balance:0};
+    });
+    S.nextId = 100;
+    recompute();
+    if (callback) callback();
+  });
 }
 
-// ── RECOMPUTE balances ──
+// ── RECOMPUTE ──
 function recompute() {
-  S.history.sort(function(a, b) { return a.isoDate.localeCompare(b.isoDate); });
+  S.history.sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
   var bal = 0;
   for (var i = 0; i < S.history.length; i++) {
     var h = S.history[i];
-    if (h.type === 'topup') bal = +(bal + h.total).toFixed(2);
-    else bal = +(bal - h.total).toFixed(2);
+    bal = +(h.type === 'topup' ? bal + h.total : bal - h.total).toFixed(2);
     h.balance = bal;
   }
 }
@@ -661,57 +359,43 @@ function recompute() {
 // ── HELPERS ──
 function parseNum(s) {
   if (s === null || s === undefined || s === '') return NaN;
-  return parseFloat(String(s).replace(/\s/g, '').replace(',', '.'));
+  return parseFloat(String(s).replace(/\s/g,'').replace(',','.'));
 }
-
 function fmt(n, dec) {
   if (dec === undefined) dec = 2;
   if (n === null || n === undefined || isNaN(n)) return '—';
-  return n.toLocaleString('ro-RO', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+  return n.toLocaleString('ro-RO', {minimumFractionDigits:dec, maximumFractionDigits:dec});
 }
-
 function fmtDate(iso) {
   if (!iso) return '';
-  var parts = iso.split('-');
-  var y = parts[0], m = parseInt(parts[1]), day = parseInt(parts[2]);
+  var p = iso.split('-');
   var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
-  return day + ' ' + mo[m-1] + ' ' + y;
+  return parseInt(p[2]) + ' ' + mo[parseInt(p[1])-1] + ' ' + p[0];
 }
-
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function fmtInput(n) {
-  return n.toFixed(2).replace('.', ',');
-}
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+function fmtInput(n) { return n.toFixed(2).replace('.', ','); }
+function timeStr() { return new Date().toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'}); }
 
 // ── PERIOD HELPERS ──
-function getMonthKey(iso) { return iso.slice(0, 7); }
-
+function getMonthKey(iso) { return iso.slice(0,7); }
 function getWeekKey(iso) {
   var d = new Date(iso + 'T12:00:00');
   var day = d.getDay() || 7;
   d.setDate(d.getDate() - day + 1);
   return d.toISOString().split('T')[0];
 }
-
 function fmtMonth(key) {
-  var parts = key.split('-');
+  var p = key.split('-');
   var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
-  return mo[parseInt(parts[1])-1] + ' ' + parts[0].slice(2);
+  return mo[parseInt(p[1])-1] + ' ' + p[0].slice(2);
 }
-
 function fmtWeek(iso) {
   var d = new Date(iso + 'T12:00:00');
   var mo = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
   return d.getDate() + ' ' + mo[d.getMonth()];
 }
 
-// ── SMART CALC (any 2 of 3) ──
-// Regula: campul pe care userul scrie (changed) NU se atinge.
-// Dintre celelalte 2, calculam cel care NU e focusat activ.
-// Daca ambele sunt nefocusate, calculam al 3-lea in functie de prioritate.
+// ── CALC FIELDS (on blur) ──
 function calcFields(changed) {
   var tEl = document.getElementById('f-total');
   var pEl = document.getElementById('f-price');
@@ -720,486 +404,240 @@ function calcFields(changed) {
   var p = parseNum(pEl.value);
   var l = parseNum(lEl.value);
   function ok(n) { return !isNaN(n) && n > 0; }
-
-  // Calculeaza campul gol/necunoscut pe baza celor 2 completate
   if (changed === 'total') {
-    if (ok(t) && ok(p)) { lEl.value = fmtInput(t / p); }
-    else if (ok(t) && ok(l)) { pEl.value = fmtInput(t / l); }
+    if (ok(t) && ok(p)) lEl.value = fmtInput(t / p);
+    else if (ok(t) && ok(l)) pEl.value = fmtInput(t / l);
   } else if (changed === 'price') {
-    if (ok(p) && ok(l)) { tEl.value = fmtInput(p * l); }
-    else if (ok(t) && ok(p)) { lEl.value = fmtInput(t / p); }
+    if (ok(p) && ok(l)) tEl.value = fmtInput(p * l);
+    else if (ok(t) && ok(p)) lEl.value = fmtInput(t / p);
   } else if (changed === 'liters') {
-    if (ok(p) && ok(l)) { tEl.value = fmtInput(p * l); }
-    else if (ok(t) && ok(l)) { pEl.value = fmtInput(t / l); }
+    if (ok(p) && ok(l)) tEl.value = fmtInput(p * l);
+    else if (ok(t) && ok(l)) pEl.value = fmtInput(t / l);
   }
 }
 
 // ── ADD FUEL ──
 function doAddFuel() {
-  var date = document.getElementById('f-date').value || todayStr();
-  var total = parseNum(document.getElementById('f-total').value);
+  var date   = document.getElementById('f-date').value || todayStr();
+  var total  = parseNum(document.getElementById('f-total').value);
+  var price  = parseNum(document.getElementById('f-price').value);
   var liters = parseNum(document.getElementById('f-liters').value);
-  var price = parseNum(document.getElementById('f-price').value);
-
   if (isNaN(total) || total <= 0) { showToast('Introdu suma totala'); return; }
-
   var sorted = S.history.slice().sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
   var curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
   var overLimit = total > curBal;
-
-  S.history.push({
-    id: S.nextId++,
-    type: 'fuel',
-    isoDate: date,
-    total: +total.toFixed(2),
-    liters: isNaN(liters) ? null : +liters.toFixed(2),
-    pricePerL: isNaN(price) ? null : +price.toFixed(2),
-    balance: 0
-  });
-
+  S.history.push({id:S.nextId++, type:'fuel', isoDate:date,
+    total:+total.toFixed(2), liters:isNaN(liters)?null:+liters.toFixed(2),
+    pricePerL:isNaN(price)?null:+price.toFixed(2), balance:0});
   recompute();
   document.getElementById('f-total').value = '';
-  document.getElementById('f-liters').value = '';
   document.getElementById('f-price').value = '';
+  document.getElementById('f-liters').value = '';
   document.getElementById('f-date').value = todayStr();
-  saveState();
-  render();
-  if (overLimit) {
-    showToast('Atentie! Sold negativ: ' + fmt(S.history.slice().sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);})[S.history.length-1].balance) + ' lei');
-  } else {
-    showToast('−' + fmt(total) + ' lei inregistrat');
-  }
+  apiSave(); render();
+  if (overLimit) showToast('Atentie! Sold negativ: ' + fmt(S.history[S.history.length-1].balance) + ' lei');
+  else showToast('−' + fmt(total) + ' lei inregistrat');
 }
 
 // ── TOPUP ──
 function doTopup() {
-  var val = parseNum(document.getElementById('t-amount').value);
+  var val  = parseNum(document.getElementById('t-amount').value);
   var date = document.getElementById('t-date').value || todayStr();
   if (isNaN(val) || val <= 0) { showToast('Introdu o suma valida'); return; }
-
-  S.history.push({
-    id: S.nextId++,
-    type: 'topup',
-    isoDate: date,
-    total: +val.toFixed(2),
-    liters: null,
-    pricePerL: null,
-    balance: 0
-  });
-
+  S.history.push({id:S.nextId++, type:'topup', isoDate:date, total:+val.toFixed(2), liters:null, pricePerL:null, balance:0});
   recompute();
   document.getElementById('t-amount').value = '';
   document.getElementById('t-date').value = todayStr();
-  saveState();
-  render();
+  apiSave(); render();
   showToast('+' + fmt(val) + ' lei adaugat');
 }
 
 // ── DELETE ──
 function deleteEntry(id) {
   var h = null;
-  for (var i = 0; i < S.history.length; i++) {
-    if (S.history[i].id === id) { h = S.history[i]; break; }
-  }
+  for (var i = 0; i < S.history.length; i++) { if (S.history[i].id === id) { h = S.history[i]; break; } }
   if (!h) return;
-  var label = (h.type === 'topup' ? '+' : '-') + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate);
-  if (!confirm('Sigur stergi?\n\n' + label)) return;
-  S.history = S.history.filter(function(x) { return x.id !== id; });
-  recompute();
-  saveState();
-  render();
+  if (!confirm('Sigur stergi?\n\n' + (h.type==='topup'?'+':'-') + fmt(h.total) + ' lei — ' + fmtDate(h.isoDate))) return;
+  S.history = S.history.filter(function(x){ return x.id !== id; });
+  recompute(); apiSave(); render();
   showToast('Inregistrare stearsa');
 }
-
 function clearAll() {
   if (!confirm('Stergi TOT istoricul?\n\nAcesta actiune nu poate fi anulata.')) return;
-  S.history = [];
-  saveState();
-  render();
-  showToast('Istoric sters');
+  S.history = []; apiSave(); render(); showToast('Istoric sters');
 }
 
-// ── RENDER HERO ──
+// ── RENDER ──
 function render() {
   var sorted = S.history.slice().sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
   var curBal = sorted.length ? sorted[sorted.length-1].balance : 0;
-
   var firstTopup = null;
-  for (var i = 0; i < sorted.length; i++) {
-    if (sorted[i].type === 'topup') { firstTopup = sorted[i]; break; }
-  }
+  for (var i = 0; i < sorted.length; i++) { if (sorted[i].type === 'topup') { firstTopup = sorted[i]; break; } }
   var initBal = firstTopup ? firstTopup.total : null;
-
   var spent = 0, litri = 0;
   for (var j = 0; j < sorted.length; j++) {
-    if (sorted[j].type === 'fuel') {
-      spent += sorted[j].total;
-      if (sorted[j].liters) litri += sorted[j].liters;
-    }
+    if (sorted[j].type === 'fuel') { spent += sorted[j].total; if (sorted[j].liters) litri += sorted[j].liters; }
   }
-  spent = +spent.toFixed(2);
-  litri = +litri.toFixed(2);
 
   document.getElementById('hero-num').textContent = fmt(curBal);
-
   var pct = initBal ? curBal / initBal * 100 : 100;
   var heroEl = document.getElementById('hero-bal');
   heroEl.style.color = pct > 50 ? 'var(--fuel)' : pct > 25 ? 'var(--amber)' : 'var(--red)';
-
-  var warnEl = document.getElementById('hero-warning');
-  if (warnEl) warnEl.style.display = curBal < 0 ? 'block' : 'none';
+  document.getElementById('hero-warning').style.display = curBal < 0 ? 'block' : 'none';
   document.getElementById('stat-init').textContent = initBal !== null ? fmt(initBal) + ' lei' : '—';
-  document.getElementById('stat-spent').textContent = fmt(spent) + ' lei';
-  document.getElementById('stat-litri').textContent = fmt(litri, 1) + ' L';
+  document.getElementById('stat-spent').textContent = fmt(+spent.toFixed(2)) + ' lei';
+  document.getElementById('stat-litri').textContent = fmt(+litri.toFixed(2), 1) + ' L';
 
   var bar = document.getElementById('prog-fill');
-  var p2 = Math.max(0, Math.min(100, pct));
-  bar.style.width = p2 + '%';
-  bar.style.background = pct > 50
-    ? 'linear-gradient(90deg, var(--fuel), #00e5c0)'
-    : pct > 25
-    ? 'linear-gradient(90deg, var(--amber), #fbbf24)'
-    : 'linear-gradient(90deg, var(--red), #f87171)';
+  bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  bar.style.background = pct > 50 ? 'linear-gradient(90deg,var(--fuel),#00e5c0)' : pct > 25 ? 'linear-gradient(90deg,var(--amber),#fbbf24)' : 'linear-gradient(90deg,var(--red),#f87171)';
 
   renderHistory(sorted);
-
-  if (document.getElementById('tab-chart').classList.contains('active')) {
-    renderCharts();
-  }
+  if (document.getElementById('tab-chart').classList.contains('active')) renderCharts();
 }
 
-// ── RENDER HISTORY ──
+// ── HISTORY ──
 function renderHistory(sorted) {
   var el = document.getElementById('history-list');
-  if (!sorted.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzactie.<br>Adauga prima alimentare!</div>';
-    return;
-  }
-
-  var reversed = sorted.slice().reverse();
+  if (!sorted.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">⛽</div>Nicio tranzactie.<br>Adauga prima alimentare!</div>'; return; }
   var html = '';
-  for (var i = 0; i < reversed.length; i++) {
-    var h = reversed[i];
-    var isTopup = h.type === 'topup';
-    var costStr = isTopup ? '+' + fmt(h.total) + ' lei' : '−' + fmt(h.total) + ' lei';
-    var icon = isTopup ? '💳' : '⛽';
-    var label = isTopup ? 'Incarcare card' : 'Alimentare';
-    var costClass = isTopup ? 'plus' : 'minus';
-
+  var rev = sorted.slice().reverse();
+  for (var i = 0; i < rev.length; i++) {
+    var h = rev[i];
+    var isT = h.type === 'topup';
     var pills = '';
-    if (!isTopup) {
-      if (h.liters) pills += '<div class="pill"><strong>' + fmt(h.liters, 2) + ' L</strong></div>';
-      if (h.pricePerL) pills += '<div class="pill">' + fmt(h.pricePerL, 2) + ' lei/L</div>';
+    if (!isT) {
+      if (h.liters) pills += '<div class="pill"><strong>' + fmt(h.liters,2) + ' L</strong></div>';
+      if (h.pricePerL) pills += '<div class="pill">' + fmt(h.pricePerL,2) + ' lei/L</div>';
     }
     pills += '<div class="pill">Sold: <strong>' + fmt(h.balance) + ' lei</strong></div>';
-
-    html += '<div class="hist-item' + (isTopup ? ' topup' : '') + '">';
-    html += '<div class="hist-top">';
-    html += '<div><div class="hist-type">' + icon + ' ' + label + '</div>';
+    html += '<div class="hist-item' + (isT?' topup':'') + '">';
+    html += '<div class="hist-top"><div><div class="hist-type">' + (isT?'💳':'⛽') + ' ' + (isT?'Incarcare card':'Alimentare') + '</div>';
     html += '<div class="hist-date">' + fmtDate(h.isoDate) + '</div></div>';
-    html += '<div><div class="hist-cost ' + costClass + '">' + costStr + '</div></div>';
-    html += '</div>';
-    html += '<div class="hist-bottom">';
-    html += '<div class="hist-pills">' + pills + '</div>';
-    html += '<button class="del-btn" onclick="deleteEntry(' + h.id + ')">✕ Sterge</button>';
-    html += '</div></div>';
+    html += '<div><div class="hist-cost ' + (isT?'plus':'minus') + '">' + (isT?'+':'-') + fmt(h.total) + ' lei</div></div></div>';
+    html += '<div class="hist-bottom"><div class="hist-pills">' + pills + '</div>';
+    html += '<button class="del-btn" onclick="deleteEntry(' + h.id + ')">✕ Sterge</button></div></div>';
   }
   el.innerHTML = html;
 }
 
-// ── CHARTS ──
-// Generic period aggregator (used for stats computation regardless of active period)
-function buildPeriodDataFor(fuels, period) {
+// ── PERIOD DATA ──
+function periodAggregate(fuels, period) {
   var getKey = period === 'monthly' ? getMonthKey : getWeekKey;
   var fmtKey = period === 'monthly' ? fmtMonth : fmtWeek;
-  var map = {};
-  var keyOrder = [];
-  for (var j = 0; j < fuels.length; j++) {
-    var h = fuels[j];
-    var k = getKey(h.isoDate);
-    if (!map[k]) { map[k] = {label: fmtKey(k), spent: 0, liters: 0}; keyOrder.push(k); }
-    map[k].spent = +(map[k].spent + h.total).toFixed(2);
-    if (h.liters) map[k].liters = +(map[k].liters + h.liters).toFixed(2);
+  var map = {}, order = [];
+  for (var i = 0; i < fuels.length; i++) {
+    var k = getKey(fuels[i].isoDate);
+    if (!map[k]) { map[k] = {label:fmtKey(k), spent:0, liters:0}; order.push(k); }
+    map[k].spent = +(map[k].spent + fuels[i].total).toFixed(2);
+    if (fuels[i].liters) map[k].liters = +(map[k].liters + fuels[i].liters).toFixed(2);
   }
-  keyOrder.sort();
-  var out = {labels: [], spent: [], liters: []};
-  for (var ki = 0; ki < keyOrder.length; ki++) {
-    var v = map[keyOrder[ki]];
-    out.labels.push(v.label);
-    out.spent.push(v.spent);
-    out.liters.push(v.liters);
-  }
+  order.sort();
+  var out = {labels:[], spent:[], liters:[]};
+  for (var j = 0; j < order.length; j++) { out.labels.push(map[order[j]].label); out.spent.push(map[order[j]].spent); out.liters.push(map[order[j]].liters); }
   return out;
 }
 
 function buildPeriodData(fuels) {
   if (activePeriod === 'fill') {
-    var labels = [], spent = [], liters = [];
-    for (var i = 0; i < fuels.length; i++) {
-      labels.push(fmtDate(fuels[i].isoDate));
-      spent.push(fuels[i].total);
-      liters.push(fuels[i].liters || 0);
-    }
-    return {labels: labels, spent: spent, liters: liters};
+    return {labels:fuels.map(function(h){return fmtDate(h.isoDate);}), spent:fuels.map(function(h){return h.total;}), liters:fuels.map(function(h){return h.liters||0;})};
   }
-
-  var getKey = activePeriod === 'monthly' ? getMonthKey : getWeekKey;
-  var fmtKey = activePeriod === 'monthly' ? fmtMonth : fmtWeek;
-  var map = {};
-  var keyOrder = [];
-
-  for (var j = 0; j < fuels.length; j++) {
-    var h = fuels[j];
-    var k = getKey(h.isoDate);
-    if (!map[k]) { map[k] = {label: fmtKey(k), spent: 0, liters: 0}; keyOrder.push(k); }
-    map[k].spent = +(map[k].spent + h.total).toFixed(2);
-    if (h.liters) map[k].liters = +(map[k].liters + h.liters).toFixed(2);
-  }
-
-  keyOrder.sort();
-  var out = {labels: [], spent: [], liters: []};
-  for (var ki = 0; ki < keyOrder.length; ki++) {
-    var v = map[keyOrder[ki]];
-    out.labels.push(v.label);
-    out.spent.push(v.spent);
-    out.liters.push(v.liters);
-  }
-  return out;
+  return periodAggregate(fuels, activePeriod);
 }
 
-var BASE_OPTS = {
-  responsive: true,
-  plugins: {
-    legend: {display: false},
-    tooltip: {
-      backgroundColor: '#161d1f',
-      borderColor: '#1e2a2d',
-      borderWidth: 1,
-      titleColor: '#5a7278',
-      bodyColor: '#e8f0f2'
-    }
-  },
-  scales: {
-    x: {
-      grid: {color: '#1e2a2d'},
-      ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, maxRotation: 40}
-    },
-    y: {
-      grid: {color: '#1e2a2d'},
-      ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}}
-    }
-  }
-};
-
-function makeOpts(tooltipCb, yTickCb, labelFmt) {
+// ── CHARTS ──
+function makeOpts(ttCb, yTick, lblFmt) {
   return {
     responsive: true,
+    layout: {padding:{top:20}},
     plugins: {
-      legend: {display: false},
-      tooltip: {
-        backgroundColor: '#161d1f',
-        borderColor: '#1e2a2d',
-        borderWidth: 1,
-        titleColor: '#5a7278',
-        bodyColor: '#e8f0f2',
-        callbacks: {label: tooltipCb}
-      },
-      datalabels: labelFmt ? {
-        color: 'rgba(232,240,242,0.9)',
-        font: {size: 9, family: 'Inconsolata', weight: '600'},
-        anchor: 'end',
-        align: 'end',
-        offset: -16,
-        padding: {top: 0},
-        formatter: labelFmt,
-        clip: false
-      } : {display: false}
-    },
-    layout: {
-      padding: { top: 18 }
+      legend: {display:false},
+      tooltip: {backgroundColor:'#161d1f',borderColor:'#1e2a2d',borderWidth:1,titleColor:'#5a7278',bodyColor:'#e8f0f2',callbacks:{label:ttCb}},
+      datalabels: lblFmt ? {color:'rgba(232,240,242,0.9)',font:{size:9,family:'Inconsolata',weight:'600'},anchor:'end',align:'end',offset:-16,clip:false,formatter:lblFmt} : {display:false}
     },
     scales: {
-      x: {
-        grid: {color: '#1e2a2d'},
-        ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, maxRotation: 40}
-      },
-      y: {
-        grid: {color: '#1e2a2d'},
-        ticks: {color: '#5a7278', font: {size: 9, family: 'Inconsolata'}, callback: yTickCb}
-      }
+      x:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},maxRotation:40}},
+      y:{grid:{color:'#1e2a2d'},ticks:{color:'#5a7278',font:{size:9,family:'Inconsolata'},callback:yTick}}
     }
   };
 }
 
 function renderCharts() {
-  var fuels = [];
-  for (var i = 0; i < S.history.length; i++) {
-    if (S.history[i].type === 'fuel') fuels.push(S.history[i]);
-  }
-  fuels.sort(function(a,b){ return a.isoDate.localeCompare(b.isoDate); });
+  var fuels = S.history.filter(function(h){return h.type==='fuel';}).sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);});
+  var pl = activePeriod==='monthly'?'lunare':activePeriod==='weekly'?'saptamanale':'per alimentare';
+  document.getElementById('title-spent').textContent = 'Cheltuieli ' + pl + ' (lei)';
+  document.getElementById('title-liters').textContent = 'Litri ' + pl;
 
-  // Update titles
-  var periodLabel = activePeriod === 'monthly' ? 'lunare' : activePeriod === 'weekly' ? 'saptamanale' : 'per alimentare';
-  document.getElementById('title-spent').textContent = 'Cheltuieli ' + periodLabel + ' (lei)';
-  document.getElementById('title-liters').textContent = 'Litri ' + periodLabel;
+  // Stats
+  var totSpent = 0, totLiters = 0;
+  fuels.forEach(function(h){ totSpent+=h.total; if(h.liters) totLiters+=h.liters; });
+  var pdM = periodAggregate(fuels,'monthly'), pdW = periodAggregate(fuels,'weekly');
+  var avgM = pdM.labels.length ? +(totSpent/pdM.labels.length).toFixed(2) : 0;
+  var avgW = pdW.labels.length ? +(totSpent/pdW.labels.length).toFixed(2) : 0;
+  var avgF = fuels.length ? +(totSpent/fuels.length).toFixed(2) : 0;
+  document.getElementById('cs-avg-monthly').textContent = fmt(avgM) + ' lei';
+  document.getElementById('cs-avg-weekly').textContent = fmt(avgW) + ' lei';
+  document.getElementById('cs-avg-fill').textContent = fmt(avgF) + ' lei';
+
+  // Prediction
+  var sorted2 = S.history.slice().sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);});
+  var curBal = sorted2.length ? sorted2[sorted2.length-1].balance : 0;
+  var pEl = document.getElementById('predict-text');
+  if (avgW > 0 && curBal > 0) {
+    var daysLeft = Math.round(curBal/avgW*7);
+    var endDate = new Date(); endDate.setDate(endDate.getDate()+daysLeft);
+    var endStr = fmtDate(endDate.toISOString().split('T')[0]);
+    var fillsLeft = avgF > 0 ? Math.floor(curBal/avgF) : '?';
+    pEl.innerHTML = 'La ritmul actual (<strong>'+fmt(avgW)+' lei/sapt</strong>), soldul de <strong>'+fmt(curBal)+' lei</strong> va dura ~<strong>'+daysLeft+' zile</strong> — pana pe <strong>'+endStr+'</strong>.<br>Mai pot face ~<strong>'+fillsLeft+' alimentari</strong> a cate <strong>'+fmt(avgF)+' lei</strong>.';
+  } else if (curBal <= 0) {
+    pEl.innerHTML = '<strong>Soldul este epuizat.</strong> Adauga fonduri pentru a continua.';
+  } else {
+    pEl.textContent = 'Adauga mai multe date pentru a vedea predictia.';
+  }
 
   if (!fuels.length) {
-    if (chartSpent)  { chartSpent.destroy();  chartSpent  = null; }
-    if (chartLiters) { chartLiters.destroy(); chartLiters = null; }
-    if (chartPrice)  { chartPrice.destroy();  chartPrice  = null; }
+    if(chartSpent){chartSpent.destroy();chartSpent=null;} if(chartLiters){chartLiters.destroy();chartLiters=null;} if(chartPrice){chartPrice.destroy();chartPrice=null;}
     return;
   }
-
   var pd = buildPeriodData(fuels);
 
-  // ── Stats: all 3 averages + prediction ──
-  var totalSpent = 0, totalLiters = 0;
-  for (var fi = 0; fi < fuels.length; fi++) {
-    totalSpent += fuels[fi].total;
-    if (fuels[fi].liters) totalLiters += fuels[fi].liters;
-  }
-  totalSpent = +totalSpent.toFixed(2);
-  totalLiters = +totalLiters.toFixed(2);
+  if(chartSpent){chartSpent.destroy();chartSpent=null;}
+  chartSpent = new Chart(document.getElementById('canvas-spent'), {type:'bar',
+    data:{labels:pd.labels,datasets:[{data:pd.spent,backgroundColor:'rgba(239,68,68,.6)',borderColor:'#ef4444',borderWidth:1,borderRadius:6}]},
+    options:makeOpts(function(c){return ' '+fmt(c.parsed.y)+' lei';},function(v){return fmt(v,0)+' lei';},function(v){return fmt(v,0)+' lei';})});
 
-  // Monthly average
-  var pdMonthly = buildPeriodDataFor(fuels, 'monthly');
-  var avgMonthly = pdMonthly.labels.length ? +(totalSpent / pdMonthly.labels.length).toFixed(2) : 0;
+  if(chartLiters){chartLiters.destroy();chartLiters=null;}
+  chartLiters = new Chart(document.getElementById('canvas-liters'), {type:'bar',
+    data:{labels:pd.labels,datasets:[{data:pd.liters,backgroundColor:'rgba(0,196,160,.55)',borderColor:'#00c4a0',borderWidth:1,borderRadius:6}]},
+    options:makeOpts(function(c){return ' '+fmt(c.parsed.y,2)+' L';},function(v){return v+' L';},function(v){return fmt(v,2)+' L';})});
 
-  // Weekly average
-  var pdWeekly = buildPeriodDataFor(fuels, 'weekly');
-  var avgWeekly = pdWeekly.labels.length ? +(totalSpent / pdWeekly.labels.length).toFixed(2) : 0;
-
-  // Per fill average
-  var avgFill = fuels.length ? +(totalSpent / fuels.length).toFixed(2) : 0;
-
-  document.getElementById('cs-avg-monthly').textContent = fmt(avgMonthly) + ' lei';
-  document.getElementById('cs-avg-weekly').textContent = fmt(avgWeekly) + ' lei';
-  document.getElementById('cs-avg-fill').textContent = fmt(avgFill) + ' lei';
-
-  // ── Prediction ──
-  var lastSorted = S.history.slice().sort(function(a,b){return a.isoDate.localeCompare(b.isoDate);});
-  var curBal = lastSorted.length ? lastSorted[lastSorted.length-1].balance : 0;
-  var predictEl = document.getElementById('predict-text');
-  if (avgWeekly > 0 && curBal > 0) {
-    var weeksLeft = curBal / avgWeekly;
-    var daysLeft = Math.round(weeksLeft * 7);
-    var endDate = new Date();
-    endDate.setDate(endDate.getDate() + daysLeft);
-    var endStr = fmtDate(endDate.toISOString().split('T')[0]);
-    var fillsLeft = avgFill > 0 ? Math.floor(curBal / avgFill) : '?';
-    predictEl.innerHTML =
-      'La ritmul actual (<strong>' + fmt(avgWeekly) + ' lei/sapt</strong>), soldul de <strong>' + fmt(curBal) + ' lei</strong> va dura aproximativ <strong>' + daysLeft + ' zile</strong> — pana pe <strong>' + endStr + '</strong>.<br>' +
-      'Mai pot face aproximativ <strong>' + fillsLeft + ' alimentari</strong> a cate <strong>' + fmt(avgFill) + ' lei</strong>.';
-  } else if (curBal <= 0) {
-    predictEl.innerHTML = '<strong>Soldul este epuizat.</strong> Adauga fonduri pentru a continua.';
-  } else {
-    predictEl.innerHTML = 'Adauga mai multe date pentru a vedea predictia.';
-  }
-
-  // Chart 1 — Cheltuieli
-  if (chartSpent) { chartSpent.destroy(); chartSpent = null; }
-  chartSpent = new Chart(document.getElementById('canvas-spent'), {
-    type: 'bar',
-    data: {
-      labels: pd.labels,
-      datasets: [{
-        data: pd.spent,
-        backgroundColor: 'rgba(239,68,68,0.6)',
-        borderColor: '#ef4444',
-        borderWidth: 1,
-        borderRadius: 6
-      }]
-    },
-    options: makeOpts(
-      function(ctx) { return ' ' + fmt(ctx.parsed.y) + ' lei'; },
-      function(v) { return fmt(v, 0) + ' lei'; },
-      function(v) { return fmt(v, 0) + ' lei'; }
-    )
-  });
-
-  // Chart 2 — Litri
-  if (chartLiters) { chartLiters.destroy(); chartLiters = null; }
-  chartLiters = new Chart(document.getElementById('canvas-liters'), {
-    type: 'bar',
-    data: {
-      labels: pd.labels,
-      datasets: [{
-        data: pd.liters,
-        backgroundColor: 'rgba(0,196,160,0.55)',
-        borderColor: '#00c4a0',
-        borderWidth: 1,
-        borderRadius: 6
-      }]
-    },
-    options: makeOpts(
-      function(ctx) { return ' ' + fmt(ctx.parsed.y, 2) + ' L'; },
-      function(v) { return v + ' L'; },
-      function(v) { return fmt(v, 2) + ' L'; }
-    )
-  });
-
-  // Chart 3 — Pret/L (always per alimentare)
-  if (chartPrice) { chartPrice.destroy(); chartPrice = null; }
-  var withPrice = fuels.filter(function(h) { return h.pricePerL; });
-  if (!withPrice.length) {
-    document.getElementById('wrap-price').style.display = 'none';
-    return;
-  }
-  document.getElementById('wrap-price').style.display = 'block';
-
-  var prices = withPrice.map(function(h) { return h.pricePerL; });
-  var ptColors = prices.map(function(p, i) {
-    if (i === 0) return '#a78bfa';
-    return p > prices[i-1] ? '#ef4444' : '#22c55e';
-  });
-
-  var minP = Math.min.apply(null, prices);
-  var maxP = Math.max.apply(null, prices);
-
-  var priceOpts = makeOpts(
-    function(ctx) { return ' ' + fmt(ctx.parsed.y) + ' lei/L'; },
-    function(v) { return v + ' lei'; }
-  );
-  priceOpts.scales.y.suggestedMin = minP - 0.3;
-  priceOpts.scales.y.suggestedMax = maxP + 0.3;
-
-  chartPrice = new Chart(document.getElementById('canvas-price'), {
-    type: 'line',
-    data: {
-      labels: withPrice.map(function(h) { return fmtDate(h.isoDate); }),
-      datasets: [{
-        data: prices,
-        borderColor: '#a78bfa',
-        backgroundColor: 'rgba(167,139,250,0.08)',
-        borderWidth: 2,
-        pointBackgroundColor: ptColors,
-        pointBorderColor: ptColors,
-        pointRadius: 6,
-        pointHoverRadius: 8,
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: priceOpts
-  });
+  if(chartPrice){chartPrice.destroy();chartPrice=null;}
+  var wp = fuels.filter(function(h){return h.pricePerL;});
+  if(!wp.length){document.getElementById('wrap-price').style.display='none';return;}
+  document.getElementById('wrap-price').style.display='block';
+  var prices = wp.map(function(h){return h.pricePerL;});
+  var ptColors = prices.map(function(p,i){return i===0?'#a78bfa':p>prices[i-1]?'#ef4444':'#22c55e';});
+  var prOpts = makeOpts(function(c){return ' '+fmt(c.parsed.y)+' lei/L';},function(v){return v+' lei';},null);
+  prOpts.scales.y.suggestedMin = Math.min.apply(null,prices)-0.3;
+  prOpts.scales.y.suggestedMax = Math.max.apply(null,prices)+0.3;
+  chartPrice = new Chart(document.getElementById('canvas-price'), {type:'line',
+    data:{labels:wp.map(function(h){return fmtDate(h.isoDate);}),datasets:[{data:prices,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.08)',borderWidth:2,pointBackgroundColor:ptColors,pointBorderColor:ptColors,pointRadius:6,pointHoverRadius:8,fill:true,tension:0.3}]},
+    options:prOpts});
 }
 
 // ── PERIOD TOGGLE ──
 function setPeriod(p, btn) {
   activePeriod = p;
-  var btns = document.querySelectorAll('.period-btn');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
   renderCharts();
 }
 
 // ── TABS ──
 function switchTab(name, btn) {
-  var sections = document.querySelectorAll('.section');
-  for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
-  var navBtns = document.querySelectorAll('.nav-btn');
-  for (var j = 0; j < navBtns.length; j++) navBtns[j].classList.remove('active');
-  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
   if (name === 'chart') renderCharts();
 }
@@ -1207,19 +645,19 @@ function switchTab(name, btn) {
 // ── TOAST ──
 function showToast(msg) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 2600);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2600);
 }
 
+
+
 // ── INIT ──
-loadState();
 document.getElementById('f-date').value = todayStr();
 document.getElementById('t-date').value = todayStr();
-if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone) {
+if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone)
   document.getElementById('ios-hint').style.display = 'block';
-}
-render();
+// Load from cloud on startup, then render
+apiLoad(function() { render(); });
 </script>
 </body>
 </html>
