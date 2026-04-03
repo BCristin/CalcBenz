@@ -781,7 +781,7 @@ function renderHistory(sorted) {
     html += '<div class="hist-date">' + fmtDate(h.isoDate) + '</div></div>';
     html += '<div><div class="hist-cost ' + (isT?'plus':'minus') + '">' + (isT?'+':'-') + fmt(h.total) + ' lei</div></div></div>';
     html += '<div class="hist-bottom"><div class="hist-pills">' + pills + '</div>';
-    html += '<button class="del-btn" onclick="deleteEntry(' + h.id + ')">✕ Sterge</button></div></div>';
+    html += '<button class="del-btn" onclick="deleteEntry(' + h.id + ')">✕</button></div></div>';
   }
   el.innerHTML = html;
 }
